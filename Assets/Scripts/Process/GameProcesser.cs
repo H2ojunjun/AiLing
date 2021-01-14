@@ -3,23 +3,35 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
+using System;
 
 //用于管理游戏进程，包括新建档，读档，存档等
 public class GameProcesser:MonoSingleton<GameProcesser>
 {
+    public bool enable = false;
+
     private string _savePath;
 
     List<GameModel> archives = new List<GameModel>();
 
     void Awake()
     {
+        if (enable == false)
+            return;
         //Debug.Log(Application.persistentDataPath);
-        _savePath = Application.persistentDataPath;
-        //if (!File.Exists(_savePath))
-        //{
-        //    Debug.LogError("savepath is not exist");
-        //    return;
-        //}
+        _savePath = Application.persistentDataPath+"/Archives";
+        if (!File.Exists(_savePath))
+        {
+            try
+            {
+                Directory.CreateDirectory(_savePath);
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError("create directory fail" + ex.ToString());
+            }
+
+        }
 
         string[] files = Directory.GetFiles(_savePath);
         if (files.Length == 0)

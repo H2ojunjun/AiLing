@@ -14,7 +14,7 @@ public class GameModel
     public GameModel()
     {
         id = 1;
-        chapter = 1;
+        chapter = 0;
         section = 1;
     }
 }
