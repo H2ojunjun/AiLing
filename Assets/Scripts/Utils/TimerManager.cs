@@ -82,7 +82,7 @@ namespace AiLing
 
         public Timer GetTimer(int id)
         {
-            if (timerDic.Count == 0 || timerDic == null)
+            if (timerDic.Count == 0 || timerDic == null || id == 0)
             {
                 //Debug.LogError("timerList is null or no element");
                 return null;

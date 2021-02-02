@@ -125,6 +125,9 @@ namespace AiLing
         [OnValueChanged("ChangeEvent", false)]
         public string gameEvent;
 
+        [LabelText("可触发次数(-1表示无限)")]
+        public int evntTime = 1;
+
         //基本数据类型参数和string类型参数
         //[HideLabel]
         [HorizontalGroup("事件参数")]
@@ -155,13 +158,19 @@ namespace AiLing
 
         public void CallEvent()
         {
-            realEvent = Activator.CreateInstance(eventType) as GameEvent;
+            if(realEvent == null)
+                realEvent = Activator.CreateInstance(eventType) as GameEvent;
             InjectPara();
-            InjectUnArtificial();
-            if (paras.Count == 0)
-                realEvent.Excute(null);
+            if(realEvent.leftTimes == int.MinValue)
+                realEvent.leftTimes = evntTime;
+            //InjectUnArtificial();
+            if (realEvent.leftTimes == 0)
+                return;
+            if (listener.unartificialPara.Count == 0)
+                realEvent.Excute(paras.ToArray(), null);
             else
-                realEvent.Excute(paras.ToArray());
+                realEvent.Excute(paras.ToArray(),listener.unartificialPara);
+            realEvent.leftTimes--;
         }
 
         private void ChangeEvent()
@@ -181,11 +190,13 @@ namespace AiLing
             }
             else
             {
+                normalPara.Clear();
                 for (int i = 0; i < eventInfo.parameterNum; i++)
                 {
                     ParaInfo<string> info = new ParaInfo<string>(eventInfo.paraNames[i]);
                     normalPara.Add(info);
                 }
+                objPara.Clear();
                 for (int i = 0; i < eventInfo.gameobjectNum; i++)
                 {
                     ParaInfo<GameObject> info = new ParaInfo<GameObject>(eventInfo.gameObjNames[i]);
@@ -219,6 +230,8 @@ namespace AiLing
         /// </summary>
         public void InjectPara()
         {
+            if (paras.Count > 0)
+                return;
             //List<object> paraList = new List<object>();
             paras.Clear();
             foreach (var item in normalPara)
@@ -231,15 +244,17 @@ namespace AiLing
                 object o = item.parameter;
                 paras.Add(o);
             }
-            foreach(var para in paras)
-                Debug.Log(para);
+            if (paras.Count == 0)
+                paras = null;
+            //foreach(var para in paras)
+            //    Debug.Log(para);
         }
 
-        public void InjectUnArtificial()
-        {
-            if (isUnArtificial)
-                paras.AddRange(listener.unartificialPara);
-        }
+        //public void InjectUnArtificial()
+        //{
+        //    if (isUnArtificial)
+        //        paras.Add(listener.unartificialPara);
+        //}
 
         public object GetNormalPara(string paraNameType,string para)
         {
@@ -280,6 +295,36 @@ namespace AiLing
                 eventType = eventInfo.eventType;
                 isUnArtificial = eventInfo.isUnArtificial;
                 Debug.Log("eventType" + eventType.Name);
+
+                Dictionary<string, string> tempNormalDic = new Dictionary<string, string>();
+                foreach(var item in normalPara)
+                {
+                    tempNormalDic.Add(item.paraNameType, item.parameter);
+                }
+                normalPara.Clear();
+                for (int i = 0; i < eventInfo.parameterNum; i++)
+                {
+                    ParaInfo<string> info = new ParaInfo<string>(eventInfo.paraNames[i]);
+                    string value;
+                    if (tempNormalDic.TryGetValue(eventInfo.paraNames[i], out value))
+                        info.parameter = value;
+                    normalPara.Add(info);
+                }
+
+                Dictionary<string, GameObject> tempGameobjDic = new Dictionary<string, GameObject>();
+                foreach (var item in objPara)
+                {
+                    tempGameobjDic.Add(item.paraNameType, item.parameter);
+                }
+                objPara.Clear();
+                for (int i = 0; i < eventInfo.gameobjectNum; i++)
+                {
+                    ParaInfo<GameObject> info = new ParaInfo<GameObject>(eventInfo.gameObjNames[i]);
+                    GameObject value;
+                    if (tempGameobjDic.TryGetValue(eventInfo.gameObjNames[i], out value))
+                        info.parameter = value;
+                    objPara.Add(info);
+                }
             }
             else
                 Debug.LogError("刷新失败，EventTypeDic中找不到该事件："+gameEvent);

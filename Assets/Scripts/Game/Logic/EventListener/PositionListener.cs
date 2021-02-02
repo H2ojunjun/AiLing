@@ -9,6 +9,7 @@ namespace AiLing
     {
         private void OnTriggerEnter(Collider other)
         {
+            unartificialPara.Clear();
             this.unartificialPara.Add(other.gameObject.name);
             base.CallEvent();
         }

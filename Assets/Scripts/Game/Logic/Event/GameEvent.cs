@@ -70,9 +70,20 @@ namespace AiLing
         //返回值，如果事件的Call函数被调用后有返回值则保存在此处
         public object[] returns;
 
-        public virtual void Excute(params object[] normalPara)
+        //该事件所剩下的可触发次数,int.MinValue表示该事件还未被设置leftTimes
+        public int leftTimes = int.MinValue;
+
+        public virtual void Excute(object[] normalPara,params object[] unartPara)
         {
             currEvents.Add(this);
+        }
+
+        /// <summary>
+        /// 将该事件从currEvents列表中移除
+        /// </summary>
+        public void EventEnd()
+        {
+            currEvents.Remove(this);
         }
     }
 }

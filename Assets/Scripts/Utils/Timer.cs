@@ -16,6 +16,7 @@ namespace AiLing
     /// </summary>
     public class Timer
     {
+        //参数为float time，该timer所剩余的时间
         private TimeChangeCallBack _timeChange;
         private TimerEndCallBack _timeEnd;
         private TimerStartCallBack _timeStart;
