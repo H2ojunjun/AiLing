@@ -21,10 +21,10 @@ namespace AiLing
         public string[] gameObjNames;
         //是否包含非人为设置参数
         public bool isUnArtificial;
-        public GameEventInfoAttribute(int parameterNum, string eventName, string[] paraNames = null, int gameobjectNum = 0,string[] gameObjNames =null,bool isUnArtificial = false)
+        public GameEventInfoAttribute(string eventName, int parameterNum ,string[] paraNames = null, int gameobjectNum = 0,string[] gameObjNames =null,bool isUnArtificial = false)
         {
-            this.parameterNum = parameterNum;
             this.eventName = eventName;
+            this.parameterNum = parameterNum;
             this.paraNames = paraNames;
             this.gameobjectNum = gameobjectNum;
             this.gameObjNames = gameObjNames;

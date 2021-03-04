@@ -15,10 +15,18 @@ namespace AiLing
         }
     }
 
-    public enum ListenerType
+    //public enum ListenerType
+    //{
+    //    [GameEnum("位置监听器")]
+    //    POS = 1
+    //}
+
+    public enum EMusicName
     {
-        [GameEnum("位置监听器")]
-        POS = 1
+        [GameEnum("背景音乐")]
+        BackGround,
+        [GameEnum("汽车碰撞")]
+        CarCrash,
     }
 }
 

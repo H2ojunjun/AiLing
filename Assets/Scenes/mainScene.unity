@@ -260,7 +260,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &268186059
 GameObject:
@@ -311,8 +311,8 @@ Camera:
   m_GameObject: {fileID: 268186059}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.003921569}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -508,7 +508,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -531,7 +531,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 7.44, z: 0}
 --- !u!1 &732679194
 GameObject:
@@ -772,7 +772,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1679710509
 GameObject:
@@ -827,6 +827,7 @@ MonoBehaviour:
       Data: 
   events:
   - gameEvent: "\u6D4B\u8BD5\u4E8B\u4EF6"
+    evntTime: 1
     normalPara:
     - paraNameType: "\u6D4B\u8BD5\u53C2\u65701:string"
       parameter: "\u6697\u68EE"
@@ -839,11 +840,20 @@ MonoBehaviour:
       parameter: {fileID: 923523673}
     - paraNameType: "\u6E38\u620F\u7269\u4F532"
       parameter: {fileID: 923523673}
-    isUnArtificial: 0
+    isUnArtificial: 1
     listener: {fileID: 1679710510}
-  - gameEvent: "\u6D4B\u8BD5\u4E8B\u4EF62"
-    normalPara: []
-    objPara: []
+  - gameEvent: "\u9ED1\u5C4F"
+    evntTime: 1
+    normalPara:
+    - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+      parameter: 2.0
+    - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+      parameter: 0.5
+    - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+      parameter: 0.5
+    objPara:
+    - paraNameType: "\u706F\u5149"
+      parameter: {fileID: 705507993}
     isUnArtificial: 0
     listener: {fileID: 1679710510}
 --- !u!65 &1679710511
@@ -882,15 +892,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.955
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.z

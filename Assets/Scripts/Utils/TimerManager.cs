@@ -7,7 +7,10 @@ namespace AiLing
 {
     public class TimerManager : MonoSingleton<TimerManager>
     {
+        //保存所有Timer的字典
         public Dictionary<int, Timer> timerDic = new Dictionary<int, Timer>();
+        //保存在timerDic中空闲的index
+        public Stack<int> freeTimerIndexes = new Stack<int>();
 
         void Start()
         {
@@ -32,27 +35,13 @@ namespace AiLing
             if (timeEnd != null)
                 timer.timeEnd += timeEnd;
             int timerKey = 0;
-            if (timerDic.Count == 0)
-                timerKey = 1;
+            if (freeTimerIndexes.Count == 0)
+            {
+                timerKey = timerDic.Count + 1;
+            }
             else
             {
-                int maxKey = int.MinValue;
-                foreach (var item in timerDic)
-                {
-                    if (item.Key > maxKey)
-                        maxKey = item.Key;
-                }
-                Timer outTimer = null;
-                for (int key = 1; key <= maxKey; key++)
-                {
-                    if (!timerDic.TryGetValue(key, out outTimer))
-                    {
-                        timerKey = key;
-                        break;
-                    }
-                }
-                if (timerKey == 0)
-                    timerKey = maxKey + 1;
+                timerKey = freeTimerIndexes.Pop();
             }
             timerDic.Add(timerKey, timer);
             timer.Start();
@@ -100,6 +89,7 @@ namespace AiLing
         public void RemoveTimer(int id)
         {
             timerDic.Remove(id);
+            freeTimerIndexes.Push(id);
         }
 
         public void Pause(int id)
@@ -124,7 +114,6 @@ namespace AiLing
             return false;
         }
 
-        // Update is called once per frame
         void Update()
         {
             foreach (var timerItem in timerDic.ToList())

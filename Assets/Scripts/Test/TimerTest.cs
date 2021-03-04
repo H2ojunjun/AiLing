@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimerTest : MonoBehaviour
 {
-    int timer = 0;
+    
     // Start is called before the first frame update
     void Start()
     {

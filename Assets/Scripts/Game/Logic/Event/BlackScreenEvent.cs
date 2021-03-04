@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AiLing
 {
-    [GameEventInfo(3,"黑屏",new string[] {"效果总时间:float","淡入时间:float", "淡出时间:float" },1,new string[] { "灯光"})]
+    [GameEventInfo("黑屏",3,new string[] {"效果总时间:float","淡入时间:float", "淡出时间:float" },1,new string[] { "灯光"})]
     public class BlackScreenEvent : GameEvent
     {
         float blackTime;
