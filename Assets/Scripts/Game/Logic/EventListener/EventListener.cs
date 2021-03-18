@@ -12,20 +12,21 @@ namespace AiLing
     //[ExecuteInEditMode]
     public class EventListener : SerializedMonoBehaviour
     {
-        [OdinSerialize]
         //存储事件的中文名对应的Tuple结构，其中放着事件的参数信息（与GameEventInfoAttribute中的参数信息一致）和事件的类型Type，在运行时可以不必再用string去反射得到Type，优化程序
-        //public static Dictionary<string, Tuple<Type, int, string[], int, string[], bool>> EventTypeDic = new Dictionary<string, Tuple<Type, int, string[], int, string[], bool>>();
         public static Dictionary<string, GameEventInfo> EventTypeDic = new Dictionary<string, GameEventInfo>();
 
         //[TableList(AlwaysExpanded = true)]
-        [LabelText("事件列表")]
-        [ListDrawerSettings(Expanded = true,CustomAddFunction ="AddEventModifier")]
-        public List<EventModifier> events = new List<EventModifier>();
+        [LabelText("条件事件列表")]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddConditionEvent",DraggableItems = false)]
+        public List<ConditionEvents> conditionEvents = new List<ConditionEvents>();
 
         //非人为设置(人为无法预知)的事件参数，由程序判断，如发生碰撞后其他物体的碰撞器等
         [HideInInspector]
         public List<object> unartificialPara;
 
+
+        [HideInInspector]
+        public StatusInfo si;
         /// <summary>
         /// 初始化EventTypeDic
         /// </summary>
@@ -51,8 +52,6 @@ namespace AiLing
                     bool isUnArtificial = attribute.isUnArtificial;
                     EventModifier.eventNames.Add(eventName);
                     GameEventInfo info = new GameEventInfo(type, parameterNum, paraNames, gameobjectNum, gameObjNames, isUnArtificial);
-                    //Tuple<Type, int, string[], int, string[], bool> tup = new Tuple<Type, int, string[], int, string[], bool>(type, parameterNum, paraNames, gameobjectNum, gameObjNames, isUnArtificial);
-                    //EventTypeDic.Add(eventName, tup);
                     EventTypeDic.Add(eventName, info);
                 }
             }
@@ -73,18 +72,28 @@ namespace AiLing
         [GUIColor(0.3f, 1f, 0.5f, 1)]
         private void RefreshAll()
         {
-            foreach (var item in events)
+            foreach (var item in conditionEvents)
             {
-                item.Refresh();
+                foreach (var eve in item.events)
+                {
+                    eve.Refresh();
+                }
+                foreach(var condition in item.conditions)
+                {
+                    condition.Refresh();
+                }
             }
             Debug.Log("刷新成功");
         }
 
         public virtual void CallEvent()
         {
-            foreach(var item in events)
+            foreach (var item in conditionEvents)
             {
-                item.CallEvent();
+                foreach (var eve in item.events)
+                {
+                    eve.CallEvent();
+                }
             }
         }
 
@@ -96,11 +105,145 @@ namespace AiLing
             RefreshAll();
         }
 
+        private void AddConditionEvent()
+        {
+            ConditionEvents condEve = new ConditionEvents();
+            condEve.listener = this;
+            conditionEvents.Add(condEve);
+        }
+    }
+
+    [Serializable]
+    public class ConditionEvents
+    {
+        [HideInInspector]
+        public EventListener listener;
+
+        [HideInInspector]
+        public StatusInfo si;
+
+        [LabelText("条件列表")]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddCondition",DraggableItems = false)]
+        public List<Condition> conditions = new List<Condition>();
+
+        [LabelText("事件列表")]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventModifier",DraggableItems =false)]
+        public List<EventModifier> events = new List<EventModifier>();
+
+        //[LabelText("是否改变状态值")]
+        //public bool isChangeStatus;
+
+        //[ShowIf("isChangeStatus")]
+        //[LabelText("状态类型")]
+        //[ValueDropdown("")]
+        //public string statusType;
+
+        //[ShowIf("isChangeStatus")]
+        //[LabelText("新值")]
+        //public string value;
+
+        //public static ValueDropdownList<string> statusCNNames = StatusInfo.statusCNNames;
+
         private void AddEventModifier()
         {
             EventModifier mod = new EventModifier();
-            mod.listener = this;
+            mod.listener = listener;
             events.Add(mod);
+        }
+
+        private void AddCondition()
+        {
+            if (si == null)
+                si = listener.GetComponent<StatusInfo>();
+            if (si == null)
+                return;
+            Condition cod = new Condition(si);
+            conditions.Add(cod);
+        }
+    }
+
+    [Serializable]
+    public class Condition
+    {
+        [HideInInspector]
+        public StatusInfo si;
+
+        [ValueDropdown("statusCNNames")]
+        [OnValueChanged("OnChangeStatus")]
+        [HorizontalGroup("condition",Width =140, LabelWidth = 50)]
+        [BoxGroup("condition/当前状态")]
+        [HideLabel]
+        public string currStatus;
+
+        [ValueDropdown("OperationNames")]
+        [HorizontalGroup("condition", Width = 120,LabelWidth = 20)]
+        [BoxGroup("condition/操作符")]
+        [HideLabel]
+        public EOperation operation;
+
+        [ValueDropdown("specificStatus")]
+        [HorizontalGroup("condition", Width =90,LabelWidth = 10)]
+        [BoxGroup("condition/值")]
+        [HideLabel]
+        public int value;
+
+        [HideInInspector]
+        [NonSerialized]
+        [OdinSerialize]
+        public ValueDropdownList<string> statusCNNames = StatusInfo.statusCNNames;
+
+        [HideInInspector]
+        [NonSerialized]
+        [OdinSerialize]
+        public ValueDropdownList<int> specificStatus = new ValueDropdownList<int>();
+
+        [NonSerialized]
+        [OdinSerialize]
+        public ValueDropdownList<EOperation> OperationNames = new ValueDropdownList<EOperation>
+        {
+            { "大于",EOperation.Bigger},
+            {"大于等于",EOperation.BiggerEqual},
+            {"等于",EOperation.Equal},
+            { "小于",EOperation.Lower},
+            { "小于等于",EOperation.LowerEqual},
+        };
+
+        private void OnChangeStatus()
+        {
+            statusCNNames = StatusInfo.statusCNNames;
+            foreach (var si in si.statusInfoes)
+            {
+                if (si.status == currStatus)
+                {
+                    specificStatus = si.specificStatus;
+                }
+            }
+        }
+
+        private void InitOperations()
+        {
+            OperationNames = new ValueDropdownList<EOperation>();
+            Type t = typeof(EOperation);
+            FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (var field in fields)
+            {
+                var attris = Attribute.GetCustomAttribute(field, typeof(GameEnumAttribute), false) as GameEnumAttribute;
+                string name = attris.CNName;
+                var enumValue = (EOperation)field.GetValue(null);
+                OperationNames.Add(name, enumValue);
+            }
+        }
+
+        public void Refresh()
+        {
+            OnChangeStatus();
+            InitOperations();
+            si.Refresh();
+        }
+
+        public Condition(StatusInfo si)
+        {
+            this.si = si;
         }
     }
 
@@ -130,20 +273,20 @@ namespace AiLing
 
         //基本数据类型参数和string类型参数
         //[HideLabel]
-        [HorizontalGroup("事件参数")]
+        [HorizontalGroup("事件参数",Width =150,LabelWidth =100)]
         [LabelText("普通参数")]
         //[VerticalGroup("普通参数")]
         //[TableColumnWidth(200)]
-        [ListDrawerSettings(Expanded = true, HideAddButton = true,HideRemoveButton =true)]
+        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true, DraggableItems = false)]
         public List<ParaInfo<string>> normalPara = new List<ParaInfo<string>>();
 
         //gameobject类型参数
         //[HideLabel]
-        [HorizontalGroup("事件参数")]
+        [HorizontalGroup("事件参数",Width =200,LabelWidth =50)]
         [LabelText("游戏物体参数")]
         //[VerticalGroup("游戏物体参数")]
         //[TableColumnWidth(200)]
-        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true)]
+        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true,DraggableItems = false)]
         public List<ParaInfo<GameObject>> objPara = new List<ParaInfo<GameObject>>();
 
         [HideInInspector]
@@ -158,18 +301,18 @@ namespace AiLing
 
         public void CallEvent()
         {
-            if(realEvent == null)
+            if (realEvent == null)
                 realEvent = Activator.CreateInstance(eventType) as GameEvent;
             InjectPara();
-            if(realEvent.leftTimes == int.MinValue)
-                realEvent.leftTimes = evntTime;
-            //InjectUnArtificial();
             if (realEvent.leftTimes == 0)
                 return;
+            if (realEvent.leftTimes == int.MinValue)
+                realEvent.leftTimes = evntTime;
+            //InjectUnArtificial();
             if (listener.unartificialPara.Count == 0)
                 realEvent.Excute(paras.ToArray(), null);
             else
-                realEvent.Excute(paras.ToArray(),listener.unartificialPara);
+                realEvent.Excute(paras.ToArray(), listener.unartificialPara);
             realEvent.leftTimes--;
         }
 
@@ -180,8 +323,6 @@ namespace AiLing
                 Debug.LogError("请选择事件名！");
                 return;
             }
-            //normalPara.Clear();
-            //Tuple<Type, int, string[], int, string[], bool> eventInfo;
             GameEventInfo eventInfo;
             if (!EventListener.EventTypeDic.TryGetValue(gameEvent, out eventInfo))
             {
@@ -232,14 +373,13 @@ namespace AiLing
         {
             if (paras.Count > 0)
                 return;
-            //List<object> paraList = new List<object>();
             paras.Clear();
             foreach (var item in normalPara)
             {
                 object o = GetNormalPara(item.paraNameType, item.parameter);
                 paras.Add(o);
             }
-            foreach(var item in objPara)
+            foreach (var item in objPara)
             {
                 object o = item.parameter;
                 paras.Add(o);
@@ -256,7 +396,7 @@ namespace AiLing
         //        paras.Add(listener.unartificialPara);
         //}
 
-        public object GetNormalPara(string paraNameType,string para)
+        public object GetNormalPara(string paraNameType, string para)
         {
             string[] nameType = paraNameType.Split(':');
             switch (nameType[1])
@@ -288,7 +428,6 @@ namespace AiLing
         {
             if (string.IsNullOrEmpty(gameEvent))
                 return;
-            //Tuple<Type, int, string[], int, string[], bool> tup;
             GameEventInfo eventInfo;
             if (EventListener.EventTypeDic.TryGetValue(gameEvent, out eventInfo))
             {
@@ -297,7 +436,7 @@ namespace AiLing
                 Debug.Log("eventType" + eventType.Name);
 
                 Dictionary<string, string> tempNormalDic = new Dictionary<string, string>();
-                foreach(var item in normalPara)
+                foreach (var item in normalPara)
                 {
                     tempNormalDic.Add(item.paraNameType, item.parameter);
                 }
@@ -327,7 +466,7 @@ namespace AiLing
                 }
             }
             else
-                Debug.LogError("刷新失败，EventTypeDic中找不到该事件："+gameEvent);
+                Debug.LogError("刷新失败，EventTypeDic中找不到该事件：" + gameEvent);
         }
     }
 
@@ -350,7 +489,7 @@ namespace AiLing
             switch (t.Name)
             {
                 case "String":
-                     return EditorGUILayout.TextField(paraNameType, temp as string) as T;
+                    return EditorGUILayout.TextField(paraNameType, temp as string) as T;
                 case "GameObject":
                     return EditorGUILayout.ObjectField(paraNameType, temp as GameObject, typeof(GameObject), true) as T;
                 default:

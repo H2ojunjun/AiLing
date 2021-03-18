@@ -27,9 +27,9 @@ namespace AiLing
 
         private void FadeBlack(float time)
         {
-            if (blackTime - time < fadeIn)
+            if (blackTime - time < fadeIn && fadeIn != 0)
                 light.intensity = 1 - (blackTime - time) / fadeIn;
-            else if (time < fadeOut)
+            else if (time < fadeOut && fadeOut != 0)
                 light.intensity = 1 - time / fadeOut;
             else
                 light.intensity = 0;
