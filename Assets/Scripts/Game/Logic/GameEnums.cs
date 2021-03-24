@@ -11,7 +11,7 @@ namespace AiLing
         public string CNName;
 
         public Type enumType;
-        public GameEnumAttribute(string CNName,Type enumType=null)
+        public GameEnumAttribute(string CNName, Type enumType = null)
         {
             this.CNName = CNName;
             this.enumType = enumType;
@@ -40,10 +40,24 @@ namespace AiLing
         LowerEqual,
     }
 
+    public enum EGate
+    {
+        [GameEnum("无")]
+        None = 0,
+        [GameEnum("与")]
+        And = 1,
+        [GameEnum("或")]
+        Or,
+        [GameEnum("异或")]
+        XOr,
+        [GameEnum("同或")]
+        WithOr,
+    }
+
     public enum EStatus
     {
-        [GameEnum("两态开关",typeof(EDoubleSwitch))]
-        EDoubleSwitch,
+        [GameEnum("两态开关", typeof(EDoubleSwitch))]
+        EDoubleSwitch = 1,
         [GameEnum("三态电梯", typeof(EElevator3))]
         EElevator3,
     }
@@ -51,7 +65,7 @@ namespace AiLing
     public enum EDoubleSwitch
     {
         [GameEnum("开")]
-        Open,
+        Open = 1,
         [GameEnum("关")]
         Close
     }
@@ -59,7 +73,7 @@ namespace AiLing
     public enum EElevator3
     {
         [GameEnum("1")]
-        One=1,
+        One = 1,
         [GameEnum("2")]
         Two,
         [GameEnum("3")]

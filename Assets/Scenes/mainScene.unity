@@ -211,12 +211,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181678}
-  m_LocalRotation: {x: 0, y: 0, z: -0.008726465, w: 0.999962}
-  m_LocalPosition: {x: 7.01, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 31.88, z: 7.74}
+  m_LocalRotation: {x: -0, y: -0, z: -0.008726465, w: 0.999962}
+  m_LocalPosition: {x: 21.17, y: 11.18, z: 1.3404927}
+  m_LocalScale: {x: 1, y: 31.879997, z: 7.7400002}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1}
 --- !u!1 &165147672
 GameObject:
@@ -345,6 +345,36 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &338414019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 338414020}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &338414020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338414019}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 986369551}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &652982755
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +696,83 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &902110246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902110249}
+  - component: {fileID: 902110248}
+  - component: {fileID: 902110247}
+  m_Layer: 0
+  m_Name: Terrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!154 &902110247
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902110246}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 877d1689830e8604db310be717eb8e75, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &902110248
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902110246}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 877d1689830e8604db310be717eb8e75, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!4 &902110249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902110246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -81.2, y: -81.7, z: -103.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &923523673 stripped
 GameObject:
@@ -757,9 +863,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.710003, y: 1.9054601, z: 1.9391365}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 338414020}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294128744
 GameObject:
@@ -802,7 +909,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378710037
 GameObject:
@@ -930,7 +1037,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1378710040
 MonoBehaviour:
@@ -979,23 +1086,454 @@ MonoBehaviour:
   - listener: {fileID: 1679710510}
     si: {fileID: 1679710513}
     conditions:
-    - si: {fileID: 1679710513}
-      currStatus: EDoubleSwitch
-      operation: 4
-      value: 0
+    - owner:
+        listener: {fileID: 1679710510}
+        si: {fileID: 1679710513}
+        conditions:
+        - owner:
+            listener: {fileID: 1679710510}
+            si: {fileID: 1679710513}
+            conditions:
+            - owner:
+                listener: {fileID: 1679710510}
+                si: {fileID: 1679710513}
+                conditions:
+                - owner:
+                    listener: {fileID: 1679710510}
+                    si: {fileID: 1679710513}
+                    conditions:
+                    - currStatus: "\u4E24\u6001\u5F00\u5173"
+                      operation: 1
+                      value: 1
+                      nextValue: 2
+                      gate: 2
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    events:
+                    - gameEvent: "\u9ED1\u5C4F"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                        parameter: 
+                      objPara:
+                      - paraNameType: "\u706F\u5149"
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E24\u6001\u5F00\u5173"
+                  operation: 1
+                  value: 1
+                  nextValue: 2
+                  gate: 2
+                  statusCNNames:
+                  - "\u4E24\u6001\u5F00\u5173"
+                  - "\u4E09\u6001\u7535\u68AF"
+                events:
+                - gameEvent: "\u9ED1\u5C4F"
+                  evntTime: 1
+                  normalPara:
+                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                    parameter: 
+                  objPara:
+                  - paraNameType: "\u706F\u5149"
+                    parameter: {fileID: 0}
+                  isUnArtificial: 0
+                  listener: {fileID: 1679710510}
+              currStatus: "\u4E24\u6001\u5F00\u5173"
+              operation: 1
+              value: 1
+              nextValue: 2
+              gate: 2
+              statusCNNames:
+              - "\u4E24\u6001\u5F00\u5173"
+              - "\u4E09\u6001\u7535\u68AF"
+            events:
+            - gameEvent: "\u9ED1\u5C4F"
+              evntTime: 1
+              normalPara:
+              - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                parameter: 
+              - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                parameter: 
+              - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                parameter: 
+              objPara:
+              - paraNameType: "\u706F\u5149"
+                parameter: {fileID: 0}
+              isUnArtificial: 0
+              listener: {fileID: 1679710510}
+          currStatus: "\u4E24\u6001\u5F00\u5173"
+          operation: 1
+          value: 1
+          nextValue: 2
+          gate: 2
+          statusCNNames:
+          - "\u4E24\u6001\u5F00\u5173"
+          - "\u4E09\u6001\u7535\u68AF"
+        events:
+        - gameEvent: "\u9ED1\u5C4F"
+          evntTime: 1
+          normalPara:
+          - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+            parameter: 
+          - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+            parameter: 
+          - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+            parameter: 
+          objPara:
+          - paraNameType: "\u706F\u5149"
+            parameter: {fileID: 0}
+          isUnArtificial: 0
+          listener: {fileID: 1679710510}
+      currStatus: "\u4E24\u6001\u5F00\u5173"
+      operation: 2
+      value: 1
+      nextValue: 2
+      gate: 1
+      statusCNNames:
+      - "\u4E24\u6001\u5F00\u5173"
+      - "\u4E09\u6001\u7535\u68AF"
+    - owner:
+        listener: {fileID: 1679710510}
+        si: {fileID: 1679710513}
+        conditions:
+        - owner:
+            listener: {fileID: 1679710510}
+            si: {fileID: 1679710513}
+            conditions:
+            - owner:
+                listener: {fileID: 1679710510}
+                si: {fileID: 1679710513}
+                conditions:
+                - owner:
+                    listener: {fileID: 1679710510}
+                    si: {fileID: 1679710513}
+                    conditions:
+                    - currStatus: "\u4E24\u6001\u5F00\u5173"
+                      operation: 1
+                      value: 1
+                      nextValue: 2
+                      gate: 2
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    events:
+                    - gameEvent: "\u9ED1\u5C4F"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                        parameter: 
+                      objPara:
+                      - paraNameType: "\u706F\u5149"
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E24\u6001\u5F00\u5173"
+                  operation: 1
+                  value: 1
+                  nextValue: 2
+                  gate: 2
+                  statusCNNames:
+                  - "\u4E24\u6001\u5F00\u5173"
+                  - "\u4E09\u6001\u7535\u68AF"
+                events:
+                - gameEvent: "\u9ED1\u5C4F"
+                  evntTime: 1
+                  normalPara:
+                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                    parameter: 
+                  objPara:
+                  - paraNameType: "\u706F\u5149"
+                    parameter: {fileID: 0}
+                  isUnArtificial: 0
+                  listener: {fileID: 1679710510}
+              currStatus: "\u4E24\u6001\u5F00\u5173"
+              operation: 1
+              value: 1
+              nextValue: 2
+              gate: 2
+              statusCNNames:
+              - "\u4E24\u6001\u5F00\u5173"
+              - "\u4E09\u6001\u7535\u68AF"
+            events:
+            - gameEvent: "\u9ED1\u5C4F"
+              evntTime: 1
+              normalPara:
+              - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                parameter: 
+              - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                parameter: 
+              - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                parameter: 
+              objPara:
+              - paraNameType: "\u706F\u5149"
+                parameter: {fileID: 0}
+              isUnArtificial: 0
+              listener: {fileID: 1679710510}
+          currStatus: "\u4E24\u6001\u5F00\u5173"
+          operation: 2
+          value: 2
+          nextValue: 1
+          gate: 1
+          statusCNNames:
+          - "\u4E24\u6001\u5F00\u5173"
+          - "\u4E09\u6001\u7535\u68AF"
+        - owner:
+            listener: {fileID: 1679710510}
+            si: {fileID: 1679710513}
+            conditions:
+            - owner:
+                listener: {fileID: 1679710510}
+                si: {fileID: 1679710513}
+                conditions:
+                - owner:
+                    listener: {fileID: 1679710510}
+                    si: {fileID: 1679710513}
+                    conditions:
+                    - currStatus: "\u4E24\u6001\u5F00\u5173"
+                      operation: 1
+                      value: 1
+                      nextValue: 2
+                      gate: 2
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    events:
+                    - gameEvent: "\u9ED1\u5C4F"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                        parameter: 
+                      objPara:
+                      - paraNameType: "\u706F\u5149"
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E24\u6001\u5F00\u5173"
+                  operation: 1
+                  value: 1
+                  nextValue: 2
+                  gate: 2
+                  statusCNNames:
+                  - "\u4E24\u6001\u5F00\u5173"
+                  - "\u4E09\u6001\u7535\u68AF"
+                events:
+                - gameEvent: "\u9ED1\u5C4F"
+                  evntTime: 1
+                  normalPara:
+                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                    parameter: 
+                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                    parameter: 
+                  objPara:
+                  - paraNameType: "\u706F\u5149"
+                    parameter: {fileID: 0}
+                  isUnArtificial: 0
+                  listener: {fileID: 1679710510}
+              currStatus: "\u4E24\u6001\u5F00\u5173"
+              operation: 2
+              value: 2
+              nextValue: 1
+              gate: 1
+              statusCNNames:
+              - "\u4E24\u6001\u5F00\u5173"
+              - "\u4E09\u6001\u7535\u68AF"
+            - owner:
+                listener: {fileID: 1679710510}
+                si: {fileID: 1679710513}
+                conditions:
+                - owner:
+                    listener: {fileID: 1679710510}
+                    si: {fileID: 1679710513}
+                    conditions:
+                    - currStatus: "\u4E24\u6001\u5F00\u5173"
+                      operation: 1
+                      value: 1
+                      nextValue: 2
+                      gate: 2
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    events:
+                    - gameEvent: "\u9ED1\u5C4F"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                        parameter: 
+                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                        parameter: 
+                      objPara:
+                      - paraNameType: "\u706F\u5149"
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E24\u6001\u5F00\u5173"
+                  operation: 2
+                  value: 2
+                  nextValue: 1
+                  gate: 1
+                  statusCNNames:
+                  - "\u4E24\u6001\u5F00\u5173"
+                  - "\u4E09\u6001\u7535\u68AF"
+                - owner:
+                    listener: {fileID: 1679710510}
+                    si: {fileID: 1679710513}
+                    conditions:
+                    - currStatus: "\u4E24\u6001\u5F00\u5173"
+                      operation: 2
+                      value: 2
+                      nextValue: 1
+                      gate: 1
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    - currStatus: "\u4E09\u6001\u7535\u68AF"
+                      operation: 0
+                      value: 1
+                      nextValue: 2
+                      gate: 0
+                      statusCNNames:
+                      - "\u4E24\u6001\u5F00\u5173"
+                      - "\u4E09\u6001\u7535\u68AF"
+                    events:
+                    - gameEvent: "\u9ED1\u5C4F"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                        parameter: 2
+                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                        parameter: 0.5
+                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                        parameter: 0.5
+                      objPara:
+                      - paraNameType: "\u706F\u5149"
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E09\u6001\u7535\u68AF"
+                  operation: 0
+                  value: 1
+                  nextValue: 2
+                  gate: 0
+                  statusCNNames:
+                  - "\u4E24\u6001\u5F00\u5173"
+                  - "\u4E09\u6001\u7535\u68AF"
+                events:
+                - gameEvent: "\u9ED1\u5C4F"
+                  evntTime: 1
+                  normalPara:
+                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                    parameter: 2
+                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                    parameter: 0.5
+                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                    parameter: 0.5
+                  objPara:
+                  - paraNameType: "\u706F\u5149"
+                    parameter: {fileID: 705507993}
+                  isUnArtificial: 0
+                  listener: {fileID: 1679710510}
+              currStatus: "\u4E09\u6001\u7535\u68AF"
+              operation: 0
+              value: 1
+              nextValue: 2
+              gate: 0
+              statusCNNames:
+              - "\u4E24\u6001\u5F00\u5173"
+              - "\u4E09\u6001\u7535\u68AF"
+            events:
+            - gameEvent: "\u9ED1\u5C4F"
+              evntTime: 1
+              normalPara:
+              - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+                parameter: 2
+              - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+                parameter: 0.5
+              - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+                parameter: 0.5
+              objPara:
+              - paraNameType: "\u706F\u5149"
+                parameter: {fileID: 705507993}
+              isUnArtificial: 0
+              listener: {fileID: 1679710510}
+          currStatus: "\u4E09\u6001\u7535\u68AF"
+          operation: 0
+          value: 1
+          nextValue: 2
+          gate: 0
+          statusCNNames:
+          - "\u4E24\u6001\u5F00\u5173"
+          - "\u4E09\u6001\u7535\u68AF"
+        events:
+        - gameEvent: "\u9ED1\u5C4F"
+          evntTime: 1
+          normalPara:
+          - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
+            parameter: 2
+          - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
+            parameter: 0.5
+          - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
+            parameter: 0.5
+          objPara:
+          - paraNameType: "\u706F\u5149"
+            parameter: {fileID: 705507993}
+          isUnArtificial: 0
+          listener: {fileID: 1679710510}
+      currStatus: "\u4E09\u6001\u7535\u68AF"
+      operation: 2
+      value: 2
+      nextValue: 3
+      gate: 0
+      statusCNNames:
+      - "\u4E24\u6001\u5F00\u5173"
+      - "\u4E09\u6001\u7535\u68AF"
     events:
     - gameEvent: "\u9ED1\u5C4F"
       evntTime: 1
       normalPara:
       - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-        parameter: 
+        parameter: 2
       - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-        parameter: 
+        parameter: 0.5
       - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-        parameter: 
+        parameter: 0.5
       objPara:
       - paraNameType: "\u706F\u5149"
-        parameter: {fileID: 0}
+        parameter: {fileID: 705507993}
+      isUnArtificial: 0
+      listener: {fileID: 1679710510}
+    - gameEvent: "\u64AD\u653E\u97F3\u4E50"
+      evntTime: 1
+      normalPara:
+      - paraNameType: "\u58F0\u97F3\u679A\u4E3E\u540D:string"
+        parameter: CarCrash
+      - paraNameType: "\u6B21\u6570:int"
+        parameter: 1
+      - paraNameType: "\u95F4\u9694:float"
+        parameter: 0
+      - paraNameType: "\u5EF6\u8FDF:float"
+        parameter: 0
+      objPara: []
       isUnArtificial: 0
       listener: {fileID: 1679710510}
   si: {fileID: 1679710513}
@@ -1021,10 +1559,10 @@ Transform:
   m_GameObject: {fileID: 1679710509}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.87, y: 11.48, z: 1.3404927}
-  m_LocalScale: {x: 1, y: 26.89, z: 17.58}
+  m_LocalScale: {x: 3.4, y: 27.78, z: 17.58}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1679710513
 MonoBehaviour:
@@ -1038,9 +1576,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc69e9bf0a940aa408e5db37e6605643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status:
-  - status: EElevator3
-    value: 3
+  id: 0
+  statusInfoes:
+  - owner: {fileID: 1679710513}
+    status: EDoubleSwitch
+    statusCN: "\u4E24\u6001\u5F00\u5173"
+    value: 1
+    statusReferences:
+    - CNname: "\u5F00"
+      reference: {fileID: 0}
+    - CNname: "\u5173"
+      reference: {fileID: 0}
+  - owner: {fileID: 1679710513}
+    status: EElevator3
+    statusCN: "\u4E09\u6001\u7535\u68AF"
+    value: 2
+    statusReferences:
+    - CNname: 1
+      reference: {fileID: 0}
+    - CNname: 2
+      reference: {fileID: 0}
+    - CNname: 3
+      reference: {fileID: 0}
+  myStatusCNNames:
+  - "\u4E24\u6001\u5F00\u5173"
+  - "\u4E09\u6001\u7535\u68AF"
 --- !u!1001 &1719361856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1050,7 +1610,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.x

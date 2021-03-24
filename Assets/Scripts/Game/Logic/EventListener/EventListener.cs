@@ -4,20 +4,21 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
 using System.Reflection;
+# if UNITY_EDITOR
 using UnityEditor;
+#endif
 using Sirenix.Serialization;
 
 namespace AiLing
 {
     //[ExecuteInEditMode]
-    public class EventListener : SerializedMonoBehaviour
+    public class EventListener : MonoBehaviour
     {
-        //存储事件的中文名对应的Tuple结构，其中放着事件的参数信息（与GameEventInfoAttribute中的参数信息一致）和事件的类型Type，在运行时可以不必再用string去反射得到Type，优化程序
+        //存储事件的中文名对应的结构，其中放着事件的参数信息（与GameEventInfoAttribute中的参数信息一致）和事件的类型Type，在运行时可以去反射
         public static Dictionary<string, GameEventInfo> EventTypeDic = new Dictionary<string, GameEventInfo>();
 
-        //[TableList(AlwaysExpanded = true)]
         [LabelText("条件事件列表")]
-        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddConditionEvent",DraggableItems = false)]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddConditionEvent", DraggableItems = false)]
         public List<ConditionEvents> conditionEvents = new List<ConditionEvents>();
 
         //非人为设置(人为无法预知)的事件参数，由程序判断，如发生碰撞后其他物体的碰撞器等
@@ -27,9 +28,7 @@ namespace AiLing
 
         [HideInInspector]
         public StatusInfo si;
-        /// <summary>
-        /// 初始化EventTypeDic
-        /// </summary>
+
         [PropertyOrder(0)]
         [PropertySpace]
         [GUIColor(0.3f, 1f, 0.5f, 1)]
@@ -57,17 +56,6 @@ namespace AiLing
             }
         }
 
-        //[Button("注入参数")]
-        //[GUIColor(0.3f, 1f, 0.5f, 1)]
-        //private void InjectParameter()
-        //{
-        //    foreach(var item in events)
-        //    {
-        //        item.InjectPara();
-        //    }
-        //    Debug.Log("注入所有参数成功!");
-        //}
-
         [Button("刷新")]
         [GUIColor(0.3f, 1f, 0.5f, 1)]
         private void RefreshAll()
@@ -78,7 +66,7 @@ namespace AiLing
                 {
                     eve.Refresh();
                 }
-                foreach(var condition in item.conditions)
+                foreach (var condition in item.conditions)
                 {
                     condition.Refresh();
                 }
@@ -90,9 +78,12 @@ namespace AiLing
         {
             foreach (var item in conditionEvents)
             {
-                foreach (var eve in item.events)
+                if (item.GetConditionRealResult())
                 {
-                    eve.CallEvent();
+                    foreach (var eve in item.events)
+                    {
+                        eve.CallEvent();
+                    }
                 }
             }
         }
@@ -119,30 +110,16 @@ namespace AiLing
         [HideInInspector]
         public EventListener listener;
 
-        [HideInInspector]
+        [LabelText("状态")]
         public StatusInfo si;
 
         [LabelText("条件列表")]
-        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddCondition",DraggableItems = false)]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddCondition", DraggableItems = false)]
         public List<Condition> conditions = new List<Condition>();
 
         [LabelText("事件列表")]
-        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventModifier",DraggableItems =false)]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventModifier", DraggableItems = false)]
         public List<EventModifier> events = new List<EventModifier>();
-
-        //[LabelText("是否改变状态值")]
-        //public bool isChangeStatus;
-
-        //[ShowIf("isChangeStatus")]
-        //[LabelText("状态类型")]
-        //[ValueDropdown("")]
-        //public string statusType;
-
-        //[ShowIf("isChangeStatus")]
-        //[LabelText("新值")]
-        //public string value;
-
-        //public static ValueDropdownList<string> statusCNNames = StatusInfo.statusCNNames;
 
         private void AddEventModifier()
         {
@@ -153,12 +130,42 @@ namespace AiLing
 
         private void AddCondition()
         {
-            if (si == null)
-                si = listener.GetComponent<StatusInfo>();
-            if (si == null)
-                return;
-            Condition cod = new Condition(si);
+            Condition cod = new Condition();
+            cod.statusCNNames = si.myStatusCNNames;
+            cod.owner = this;
             conditions.Add(cod);
+        }
+
+        public bool GetConditionRealResult()
+        {
+            bool realResult =false;
+            EGate gate = EGate.None;
+            for(int i=0;i<conditions.Count;i++)
+            {
+                bool result = conditions[i].GetConditionResult();
+                switch (gate)
+                {
+                    case EGate.None:
+                        realResult = result;
+                        break;
+                    case EGate.And:
+                        realResult = realResult && result; 
+                        break;
+                    case EGate.Or:
+                        realResult = realResult || result;
+                        break;
+                    case EGate.XOr:
+                        realResult = realResult != result;
+                        break;
+                    case EGate.WithOr:
+                        realResult = realResult == result;
+                        break;
+                    default:
+                        break;
+                }
+                gate = conditions[i].gate;
+            }
+            return realResult;
         }
     }
 
@@ -166,40 +173,47 @@ namespace AiLing
     public class Condition
     {
         [HideInInspector]
-        public StatusInfo si;
+        public ConditionEvents owner;
 
         [ValueDropdown("statusCNNames")]
         [OnValueChanged("OnChangeStatus")]
-        [HorizontalGroup("condition",Width =140, LabelWidth = 50)]
+        [HorizontalGroup("condition", Width = 80, LabelWidth = 50)]
         [BoxGroup("condition/当前状态")]
         [HideLabel]
         public string currStatus;
 
         [ValueDropdown("OperationNames")]
-        [HorizontalGroup("condition", Width = 120,LabelWidth = 20)]
+        [HorizontalGroup("condition", Width = 80, LabelWidth = 20)]
         [BoxGroup("condition/操作符")]
         [HideLabel]
         public EOperation operation;
 
         [ValueDropdown("specificStatus")]
-        [HorizontalGroup("condition", Width =90,LabelWidth = 10)]
+        [HorizontalGroup("condition", Width = 40, LabelWidth = 10)]
         [BoxGroup("condition/值")]
         [HideLabel]
         public int value;
 
-        [HideInInspector]
-        [NonSerialized]
-        [OdinSerialize]
-        public ValueDropdownList<string> statusCNNames = StatusInfo.statusCNNames;
+        [ValueDropdown("specificStatus")]
+        [HorizontalGroup("condition", Width = 80, LabelWidth = 10)]
+        [BoxGroup("condition/触发后的值")]
+        [HideLabel]
+        public int nextValue;
+
+        [ValueDropdown("gateNames")]
+        [HorizontalGroup("condition", Width = 60, LabelWidth = 10)]
+        [BoxGroup("condition/连接符")]
+        [HideLabel]
+        public EGate gate;
 
         [HideInInspector]
-        [NonSerialized]
-        [OdinSerialize]
-        public ValueDropdownList<int> specificStatus = new ValueDropdownList<int>();
+        public List<string> statusCNNames;
 
-        [NonSerialized]
-        [OdinSerialize]
-        public ValueDropdownList<EOperation> OperationNames = new ValueDropdownList<EOperation>
+        private ValueDropdownList<int> specificStatus = new ValueDropdownList<int>();
+
+        private ValueDropdownList<EGate> gateNames = new ValueDropdownList<EGate>();
+
+        private ValueDropdownList<EOperation> OperationNames = new ValueDropdownList<EOperation>
         {
             { "大于",EOperation.Bigger},
             {"大于等于",EOperation.BiggerEqual},
@@ -210,13 +224,27 @@ namespace AiLing
 
         private void OnChangeStatus()
         {
-            statusCNNames = StatusInfo.statusCNNames;
-            foreach (var si in si.statusInfoes)
+            statusCNNames = owner.si.myStatusCNNames;
+            foreach (var sta in owner.si.statusInfoes)
             {
-                if (si.status == currStatus)
+                if (sta.statusCN == currStatus)
                 {
-                    specificStatus = si.specificStatus;
+                    specificStatus = sta.specificStatus;
                 }
+            }
+        }
+
+        private void InitAllGate()
+        {
+            gateNames = new ValueDropdownList<EGate>();
+            Type t = typeof(EGate);
+            FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (var field in fields)
+            {
+                var attris = Attribute.GetCustomAttribute(field, typeof(GameEnumAttribute), false) as GameEnumAttribute;
+                string name = attris.CNName;
+                var enumValue = (EGate)field.GetValue(null);
+                gateNames.Add(name, enumValue);
             }
         }
 
@@ -234,16 +262,46 @@ namespace AiLing
             }
         }
 
-        public void Refresh()
+        public bool GetConditionResult()
         {
-            OnChangeStatus();
-            InitOperations();
-            si.Refresh();
+            if (owner.si == null)
+            {
+                Debug.LogError("没有为该条件列表绑定statusInfo");
+                return false;
+            }
+            foreach (var item in owner.si.statusInfoes)
+            {
+                if (item.statusCN == currStatus)
+                {
+                    switch (operation)
+                    {
+                        case EOperation.Bigger:
+                            return item.value > value;
+                        case EOperation.BiggerEqual:
+                            return item.value >= value;
+                        case EOperation.Equal:
+                            return item.value == value;
+                        case EOperation.Lower:
+                            return item.value < value;
+                        case EOperation.LowerEqual:
+                            return item.value <= value;
+                        default:
+                            return false;
+                    }
+                }
+            }
+            Debug.LogError("绑定的statusInfo中没有与当前状态值相同的状态");
+            return false;
         }
 
-        public Condition(StatusInfo si)
+        public void Refresh()
         {
-            this.si = si;
+#if UNITY_EDITOR
+            OnChangeStatus();
+            InitOperations();
+            InitAllGate();
+            owner.si.Refresh();
+#endif
         }
     }
 
@@ -264,7 +322,6 @@ namespace AiLing
         [LabelText("事件名")]
         [VerticalGroup("事件名")]
         [ValueDropdown("eventNames")]
-        //[TableColumnWidth(50)]
         [OnValueChanged("ChangeEvent", false)]
         public string gameEvent;
 
@@ -273,7 +330,7 @@ namespace AiLing
 
         //基本数据类型参数和string类型参数
         //[HideLabel]
-        [HorizontalGroup("事件参数",Width =150,LabelWidth =100)]
+        [HorizontalGroup("事件参数", Width = 150, LabelWidth = 100)]
         [LabelText("普通参数")]
         //[VerticalGroup("普通参数")]
         //[TableColumnWidth(200)]
@@ -282,11 +339,11 @@ namespace AiLing
 
         //gameobject类型参数
         //[HideLabel]
-        [HorizontalGroup("事件参数",Width =200,LabelWidth =50)]
+        [HorizontalGroup("事件参数", Width = 200, LabelWidth = 50)]
         [LabelText("游戏物体参数")]
         //[VerticalGroup("游戏物体参数")]
         //[TableColumnWidth(200)]
-        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true,DraggableItems = false)]
+        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true, DraggableItems = false)]
         public List<ParaInfo<GameObject>> objPara = new List<ParaInfo<GameObject>>();
 
         [HideInInspector]
@@ -344,26 +401,6 @@ namespace AiLing
                     objPara.Add(info);
                 }
             }
-            //if (!EventListener.EventTypeDic.TryGetValue(gameEvent, out eventInfo))
-            //{
-            //    Debug.LogError("找不到该事件，请联系巫师");
-            //    return;
-            //}
-            //else
-            //{
-            //    isUnArtificial = eventInfo.Item6;
-            //    eventType = eventInfo.Item1;
-            //    for (int i = 0; i < eventInfo.Item2; i++)
-            //    {
-            //        ParaInfo<string> info = new ParaInfo<string>(eventInfo.Item3[i]);
-            //        normalPara.Add(info);
-            //    }
-            //    for (int i = 0; i < eventInfo.Item4; i++)
-            //    {
-            //        ParaInfo<GameObject> info = new ParaInfo<GameObject>(eventInfo.Item5[i]);
-            //        objPara.Add(info);
-            //    }
-            //}
         }
 
         /// <summary>
@@ -386,15 +423,7 @@ namespace AiLing
             }
             if (paras.Count == 0)
                 paras = null;
-            //foreach(var para in paras)
-            //    Debug.Log(para);
         }
-
-        //public void InjectUnArtificial()
-        //{
-        //    if (isUnArtificial)
-        //        paras.Add(listener.unartificialPara);
-        //}
 
         public object GetNormalPara(string paraNameType, string para)
         {
@@ -424,6 +453,9 @@ namespace AiLing
             }
         }
 
+        /// <summary>
+        /// 用于编辑器模式下当事件参数信息更改时调用，刷新inspector参数列表
+        /// </summary>
         public void Refresh()
         {
             if (string.IsNullOrEmpty(gameEvent))
@@ -434,7 +466,7 @@ namespace AiLing
                 eventType = eventInfo.eventType;
                 isUnArtificial = eventInfo.isUnArtificial;
                 Debug.Log("eventType" + eventType.Name);
-
+#if UNITY_EDITOR
                 Dictionary<string, string> tempNormalDic = new Dictionary<string, string>();
                 foreach (var item in normalPara)
                 {
@@ -464,9 +496,11 @@ namespace AiLing
                         info.parameter = value;
                     objPara.Add(info);
                 }
+#endif
             }
             else
                 Debug.LogError("刷新失败，EventTypeDic中找不到该事件：" + gameEvent);
+
         }
     }
 
@@ -477,11 +511,11 @@ namespace AiLing
         [HideInInspector]
         public string paraNameType;
 
-        [DelayedProperty]
+        //[DelayedProperty]
         [CustomValueDrawer("ParameterLable")]
-        [OnValueChanged("OnParamterChange")]
         public T parameter;
 
+#if UNITY_EDITOR
         public T ParameterLable(T temp, GUIContent label)
         {
             GUIContent pLable = new GUIContent(paraNameType);
@@ -496,15 +530,11 @@ namespace AiLing
                     return null;
             }
         }
+#endif
 
         public ParaInfo(string info)
         {
             this.paraNameType = info;
-        }
-
-        private void OnParamterChange()
-        {
-            Debug.Log(parameter);
         }
     }
 }
