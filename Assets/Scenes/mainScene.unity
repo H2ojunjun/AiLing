@@ -1103,315 +1103,9 @@ MonoBehaviour:
                     si: {fileID: 1679710513}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 1
-                      value: 1
-                      nextValue: 2
-                      gate: 2
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - gameEvent: "\u9ED1\u5C4F"
-                      evntTime: 1
-                      normalPara:
-                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                        parameter: 
-                      objPara:
-                      - paraNameType: "\u706F\u5149"
-                      isUnArtificial: 0
-                      listener: {fileID: 1679710510}
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 1
-                  value: 1
-                  nextValue: 2
-                  gate: 2
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - gameEvent: "\u9ED1\u5C4F"
-                  evntTime: 1
-                  normalPara:
-                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                    parameter: 
-                  objPara:
-                  - paraNameType: "\u706F\u5149"
-                    parameter: {fileID: 0}
-                  isUnArtificial: 0
-                  listener: {fileID: 1679710510}
-              currStatus: "\u4E24\u6001\u5F00\u5173"
-              operation: 1
-              value: 1
-              nextValue: 2
-              gate: 2
-              statusCNNames:
-              - "\u4E24\u6001\u5F00\u5173"
-              - "\u4E09\u6001\u7535\u68AF"
-            events:
-            - gameEvent: "\u9ED1\u5C4F"
-              evntTime: 1
-              normalPara:
-              - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                parameter: 
-              - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                parameter: 
-              - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                parameter: 
-              objPara:
-              - paraNameType: "\u706F\u5149"
-                parameter: {fileID: 0}
-              isUnArtificial: 0
-              listener: {fileID: 1679710510}
-          currStatus: "\u4E24\u6001\u5F00\u5173"
-          operation: 1
-          value: 1
-          nextValue: 2
-          gate: 2
-          statusCNNames:
-          - "\u4E24\u6001\u5F00\u5173"
-          - "\u4E09\u6001\u7535\u68AF"
-        events:
-        - gameEvent: "\u9ED1\u5C4F"
-          evntTime: 1
-          normalPara:
-          - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-            parameter: 
-          - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-            parameter: 
-          - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-            parameter: 
-          objPara:
-          - paraNameType: "\u706F\u5149"
-            parameter: {fileID: 0}
-          isUnArtificial: 0
-          listener: {fileID: 1679710510}
-      currStatus: "\u4E24\u6001\u5F00\u5173"
-      operation: 2
-      value: 1
-      nextValue: 2
-      gate: 1
-      statusCNNames:
-      - "\u4E24\u6001\u5F00\u5173"
-      - "\u4E09\u6001\u7535\u68AF"
-    - owner:
-        listener: {fileID: 1679710510}
-        si: {fileID: 1679710513}
-        conditions:
-        - owner:
-            listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
-            conditions:
-            - owner:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 1
-                      value: 1
-                      nextValue: 2
-                      gate: 2
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - gameEvent: "\u9ED1\u5C4F"
-                      evntTime: 1
-                      normalPara:
-                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                        parameter: 
-                      objPara:
-                      - paraNameType: "\u706F\u5149"
-                      isUnArtificial: 0
-                      listener: {fileID: 1679710510}
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 1
-                  value: 1
-                  nextValue: 2
-                  gate: 2
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - gameEvent: "\u9ED1\u5C4F"
-                  evntTime: 1
-                  normalPara:
-                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                    parameter: 
-                  objPara:
-                  - paraNameType: "\u706F\u5149"
-                    parameter: {fileID: 0}
-                  isUnArtificial: 0
-                  listener: {fileID: 1679710510}
-              currStatus: "\u4E24\u6001\u5F00\u5173"
-              operation: 1
-              value: 1
-              nextValue: 2
-              gate: 2
-              statusCNNames:
-              - "\u4E24\u6001\u5F00\u5173"
-              - "\u4E09\u6001\u7535\u68AF"
-            events:
-            - gameEvent: "\u9ED1\u5C4F"
-              evntTime: 1
-              normalPara:
-              - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                parameter: 
-              - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                parameter: 
-              - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                parameter: 
-              objPara:
-              - paraNameType: "\u706F\u5149"
-                parameter: {fileID: 0}
-              isUnArtificial: 0
-              listener: {fileID: 1679710510}
-          currStatus: "\u4E24\u6001\u5F00\u5173"
-          operation: 2
-          value: 2
-          nextValue: 1
-          gate: 1
-          statusCNNames:
-          - "\u4E24\u6001\u5F00\u5173"
-          - "\u4E09\u6001\u7535\u68AF"
-        - owner:
-            listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
-            conditions:
-            - owner:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 1
-                      value: 1
-                      nextValue: 2
-                      gate: 2
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - gameEvent: "\u9ED1\u5C4F"
-                      evntTime: 1
-                      normalPara:
-                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                        parameter: 
-                      objPara:
-                      - paraNameType: "\u706F\u5149"
-                      isUnArtificial: 0
-                      listener: {fileID: 1679710510}
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 1
-                  value: 1
-                  nextValue: 2
-                  gate: 2
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - gameEvent: "\u9ED1\u5C4F"
-                  evntTime: 1
-                  normalPara:
-                  - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                    parameter: 
-                  - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                    parameter: 
-                  objPara:
-                  - paraNameType: "\u706F\u5149"
-                    parameter: {fileID: 0}
-                  isUnArtificial: 0
-                  listener: {fileID: 1679710510}
-              currStatus: "\u4E24\u6001\u5F00\u5173"
-              operation: 2
-              value: 2
-              nextValue: 1
-              gate: 1
-              statusCNNames:
-              - "\u4E24\u6001\u5F00\u5173"
-              - "\u4E09\u6001\u7535\u68AF"
-            - owner:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 1
-                      value: 1
-                      nextValue: 2
-                      gate: 2
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - gameEvent: "\u9ED1\u5C4F"
-                      evntTime: 1
-                      normalPara:
-                      - paraNameType: "\u6548\u679C\u603B\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u5165\u65F6\u95F4:float"
-                        parameter: 
-                      - paraNameType: "\u6DE1\u51FA\u65F6\u95F4:float"
-                        parameter: 
-                      objPara:
-                      - paraNameType: "\u706F\u5149"
-                      isUnArtificial: 0
-                      listener: {fileID: 1679710510}
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 2
-                  value: 2
-                  nextValue: 1
-                  gate: 1
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
-                      value: 2
-                      nextValue: 1
-                      gate: 1
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    - currStatus: "\u4E09\u6001\u7535\u68AF"
-                      operation: 0
-                      value: 1
-                      nextValue: 2
+                      value: 0
+                      nextValue: 0
                       gate: 0
                       statusCNNames:
                       - "\u4E24\u6001\u5F00\u5173"
@@ -1430,10 +1124,24 @@ MonoBehaviour:
                       - paraNameType: "\u706F\u5149"
                       isUnArtificial: 0
                       listener: {fileID: 1679710510}
-                  currStatus: "\u4E09\u6001\u7535\u68AF"
-                  operation: 0
-                  value: 1
-                  nextValue: 2
+                    - gameEvent: "\u64AD\u653E\u97F3\u4E50"
+                      evntTime: 1
+                      normalPara:
+                      - paraNameType: "\u58F0\u97F3\u679A\u4E3E\u540D:string"
+                        parameter: CarCrash
+                      - paraNameType: "\u6B21\u6570:int"
+                        parameter: 1
+                      - paraNameType: "\u95F4\u9694:float"
+                        parameter: 0
+                      - paraNameType: "\u5EF6\u8FDF:float"
+                        parameter: 0
+                      objPara: []
+                      isUnArtificial: 0
+                      listener: {fileID: 1679710510}
+                  currStatus: "\u4E24\u6001\u5F00\u5173"
+                  operation: 2
+                  value: 0
+                  nextValue: 0
                   gate: 0
                   statusCNNames:
                   - "\u4E24\u6001\u5F00\u5173"
@@ -1453,10 +1161,24 @@ MonoBehaviour:
                     parameter: {fileID: 705507993}
                   isUnArtificial: 0
                   listener: {fileID: 1679710510}
-              currStatus: "\u4E09\u6001\u7535\u68AF"
-              operation: 0
-              value: 1
-              nextValue: 2
+                - gameEvent: "\u64AD\u653E\u97F3\u4E50"
+                  evntTime: 1
+                  normalPara:
+                  - paraNameType: "\u58F0\u97F3\u679A\u4E3E\u540D:string"
+                    parameter: CarCrash
+                  - paraNameType: "\u6B21\u6570:int"
+                    parameter: 1
+                  - paraNameType: "\u95F4\u9694:float"
+                    parameter: 0
+                  - paraNameType: "\u5EF6\u8FDF:float"
+                    parameter: 0
+                  objPara: []
+                  isUnArtificial: 0
+                  listener: {fileID: 1679710510}
+              currStatus: "\u4E24\u6001\u5F00\u5173"
+              operation: 2
+              value: 0
+              nextValue: 0
               gate: 0
               statusCNNames:
               - "\u4E24\u6001\u5F00\u5173"
@@ -1476,10 +1198,24 @@ MonoBehaviour:
                 parameter: {fileID: 705507993}
               isUnArtificial: 0
               listener: {fileID: 1679710510}
-          currStatus: "\u4E09\u6001\u7535\u68AF"
-          operation: 0
-          value: 1
-          nextValue: 2
+            - gameEvent: "\u64AD\u653E\u97F3\u4E50"
+              evntTime: 1
+              normalPara:
+              - paraNameType: "\u58F0\u97F3\u679A\u4E3E\u540D:string"
+                parameter: CarCrash
+              - paraNameType: "\u6B21\u6570:int"
+                parameter: 1
+              - paraNameType: "\u95F4\u9694:float"
+                parameter: 0
+              - paraNameType: "\u5EF6\u8FDF:float"
+                parameter: 0
+              objPara: []
+              isUnArtificial: 0
+              listener: {fileID: 1679710510}
+          currStatus: "\u4E24\u6001\u5F00\u5173"
+          operation: 2
+          value: 0
+          nextValue: 0
           gate: 0
           statusCNNames:
           - "\u4E24\u6001\u5F00\u5173"
@@ -1499,10 +1235,24 @@ MonoBehaviour:
             parameter: {fileID: 705507993}
           isUnArtificial: 0
           listener: {fileID: 1679710510}
-      currStatus: "\u4E09\u6001\u7535\u68AF"
+        - gameEvent: "\u64AD\u653E\u97F3\u4E50"
+          evntTime: 1
+          normalPara:
+          - paraNameType: "\u58F0\u97F3\u679A\u4E3E\u540D:string"
+            parameter: CarCrash
+          - paraNameType: "\u6B21\u6570:int"
+            parameter: 1
+          - paraNameType: "\u95F4\u9694:float"
+            parameter: 0
+          - paraNameType: "\u5EF6\u8FDF:float"
+            parameter: 0
+          objPara: []
+          isUnArtificial: 0
+          listener: {fileID: 1679710510}
+      currStatus: "\u4E24\u6001\u5F00\u5173"
       operation: 2
-      value: 2
-      nextValue: 3
+      value: 0
+      nextValue: 0
       gate: 0
       statusCNNames:
       - "\u4E24\u6001\u5F00\u5173"

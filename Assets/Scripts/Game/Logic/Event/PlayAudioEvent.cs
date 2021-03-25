@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AiLing
 {
-    [GameEventInfo("播放音乐",4,new string[] { "声音枚举名:string", "次数:int","间隔:float","延迟:float"})]
+    [GameEventInfo("播放音乐", 4, new string[] { "声音枚举名:string", "次数:int", "间隔:float", "延迟:float" })]
     public class PlayAudioEvent : GameEvent
     {
         string music;
@@ -22,7 +22,11 @@ namespace AiLing
             time = (int)normalPara[1];
             interval = (float)normalPara[2];
 
-            timer = TimerManager.Instance.AddTimer(delay, interval, time, null, null, () => { AudioManager.Instance.PlaySound((EMusicName)Enum.Parse(typeof(EMusicName), music)); });
+            timer = TimerManager.Instance.AddTimer(delay, interval, time, EventStart, null, () =>
+            {
+                AudioManager.Instance.PlaySound((EMusicName)Enum.Parse(typeof(EMusicName), music));
+                EventEnd();
+            });
         }
     }
 }

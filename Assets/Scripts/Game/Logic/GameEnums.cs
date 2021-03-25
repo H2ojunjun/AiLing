@@ -54,6 +54,16 @@ namespace AiLing
         WithOr,
     }
 
+    public enum ESetStatusTiming
+    {
+        [GameEnum("无")]
+        None = 0,
+        [GameEnum("结束时")]
+        Finish = 1,
+        [GameEnum("开始时")]
+        Start = 2
+    }
+
     public enum EStatus
     {
         [GameEnum("两态开关", typeof(EDoubleSwitch))]

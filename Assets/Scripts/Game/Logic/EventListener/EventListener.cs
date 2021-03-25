@@ -25,7 +25,6 @@ namespace AiLing
         [HideInInspector]
         public List<object> unartificialPara;
 
-
         [HideInInspector]
         public StatusInfo si;
 
@@ -124,7 +123,7 @@ namespace AiLing
         private void AddEventModifier()
         {
             EventModifier mod = new EventModifier();
-            mod.listener = listener;
+            mod.conditionEvents = this;
             events.Add(mod);
         }
 
@@ -138,9 +137,9 @@ namespace AiLing
 
         public bool GetConditionRealResult()
         {
-            bool realResult =false;
+            bool realResult = false;
             EGate gate = EGate.None;
-            for(int i=0;i<conditions.Count;i++)
+            for (int i = 0; i < conditions.Count; i++)
             {
                 bool result = conditions[i].GetConditionResult();
                 switch (gate)
@@ -149,7 +148,7 @@ namespace AiLing
                         realResult = result;
                         break;
                     case EGate.And:
-                        realResult = realResult && result; 
+                        realResult = realResult && result;
                         break;
                     case EGate.Or:
                         realResult = realResult || result;
@@ -166,6 +165,25 @@ namespace AiLing
                 gate = conditions[i].gate;
             }
             return realResult;
+        }
+
+        public void SetStatus()
+        {
+            Dictionary<string, Status> statusInfoes = new Dictionary<string, Status>();
+            foreach (var sta in si.statusInfoes)
+            {
+                statusInfoes.Add(sta.statusCN, sta);
+            }
+            foreach (var condi in conditions)
+            {
+                Status sta;
+                if (statusInfoes.TryGetValue(condi.currStatus, out sta))
+                {
+                    sta.value = condi.nextValue;
+                }
+                else
+                    Debug.LogError("条件中的状态:" + condi.currStatus + "在绑定的StatusInfo中找不到！");
+            }
         }
     }
 
@@ -322,7 +340,7 @@ namespace AiLing
         [LabelText("事件名")]
         [VerticalGroup("事件名")]
         [ValueDropdown("eventNames")]
-        [OnValueChanged("ChangeEvent", false)]
+        [OnValueChanged("OnChangeEvent", false)]
         public string gameEvent;
 
         [LabelText("可触发次数(-1表示无限)")]
@@ -346,11 +364,15 @@ namespace AiLing
         [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true, DraggableItems = false)]
         public List<ParaInfo<GameObject>> objPara = new List<ParaInfo<GameObject>>();
 
+        [LabelText("设置后置状态时机")]
+        [OnValueChanged("OnTimingChange")]
+        public ESetStatusTiming timing = ESetStatusTiming.None;
+
         [HideInInspector]
         public bool isUnArtificial;
 
         [HideInInspector]
-        public EventListener listener;
+        public ConditionEvents conditionEvents;
 
         private Type eventType;
 
@@ -359,21 +381,42 @@ namespace AiLing
         public void CallEvent()
         {
             if (realEvent == null)
+            {
                 realEvent = Activator.CreateInstance(eventType) as GameEvent;
+                if (timing == ESetStatusTiming.Start)
+                {
+                    realEvent.startCallBack += conditionEvents.SetStatus;
+                }
+                else if (timing == ESetStatusTiming.Finish)
+                {
+                    realEvent.finishCallBack += conditionEvents.SetStatus;
+                }
+            }
             InjectPara();
             if (realEvent.leftTimes == 0)
                 return;
             if (realEvent.leftTimes == int.MinValue)
                 realEvent.leftTimes = evntTime;
-            //InjectUnArtificial();
-            if (listener.unartificialPara.Count == 0)
+            if (conditionEvents.listener.unartificialPara.Count == 0)
                 realEvent.Excute(paras.ToArray(), null);
             else
-                realEvent.Excute(paras.ToArray(), listener.unartificialPara);
+                realEvent.Excute(paras.ToArray(), conditionEvents.listener.unartificialPara);
             realEvent.leftTimes--;
         }
 
-        private void ChangeEvent()
+        private void OnTimingChange()
+        {
+            int changeNum = 0;
+            foreach (var mod in conditionEvents.events)
+            {
+                if (mod.timing != ESetStatusTiming.None)
+                    changeNum++;
+            }
+            if (changeNum > 1)
+                Debug.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
+        }
+
+        private void OnChangeEvent()
         {
             if (string.IsNullOrEmpty(gameEvent))
             {

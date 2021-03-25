@@ -22,7 +22,7 @@ namespace AiLing
             light = obj.GetComponent<Light>();
             if (timer != 0)
                 TimerManager.Instance.RemoveTimer(timer);
-            timer = TimerManager.Instance.AddTimer(blackTime, 0, 1, null, FadeBlack, EventEnd);
+            timer = TimerManager.Instance.AddTimer(blackTime, 0, 1, EventStart, FadeBlack, EventEnd);
         }
 
         private void FadeBlack(float time)

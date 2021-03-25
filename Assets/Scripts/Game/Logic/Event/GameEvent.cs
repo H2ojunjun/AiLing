@@ -73,16 +73,34 @@ namespace AiLing
         //该事件所剩下的可触发次数,int.MinValue表示该事件还未被设置leftTimes
         public int leftTimes = int.MinValue;
 
+        private Action _startCallBack;
+
+        private Action _finishCallBack;
+
+        //事件的开始callback
+        public event Action startCallBack { add { _startCallBack += value; }remove { _startCallBack -= value; } }
+
+        //事件的结束callback
+        public event Action finishCallBack { add { _finishCallBack += value; } remove { _finishCallBack -= value; } }
         public virtual void Excute(object[] normalPara,params object[] unartPara)
         {
             currEvents.Add(this);
         }
 
         /// <summary>
-        /// 将该事件从currEvents列表中移除
+        /// 开始事件，特定时间点调用
         /// </summary>
-        public void EventEnd()
+        public virtual void EventStart()
         {
+            _startCallBack?.Invoke();
+        }
+
+        /// <summary>
+        /// 结束事件，由程序在特定的时间点（时间完成时）调用
+        /// </summary>
+        public virtual void EventEnd()
+        {
+            _finishCallBack?.Invoke();
             currEvents.Remove(this);
         }
     }

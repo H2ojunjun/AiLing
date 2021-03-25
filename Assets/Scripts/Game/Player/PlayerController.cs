@@ -13,7 +13,6 @@ namespace AiLing
         private float overLapCapsuleOffset;
         private float _radius;
         private float _height;
-        //private float _groundCheckLock=0f;
         private int jumpTimer;
 
         [HideInInspector]
@@ -32,9 +31,7 @@ namespace AiLing
             DontDestroyOnLoad(gameObject);
             timerManager = TimerManager.Instance;
             movement = new Movement(this);
-            //_body = GetComponent<Rigidbody>();
             cc = GetComponent<CharacterController>();
-            //_col = GetComponent<CapsuleCollider>();
             _radius = cc.radius * 0.9f;
             _height = cc.height;
             overLapCapsuleOffset = -(cc.height / 2 + 0.1f);
@@ -98,56 +95,41 @@ namespace AiLing
         }
         private void CheckOnGround()
         {
-            Timer timer = timerManager.GetTimer(jumpTimer);
-            if (timer != null && timer.leftTime > 0)
-                return;
-            _bottom = transform.position + cc.center + transform.up * overLapCapsuleOffset + transform.up * _radius;
-            _top = transform.position + cc.center + transform.up * _height / 2 - transform.up * _radius;
+            //            Timer timer = timerManager.GetTimer(jumpTimer);
+            //            if (timer != null && timer.leftTime > 0)
+            //                return;
+            //            _bottom = transform.position + cc.center + transform.up * overLapCapsuleOffset + transform.up * _radius;
+            //            _top = transform.position + cc.center + transform.up * _height / 2 - transform.up * _radius;
 
-            Collider[] colliders = Physics.OverlapCapsule(_bottom, _top, _radius, igonreLayer);
-#if UNITY_EDITOR
-            Debug.DrawLine(_bottom, _top, Color.white);
-#endif
-            if (colliders.Length != 0)
-            {
-                //foreach (var col in colliders)
-                //{
-                //    if (!col.isTrigger)
-                //    {
-                        movement.speedVertical = 0;
-                        isInAir = false;
-                //    }
-                //}
-            }
+            //            Collider[] colliders = Physics.OverlapCapsule(_bottom, _top, _radius, igonreLayer);
+            //#if UNITY_EDITOR
+            //            Debug.DrawLine(_bottom, _top, Color.white);
+            //#endif
+            //            if (colliders.Length != 0)
+            //            {
+            //                //foreach (var col in colliders)
+            //                //{
+            //                //    if (!col.isTrigger)
+            //                //    {
+            //                        movement.speedVertical = 0;
+            //                        isInAir = false;
+            //                //    }
+            //                //}
+            //            }
+            //            else
+            //            {
+            //                isInAir = true;
+            //            }
+            if (cc.isGrounded)
+                isInAir = false;
             else
-            {
                 isInAir = true;
-            }
         }
-
-        //public void StartGroundLock()
-        //{
-        //    _groundCheckLock = 0.2f;
-        //}
-
-        //public void UpdateLock()
-        //{
-        //    _groundCheckLock -= Time.deltaTime;
-        //    if (_groundCheckLock <= 0)
-        //        _groundCheckLock = 0;
-        //}
 
         private void Update()
         {
             Move();
-            //UpdateLock();
         }
-
-        //private void FixedUpdate()
-        //{
-        //    //Move();
-        //    //UpdateLock();
-        //}
     }
 }
 
