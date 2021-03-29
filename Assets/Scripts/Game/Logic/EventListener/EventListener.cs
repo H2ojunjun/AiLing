@@ -61,6 +61,7 @@ namespace AiLing
         {
             foreach (var item in conditionEvents)
             {
+                item.listener = this;
                 foreach (var eve in item.events)
                 {
                     eve.Refresh();
@@ -397,7 +398,7 @@ namespace AiLing
                 return;
             if (realEvent.leftTimes == int.MinValue)
                 realEvent.leftTimes = evntTime;
-            if (conditionEvents.listener.unartificialPara.Count == 0)
+          if (conditionEvents.listener.unartificialPara.Count == 0)
                 realEvent.Excute(paras.ToArray(), null);
             else
                 realEvent.Excute(paras.ToArray(), conditionEvents.listener.unartificialPara);
