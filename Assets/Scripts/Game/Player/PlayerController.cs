@@ -13,7 +13,6 @@ namespace AiLing
         private float overLapCapsuleOffset;
         private float _radius;
         private float _height;
-        private int jumpTimer;
 
         [HideInInspector]
         public TimerManager timerManager;
@@ -78,11 +77,6 @@ namespace AiLing
             {
                 if (!isInAir)
                 {
-                    if (jumpTimer == 0)
-                        jumpTimer = timerManager.AddTimer(0.2f, 0f, -1, null, null, () => { timerManager.Pause(jumpTimer); });
-                    else
-                        if (!timerManager.IsLeft(jumpTimer))
-                        timerManager.Continue(jumpTimer);
                     //StartGroundLock();
                     movement.Jump();
                     //_body.AddForce(new Vector3(0, 10, 0), ForceMode.VelocityChange);
