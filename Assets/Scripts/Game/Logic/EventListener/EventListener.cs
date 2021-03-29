@@ -389,9 +389,13 @@ namespace AiLing
         /// <summary>
         /// 用于编辑器模式下当事件参数信息更改时调用，刷新inspector参数列表
         /// </summary>
-        public void Refresh()
+        public void Refresh() 
         {
             OnGameObjectChange();
+            foreach(var ec in eventChooses)
+            {
+                ec.eventNames = eventNames;
+            }
         }
     }
 
