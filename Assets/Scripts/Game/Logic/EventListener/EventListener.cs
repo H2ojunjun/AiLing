@@ -28,32 +28,31 @@ namespace AiLing
         [HideInInspector]
         public StatusInfo si;
 
-        [PropertyOrder(0)]
-        [PropertySpace]
-        [GUIColor(0.3f, 1f, 0.5f, 1)]
-        [Button("初始化事件系统", ButtonSizes.Medium)]
-        private void InitEventList()
-        {
-            EventModifier.eventNames.Clear();
-            EventTypeDic.Clear();
-            var types = ReflectionHelper.GetSubtypes(typeof(GameEvent).Assembly, typeof(GameEvent), false);
-            foreach (var type in types)
-            {
-                var attribute = type.GetCustomAttribute<GameEventInfoAttribute>();
-                if (attribute != null)
-                {
-                    string eventName = attribute.eventName;
-                    int parameterNum = attribute.parameterNum;
-                    string[] paraNames = attribute.paraNames;
-                    int gameobjectNum = attribute.gameobjectNum;
-                    string[] gameObjNames = attribute.gameObjNames;
-                    bool isUnArtificial = attribute.isUnArtificial;
-                    EventModifier.eventNames.Add(eventName);
-                    GameEventInfo info = new GameEventInfo(type, parameterNum, paraNames, gameobjectNum, gameObjNames, isUnArtificial);
-                    EventTypeDic.Add(eventName, info);
-                }
-            }
-        }
+        //[PropertyOrder(0)]
+        //[PropertySpace]
+        //[GUIColor(0.3f, 1f, 0.5f, 1)]
+        //[Button("初始化事件系统", ButtonSizes.Medium)]
+        //private void InitEventList()
+        //{
+        //    EventTypeDic.Clear();
+        //    var types = ReflectionHelper.GetSubtypes(typeof(GameEvent).Assembly, typeof(GameEvent), false);
+        //    foreach (var type in types)
+        //    {
+        //        var attribute = type.GetCustomAttribute<GameEventInfoAttribute>();
+        //        if (attribute != null)
+        //        {
+        //            string eventName = attribute.eventName;
+        //            int parameterNum = attribute.parameterNum;
+        //            string[] paraNames = attribute.paraNames;
+        //            int gameobjectNum = attribute.gameobjectNum;
+        //            string[] gameObjNames = attribute.gameObjNames;
+        //            bool isUnArtificial = attribute.isUnArtificial;
+        //            EventModifier.eventNames.Add(eventName);
+        //            GameEventInfo info = new GameEventInfo(type, parameterNum, paraNames, gameobjectNum, gameObjNames, isUnArtificial);
+        //            EventTypeDic.Add(eventName, info);
+        //        }
+        //    }
+        //}
 
         [Button("刷新")]
         [GUIColor(0.3f, 1f, 0.5f, 1)]
@@ -80,9 +79,9 @@ namespace AiLing
             {
                 if (item.GetConditionRealResult())
                 {
-                    foreach (var eve in item.events)
+                    foreach (var mod in item.events)
                     {
-                        eve.CallEvent();
+                        mod.CallEvent();
                     }
                 }
             }
@@ -90,7 +89,6 @@ namespace AiLing
 
         private void Awake()
         {
-            InitEventList();
             unartificialPara = new List<object>();
             Debug.Log(EventTypeDic.Values);
             RefreshAll();
@@ -327,173 +325,64 @@ namespace AiLing
     [Serializable]
     public class EventModifier
     {
-        //用于下拉列表的list
-        [HideInInspector]
-        public static List<string> eventNames = new List<string>();
-
-        [OdinSerialize]
-        //最后传递给event的参数，包括三部分：
-        //1.程序判断参数，即人工无法提前预知的参数
-        //2.人工可预知的基本数据类型参数
-        //3.人工可预知的非基本数据类型参数
-        public List<object> paras = new List<object>();
-
-        [LabelText("事件名")]
-        [VerticalGroup("事件名")]
-        [ValueDropdown("eventNames")]
-        [OnValueChanged("OnChangeEvent", false)]
-        public string gameEvent;
-
-        [LabelText("可触发次数(-1表示无限)")]
-        public int evntTime = 1;
-
-        //基本数据类型参数和string类型参数
-        //[HideLabel]
-        [HorizontalGroup("事件参数", Width = 150, LabelWidth = 100)]
-        [LabelText("普通参数")]
-        //[VerticalGroup("普通参数")]
-        //[TableColumnWidth(200)]
-        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true, DraggableItems = false)]
-        public List<ParaInfo<string>> normalPara = new List<ParaInfo<string>>();
-
-        //gameobject类型参数
-        //[HideLabel]
-        [HorizontalGroup("事件参数", Width = 200, LabelWidth = 50)]
-        [LabelText("游戏物体参数")]
-        //[VerticalGroup("游戏物体参数")]
-        //[TableColumnWidth(200)]
-        [ListDrawerSettings(Expanded = true, HideAddButton = true, HideRemoveButton = true, DraggableItems = false)]
-        public List<ParaInfo<GameObject>> objPara = new List<ParaInfo<GameObject>>();
-
-        [LabelText("设置后置状态时机")]
-        [OnValueChanged("OnTimingChange")]
-        public ESetStatusTiming timing = ESetStatusTiming.None;
-
-        [HideInInspector]
-        public bool isUnArtificial;
-
         [HideInInspector]
         public ConditionEvents conditionEvents;
 
-        private Type eventType;
+        [LabelText("事件绑定物体")]
+        [OnValueChanged("OnGameObjectChange")]
+        public GameObject eventHandler;
 
-        private GameEvent realEvent;
+        [LabelText("事件选择器")]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventChoose", DraggableItems = false)]
+        public List<EventChoose> eventChooses = new List<EventChoose>();
+
+        public void OnGameObjectChange()
+        {
+            GameEvent[] events = eventHandler.GetComponents<GameEvent>();
+            foreach(var item in events)
+            {
+                GameEventInfoAttribute eventInfo = item.GetEventAttribute();
+                eventNames.Add(eventInfo.eventName,item);
+            }
+        }
+
+        private bool hasSetStatusChangeCallBack = false;
+
+        private ValueDropdownList<GameEvent> eventNames = new ValueDropdownList<GameEvent>();
+
+        private void AddEventChoose()
+        {
+            EventChoose ec = new EventChoose();
+            ec.mod = this;
+            ec.eventNames = eventNames;
+            eventChooses.Add(ec);
+        }
 
         public void CallEvent()
         {
-            if (realEvent == null)
+            foreach (var eve in eventChooses)
             {
-                realEvent = Activator.CreateInstance(eventType) as GameEvent;
-                if (timing == ESetStatusTiming.Start)
+                GameEvent realEvent = eve.realEvent;
+                if (!hasSetStatusChangeCallBack)
                 {
-                    realEvent.startCallBack += conditionEvents.SetStatus;
+                    if (eve.timing == ESetStatusTiming.Start)
+                    {
+                        realEvent.startCallBack += conditionEvents.SetStatus;
+                        hasSetStatusChangeCallBack = true;
+                    }
+                    else if (eve.timing == ESetStatusTiming.Finish)
+                    {
+                        realEvent.finishCallBack += conditionEvents.SetStatus;
+                        hasSetStatusChangeCallBack = true;
+                    }
                 }
-                else if (timing == ESetStatusTiming.Finish)
-                {
-                    realEvent.finishCallBack += conditionEvents.SetStatus;
-                }
-            }
-            InjectPara();
-            if (realEvent.leftTimes == 0)
-                return;
-            if (realEvent.leftTimes == int.MinValue)
-                realEvent.leftTimes = evntTime;
-          if (conditionEvents.listener.unartificialPara.Count == 0)
-                realEvent.Excute(paras.ToArray(), null);
-            else
-                realEvent.Excute(paras.ToArray(), conditionEvents.listener.unartificialPara);
-            realEvent.leftTimes--;
-        }
-
-        private void OnTimingChange()
-        {
-            int changeNum = 0;
-            foreach (var mod in conditionEvents.events)
-            {
-                if (mod.timing != ESetStatusTiming.None)
-                    changeNum++;
-            }
-            if (changeNum > 1)
-                Debug.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
-        }
-
-        private void OnChangeEvent()
-        {
-            if (string.IsNullOrEmpty(gameEvent))
-            {
-                Debug.LogError("请选择事件名！");
-                return;
-            }
-            GameEventInfo eventInfo;
-            if (!EventListener.EventTypeDic.TryGetValue(gameEvent, out eventInfo))
-            {
-                Debug.LogError("找不到该事件，请联系巫师");
-                return;
-            }
-            else
-            {
-                normalPara.Clear();
-                for (int i = 0; i < eventInfo.parameterNum; i++)
-                {
-                    ParaInfo<string> info = new ParaInfo<string>(eventInfo.paraNames[i]);
-                    normalPara.Add(info);
-                }
-                objPara.Clear();
-                for (int i = 0; i < eventInfo.gameobjectNum; i++)
-                {
-                    ParaInfo<GameObject> info = new ParaInfo<GameObject>(eventInfo.gameObjNames[i]);
-                    objPara.Add(info);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 解析并且注入人工参数到paras中，该方法只会在事件第一次触发调用！以求减轻运行时解析字符串获取参数的消耗
-        /// </summary>
-        public void InjectPara()
-        {
-            if (paras.Count > 0)
-                return;
-            paras.Clear();
-            foreach (var item in normalPara)
-            {
-                object o = GetNormalPara(item.paraNameType, item.parameter);
-                paras.Add(o);
-            }
-            foreach (var item in objPara)
-            {
-                object o = item.parameter;
-                paras.Add(o);
-            }
-            if (paras.Count == 0)
-                paras = null;
-        }
-
-        public object GetNormalPara(string paraNameType, string para)
-        {
-            string[] nameType = paraNameType.Split(':');
-            switch (nameType[1])
-            {
-                case "int":
-                    int iArg = int.Parse(para);
-                    object iBox = iArg;
-                    return iBox;
-                case "float":
-                    float fArg = float.Parse(para);
-                    object fBox = fArg;
-                    return fBox;
-                case "bool":
-                    int bArg = int.Parse(para);
-                    bool b = false;
-                    if (bArg == 1)
-                        b = true;
-                    object bBox = b;
-                    return bBox;
-                case "string":
-                    object sBox = para;
-                    return sBox;
-                default:
-                    return null;
+                if (realEvent.leftTimes == 0)
+                    return;
+                if (conditionEvents.listener.unartificialPara.Count == 0)
+                    realEvent.Excute(null);
+                else
+                    realEvent.Excute(conditionEvents.listener.unartificialPara);
+                realEvent.leftTimes--;
             }
         }
 
@@ -502,83 +391,36 @@ namespace AiLing
         /// </summary>
         public void Refresh()
         {
-            if (string.IsNullOrEmpty(gameEvent))
-                return;
-            GameEventInfo eventInfo;
-            if (EventListener.EventTypeDic.TryGetValue(gameEvent, out eventInfo))
-            {
-                eventType = eventInfo.eventType;
-                isUnArtificial = eventInfo.isUnArtificial;
-                Debug.Log("eventType" + eventType.Name);
-#if UNITY_EDITOR
-                Dictionary<string, string> tempNormalDic = new Dictionary<string, string>();
-                foreach (var item in normalPara)
-                {
-                    tempNormalDic.Add(item.paraNameType, item.parameter);
-                }
-                normalPara.Clear();
-                for (int i = 0; i < eventInfo.parameterNum; i++)
-                {
-                    ParaInfo<string> info = new ParaInfo<string>(eventInfo.paraNames[i]);
-                    string value;
-                    if (tempNormalDic.TryGetValue(eventInfo.paraNames[i], out value))
-                        info.parameter = value;
-                    normalPara.Add(info);
-                }
-
-                Dictionary<string, GameObject> tempGameobjDic = new Dictionary<string, GameObject>();
-                foreach (var item in objPara)
-                {
-                    tempGameobjDic.Add(item.paraNameType, item.parameter);
-                }
-                objPara.Clear();
-                for (int i = 0; i < eventInfo.gameobjectNum; i++)
-                {
-                    ParaInfo<GameObject> info = new ParaInfo<GameObject>(eventInfo.gameObjNames[i]);
-                    GameObject value;
-                    if (tempGameobjDic.TryGetValue(eventInfo.gameObjNames[i], out value))
-                        info.parameter = value;
-                    objPara.Add(info);
-                }
-#endif
-            }
-            else
-                Debug.LogError("刷新失败，EventTypeDic中找不到该事件：" + gameEvent);
-
+            OnGameObjectChange();
         }
     }
 
     [Serializable]
-    public class ParaInfo<T> where T : class
+    public class EventChoose
     {
-        //参数名，用于编辑器自定义drawer
         [HideInInspector]
-        public string paraNameType;
+        public EventModifier mod;
 
-        //[DelayedProperty]
-        [CustomValueDrawer("ParameterLable")]
-        public T parameter;
+        [LabelText("事件名")]
+        [ValueDropdown("eventNames")]
+        public GameEvent realEvent;
 
-#if UNITY_EDITOR
-        public T ParameterLable(T temp, GUIContent label)
+        public ValueDropdownList<GameEvent> eventNames = new ValueDropdownList<GameEvent>();
+
+        [LabelText("设置后置状态时机")]
+        [OnValueChanged("OnTimingChange")]
+        public ESetStatusTiming timing = ESetStatusTiming.None;
+
+        private void OnTimingChange()
         {
-            GUIContent pLable = new GUIContent(paraNameType);
-            Type t = typeof(T);
-            switch (t.Name)
+            int changeNum = 0;
+            foreach (var item in mod.eventChooses)
             {
-                case "String":
-                    return EditorGUILayout.TextField(paraNameType, temp as string) as T;
-                case "GameObject":
-                    return EditorGUILayout.ObjectField(paraNameType, temp as GameObject, typeof(GameObject), true) as T;
-                default:
-                    return null;
+                if (item.timing != ESetStatusTiming.None)
+                    changeNum++;
             }
-        }
-#endif
-
-        public ParaInfo(string info)
-        {
-            this.paraNameType = info;
+            if (changeNum > 1)
+                Debug.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
         }
     }
 }

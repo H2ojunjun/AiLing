@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace AiLing
 {
@@ -11,23 +12,12 @@ namespace AiLing
     {
         //事件名
         public string eventName;
-        //基本数据类型参数数量，人为设置
-        public int parameterNum;
-        //基本数据类型参数名，人为设置
-        public string[] paraNames;
-        //gameobject数据类型参数数量，人为设置
-        public int gameobjectNum;
-        //gameobject数据类型参数名，人为设置
-        public string[] gameObjNames;
+
         //是否包含非人为设置参数
         public bool isUnArtificial;
-        public GameEventInfoAttribute(string eventName, int parameterNum ,string[] paraNames = null, int gameobjectNum = 0,string[] gameObjNames =null,bool isUnArtificial = false)
+        public GameEventInfoAttribute(string eventName,bool isUnArtificial = false)
         {
             this.eventName = eventName;
-            this.parameterNum = parameterNum;
-            this.paraNames = paraNames;
-            this.gameobjectNum = gameobjectNum;
-            this.gameObjNames = gameObjNames;
             this.isUnArtificial = isUnArtificial;
         }
     }
@@ -60,18 +50,18 @@ namespace AiLing
         }
     }
 
-    public class GameEvent
+    public class GameEvent : MonoBehaviour
     {
         //保存当前游戏中所有正在被调用的事件
         public static List<GameEvent> currEvents = new List<GameEvent>();
 
-        public GameObject owner;
-
         //返回值，如果事件的Call函数被调用后有返回值则保存在此处
+        [HideInInspector]
         public object[] returns;
 
         //该事件所剩下的可触发次数,int.MinValue表示该事件还未被设置leftTimes
-        public int leftTimes = int.MinValue;
+        [LabelText("可触发次数（-1表示无限）")]
+        public int leftTimes = 0;
 
         private Action _startCallBack;
 
@@ -82,9 +72,14 @@ namespace AiLing
 
         //事件的结束callback
         public event Action finishCallBack { add { _finishCallBack += value; } remove { _finishCallBack -= value; } }
-        public virtual void Excute(object[] normalPara,params object[] unartPara)
+        public virtual void Excute(params object[] unartPara)
         {
             currEvents.Add(this);
+        }
+        
+        public virtual GameEventInfoAttribute GetEventAttribute()
+        {
+            return null;
         }
 
         /// <summary>

@@ -2,31 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using System.Reflection;
 
 namespace AiLing
 {
-    [GameEventInfo("播放音乐", 4, new string[] { "声音枚举名:string", "次数:int", "间隔:float", "延迟:float" })]
+    [GameEventInfo("播放音乐")]
     public class PlayAudioEvent : GameEvent
     {
-        string music;
-        //次数
-        int time;
-        //间隔
-        float interval;
-        float delay;
+        [LabelText("声音枚举名")]
+        public EMusicName music;
+        [LabelText("次数")]
+        public int time = 0;
+        [LabelText("间隔")]
+        public float interval = 0;
+        [LabelText("延迟")]
+        public float delay = 0;
         int timer;
-        public override void Excute(object[] normalPara, params object[] unartPara)
+        public override void Excute(params object[] unartPara)
         {
-            base.Excute(normalPara, unartPara);
-            music = (string)normalPara[0];
-            time = (int)normalPara[1];
-            interval = (float)normalPara[2];
-
             timer = TimerManager.Instance.AddTimer(delay, interval, time, EventStart, null, () =>
             {
-                AudioManager.Instance.PlaySound((EMusicName)Enum.Parse(typeof(EMusicName), music));
+                AudioManager.Instance.PlaySound(music);
                 EventEnd();
             });
+        }
+
+        public override GameEventInfoAttribute GetEventAttribute()
+        {
+            Type t = typeof(PlayAudioEvent);
+            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
+            return attri;
         }
     }
 }
