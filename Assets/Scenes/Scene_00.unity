@@ -780,7 +780,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpSpeed: 3
-  horizontalSpeed: 3
+  horizontalAcceleration: 3
+  horizontalSpeedMax: 5
   cc: {fileID: 0}
 --- !u!54 &1562627969
 Rigidbody:
