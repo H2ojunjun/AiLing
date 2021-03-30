@@ -1,4 +1,5 @@
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace AiLing
 {
@@ -7,8 +8,12 @@ namespace AiLing
     public class PlayerController : MonoSingleton<PlayerController>
     {
         public Movement movement;
+        [LabelText("跳跃初速度")]
         public float jumpSpeed = 6;
-        public float horizontalSpeed = 10;
+        [LabelText("水平加速度")]
+        public float horizontalAcceleration = 10;
+        [LabelText("水平速度最大值")]
+        public float horizontalSpeedMax = 50;
         [HideInInspector]
         public CharacterController cc;
         public bool isInAir { get { return movement.isInAir; } set { movement.isInAir = value; } }
@@ -33,7 +38,22 @@ namespace AiLing
             CheckOnGround();
             Debug.Log(isInAir ? "isInAir" : "notInAir");
             float horizontal = Input.GetAxis("Horizontal");
-            movement.speedHorizontal = horizontal * horizontalSpeed;
+            if (horizontal != 0)
+            {
+                if (Mathf.Abs(movement.speedHorizontal) < horizontalSpeedMax)
+                    movement.speedHorizontal += horizontal * horizontalAcceleration * Time.deltaTime;
+                else
+                {
+                    if (movement.speedHorizontal < 0)
+                        movement.speedHorizontal = -horizontalSpeedMax;
+                    else
+                        movement.speedHorizontal = horizontalSpeedMax;
+                }
+            }
+            else
+            {
+                movement.speedHorizontal = 0;
+            }
             if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space))
             {
                 if (!isInAir)
@@ -43,6 +63,7 @@ namespace AiLing
             }
             if (isInAir)
             {
+                //如果从高处跳下，则要将垂直速度置0
                 if (isInAir != oldIsInAir && movement.speedVertical < 0)
                     movement.speedVertical = 0;
                 movement.FallingDown(Time.deltaTime);

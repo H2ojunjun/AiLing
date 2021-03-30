@@ -6,8 +6,6 @@ namespace AiLing
 {
     public class Movement
     {
-        private const float RUN_SPEED_MIN = 10.0F;
-
         private float _speedHorizontal;
         private float _speedVertical;
         private float _gravity = 10;
@@ -18,9 +16,14 @@ namespace AiLing
         public bool canJump = true;
 
         public PlayerController owner;
-        public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < RUN_SPEED_MIN && !isInAir; } }
-        public bool isRun { get { return Mathf.Abs(speedHorizontal) >= RUN_SPEED_MIN && !isInAir; } }
+        public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
+        public bool isRun { get { return Mathf.Abs(speedHorizontal) >= runSpeedMin && !isInAir; } }
         public bool isInAir;
+
+        public float runSpeedMin
+        {
+            get { return owner.horizontalSpeedMax/2; }
+        }
 
         public float speedHorizontal
         {
@@ -34,7 +37,7 @@ namespace AiLing
                 }
                 else if (!canRun)
                 {
-                    _speedHorizontal = Mathf.Min(value, RUN_SPEED_MIN);
+                    _speedHorizontal = Mathf.Min(value, runSpeedMin);
                 }
                 _speedHorizontal = value;
             }
