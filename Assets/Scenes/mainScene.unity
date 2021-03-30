@@ -614,10 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff34d94595362fd4086cb2987dcd4ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerManager: {fileID: 0}
-  igonreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   jumpSpeed: 6
   horizontalSpeed: 10
   cc: {fileID: 0}
@@ -791,10 +787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff34d94595362fd4086cb2987dcd4ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerManager: {fileID: 0}
-  igonreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   jumpSpeed: 6
   horizontalSpeed: 10
   cc: {fileID: 0}
@@ -3665,7 +3657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 1.249
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8011962d64c1a1942a898af93710395f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3711,5 +3703,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 8011962d64c1a1942a898af93710395f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 05d9dcac77e6e14438825cd91fb3430a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8011962d64c1a1942a898af93710395f, type: 3}
