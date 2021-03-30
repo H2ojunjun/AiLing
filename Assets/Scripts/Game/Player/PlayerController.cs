@@ -3,6 +3,7 @@ using UnityEngine;
 namespace AiLing
 {
     //所有的玩家物理效果的接口都在此
+    [RequireComponent(typeof(CharacterController),typeof(Rigidbody))]
     public class PlayerController : MonoSingleton<PlayerController>
     {
         public Movement movement;
