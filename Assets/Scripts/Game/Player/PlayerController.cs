@@ -23,6 +23,9 @@ namespace AiLing
             cc = GetComponent<CharacterController>();
             movementAnimSetter = new MovementAnimatorSetter(GetComponent<Animator>());
             movementAnimSetter.InitMovementAnimatorInfo();
+            Rigidbody body = GetComponent<Rigidbody>();
+            body.useGravity = false;
+            body.constraints = RigidbodyConstraints.FreezePositionZ|RigidbodyConstraints.FreezeRotation;
         }
 
         private void Move()
