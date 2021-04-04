@@ -3,23 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIBase
+namespace AiLing
 {
-    public UIPanel panel;
+    public abstract class UIBase
+    {
+        public abstract string PackageName { get; }
 
-    public GComponent mainCom;
+        public abstract string componentName { get; }
 
-    //protected virtual void Awake()
-    //{
-    //    panel = GetComponent<UIPanel>();
-    //    mainCom = panel.ui;
-    //}
+        public GameObject owner;
 
-    protected abstract void Init();
+        public UIPanel panel;
 
-    protected abstract void OnShow();
+        public GComponent mainCom;
 
-    protected abstract void OnClose();
+        public abstract void Init();
 
-    protected abstract void OnHide();
+        public abstract void OnShow();
+
+        public abstract void OnClose();
+
+        public abstract void OnHide();
+    }
 }
+

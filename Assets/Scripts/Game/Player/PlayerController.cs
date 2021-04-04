@@ -48,16 +48,19 @@ namespace AiLing
                 canMove = true;
                 movement.isRight = horizontal > 0;
             }
-            //真正的角度
+            //真正的角度,localRotation.eulerAngles.y永远为正数（即使在Inspector面板中可以为负数）,将该正数转化成inspector面板中的数。
             float big = 360 - transform.localRotation.eulerAngles.y;
             float small = transform.localRotation.eulerAngles.y;
             float angle = big < small ? -big : small;
+
             if (movement.isRight && angle < 90)
             {
+                //向右转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y + rotationDelta, transform.localRotation.z));
             }
             if (!movement.isRight && angle > -90)
             {
+                //向左转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y - rotationDelta, transform.localRotation.z));
             }
             if (canMove)
@@ -65,10 +68,12 @@ namespace AiLing
                 if (Mathf.Abs(movement.speedHorizontal) < horizontalSpeedMax)
                 {
                     float horizontalMove = horizontal > 0 ? 1 : -1;
+                    //水平速度
                     movement.speedHorizontal += horizontalMove*horizontalAcceleration * Time.fixedDeltaTime;
                 }
                 else
                 {
+                    //如果水平速度大于水平速度最大值且当前前进方向和速度方向一致，则将水平速度设置为最大值。
                     if (movement.speedHorizontal < 0&& !movement.isRight)
                     {
                         movement.speedHorizontal = -horizontalSpeedMax;
@@ -77,6 +82,7 @@ namespace AiLing
                     {
                         movement.speedHorizontal = horizontalSpeedMax;
                     }else
+                        //当水平速度大于水平速度最大值且当前前进方向和速度方向不一致时，要将速度设置为0，否则就会出现按了D键还是在往左走的情况。
                         movement.speedHorizontal = 0;
                 }
             }
