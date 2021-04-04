@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 97c02ede0397975499fbbdddb7512421
+guid: 61e15374d8adadf4789e9e23a202e0f1
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: TrunAround
+    second: Turn
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: TrunAround
+      name: Turn
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
@@ -526,13 +526,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: AL_TurnAround(Clone)
+    - name: AL_Turn(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig6:Hips
-      parentName: AL_TurnAround(Clone)
+      parentName: AL_Turn(Clone)
       position: {x: 0.00059303176, y: 0.65524864, z: 0.013286597}
       rotation: {x: 0.008131789, y: -0.023939846, z: 0.021105848, w: 0.99945754}
       scale: {x: 1, y: 1, z: 1}
