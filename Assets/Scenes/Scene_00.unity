@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79152798}
   - component: {fileID: 79152797}
+  - component: {fileID: 79152799}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -163,7 +164,8 @@ MonoBehaviour:
       reference: {fileID: 0}
     - CNname: "\u5173"
       reference: {fileID: 0}
-  myStatusCNNames: []
+  myStatusCNNames:
+  - "\u4E24\u6001\u5F00\u5173"
 --- !u!4 &79152798
 Transform:
   m_ObjectHideFlags: 0
@@ -178,6 +180,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79152799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79152796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0899bfad01eb1544fbc0b4c5c2a387af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTimes: 0
+  blackTime: 0
+  fadeIn: 0
+  fadeOut: 0
+  blackLight: {fileID: 0}
 --- !u!1001 &335461525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -779,7 +798,6 @@ GameObject:
   - component: {fileID: 1679710512}
   - component: {fileID: 1679710511}
   - component: {fileID: 1679710510}
-  - component: {fileID: 1679710513}
   m_Layer: 0
   m_Name: posTrigger
   m_TagString: Untagged
@@ -801,23 +819,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   conditionEvents:
   - listener: {fileID: 1679710510}
-    si: {fileID: 1679710513}
+    si: {fileID: 0}
     conditions:
     - owner:
         listener: {fileID: 1679710510}
-        si: {fileID: 1679710513}
+        si: {fileID: 0}
         conditions:
         - owner:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -843,7 +861,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -862,7 +880,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -890,11 +908,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -920,7 +938,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -939,7 +957,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -960,11 +978,11 @@ MonoBehaviour:
               eventChooses: []
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -990,7 +1008,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1009,7 +1027,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1039,15 +1057,15 @@ MonoBehaviour:
         events:
         - conditionEvents:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1073,7 +1091,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1092,7 +1110,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1120,11 +1138,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1150,7 +1168,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1169,7 +1187,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1190,11 +1208,11 @@ MonoBehaviour:
               eventChooses: []
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1220,7 +1238,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1239,7 +1257,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1262,15 +1280,15 @@ MonoBehaviour:
           eventChooses: []
         - conditionEvents:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1296,7 +1314,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1315,7 +1333,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1343,11 +1361,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1373,7 +1391,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1392,7 +1410,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1413,11 +1431,11 @@ MonoBehaviour:
               eventChooses: []
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1443,7 +1461,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1462,7 +1480,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1494,19 +1512,19 @@ MonoBehaviour:
     events:
     - conditionEvents:
         listener: {fileID: 1679710510}
-        si: {fileID: 1679710513}
+        si: {fileID: 0}
         conditions:
         - owner:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1532,7 +1550,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1551,7 +1569,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1579,11 +1597,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1609,7 +1627,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1628,7 +1646,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1649,11 +1667,11 @@ MonoBehaviour:
               eventChooses: []
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1679,7 +1697,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1698,7 +1716,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1728,15 +1746,15 @@ MonoBehaviour:
         events:
         - conditionEvents:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1762,7 +1780,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1781,7 +1799,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1809,11 +1827,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1839,7 +1857,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1875,7 +1893,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1911,7 +1929,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1949,11 +1967,11 @@ MonoBehaviour:
           - mod:
               conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -1979,7 +1997,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2015,7 +2033,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2051,7 +2069,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2089,11 +2107,11 @@ MonoBehaviour:
           - mod:
               conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2119,7 +2137,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2155,7 +2173,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2191,7 +2209,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2226,20 +2244,20 @@ MonoBehaviour:
                 timing: 0
             realEvent: {fileID: 0}
             timing: 0
-      eventHandler: {fileID: 0}
+      eventHandler: {fileID: 79152796}
       eventChooses:
       - mod:
           conditionEvents:
             listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
+            si: {fileID: 0}
             conditions:
             - owner:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2265,7 +2283,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2284,7 +2302,7 @@ MonoBehaviour:
                   eventChooses: []
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2312,11 +2330,11 @@ MonoBehaviour:
             events:
             - conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2342,7 +2360,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2378,7 +2396,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2414,7 +2432,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2452,11 +2470,11 @@ MonoBehaviour:
           - mod:
               conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2482,7 +2500,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2518,7 +2536,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2554,7 +2572,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2592,11 +2610,11 @@ MonoBehaviour:
           - mod:
               conditionEvents:
                 listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
+                si: {fileID: 0}
                 conditions:
                 - owner:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2622,7 +2640,7 @@ MonoBehaviour:
                 events:
                 - conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2658,7 +2676,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2694,7 +2712,7 @@ MonoBehaviour:
               - mod:
                   conditionEvents:
                     listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
+                    si: {fileID: 0}
                     conditions:
                     - currStatus: "\u4E24\u6001\u5F00\u5173"
                       operation: 2
@@ -2729,512 +2747,9 @@ MonoBehaviour:
                 timing: 0
             realEvent: {fileID: 0}
             timing: 0
-        realEvent: {fileID: 0}
+        realEvent: {fileID: 79152799}
         timing: 1
-      - mod:
-          conditionEvents:
-            listener: {fileID: 1679710510}
-            si: {fileID: 1679710513}
-            conditions:
-            - owner:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 2
-                  value: 1
-                  nextValue: 2
-                  gate: 0
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  eventHandler: {fileID: 0}
-                  eventChooses: []
-                - conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  eventHandler: {fileID: 0}
-                  eventChooses: []
-              currStatus: "\u4E24\u6001\u5F00\u5173"
-              operation: 2
-              value: 1
-              nextValue: 2
-              gate: 0
-              statusCNNames:
-              - "\u4E24\u6001\u5F00\u5173"
-              - "\u4E09\u6001\u7535\u68AF"
-            events:
-            - conditionEvents:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 2
-                  value: 1
-                  nextValue: 2
-                  gate: 0
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-              eventHandler: {fileID: 0}
-              eventChooses:
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 1
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 0
-          eventHandler: {fileID: 0}
-          eventChooses:
-          - mod:
-              conditionEvents:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 2
-                  value: 1
-                  nextValue: 2
-                  gate: 0
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-              eventHandler: {fileID: 0}
-              eventChooses:
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 1
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 0
-            realEvent: {fileID: 0}
-            timing: 1
-          - mod:
-              conditionEvents:
-                listener: {fileID: 1679710510}
-                si: {fileID: 1679710513}
-                conditions:
-                - owner:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                    - eventHandler: {fileID: 0}
-                      eventChooses: []
-                  currStatus: "\u4E24\u6001\u5F00\u5173"
-                  operation: 2
-                  value: 1
-                  nextValue: 2
-                  gate: 0
-                  statusCNNames:
-                  - "\u4E24\u6001\u5F00\u5173"
-                  - "\u4E09\u6001\u7535\u68AF"
-                events:
-                - conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-              eventHandler: {fileID: 0}
-              eventChooses:
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 1
-              - mod:
-                  conditionEvents:
-                    listener: {fileID: 1679710510}
-                    si: {fileID: 1679710513}
-                    conditions:
-                    - currStatus: "\u4E24\u6001\u5F00\u5173"
-                      operation: 2
-                      value: 1
-                      nextValue: 2
-                      gate: 0
-                      statusCNNames:
-                      - "\u4E24\u6001\u5F00\u5173"
-                      - "\u4E09\u6001\u7535\u68AF"
-                    events:
-                    - eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                  eventHandler: {fileID: 0}
-                  eventChooses:
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 1
-                  - mod:
-                      eventHandler: {fileID: 0}
-                      eventChooses:
-                      - timing: 1
-                      - timing: 0
-                    realEvent: {fileID: 0}
-                    timing: 0
-                realEvent: {fileID: 0}
-                timing: 0
-            realEvent: {fileID: 0}
-            timing: 0
-        realEvent: {fileID: 0}
-        timing: 0
-  si: {fileID: 1679710513}
+  si: {fileID: 0}
 --- !u!65 &1679710511
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3262,43 +2777,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1679710513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1679710509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc69e9bf0a940aa408e5db37e6605643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 1
-  statusInfoes:
-  - owner: {fileID: 1679710513}
-    status: EDoubleSwitch
-    statusCN: "\u4E24\u6001\u5F00\u5173"
-    value: 1
-    statusReferences:
-    - CNname: "\u5F00"
-      reference: {fileID: 0}
-    - CNname: "\u5173"
-      reference: {fileID: 0}
-  - owner: {fileID: 1679710513}
-    status: EElevator3
-    statusCN: "\u4E09\u6001\u7535\u68AF"
-    value: 2
-    statusReferences:
-    - CNname: 1
-      reference: {fileID: 0}
-    - CNname: 2
-      reference: {fileID: 0}
-    - CNname: 3
-      reference: {fileID: 0}
-  myStatusCNNames:
-  - "\u4E24\u6001\u5F00\u5173"
-  - "\u4E09\u6001\u7535\u68AF"
 --- !u!1 &1964742356
 GameObject:
   m_ObjectHideFlags: 0

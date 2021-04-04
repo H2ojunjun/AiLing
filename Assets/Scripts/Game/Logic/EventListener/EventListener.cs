@@ -338,6 +338,11 @@ namespace AiLing
 
         public void OnGameObjectChange()
         {
+            if (eventHandler == null)
+            {
+                Debug.LogError(conditionEvents.listener.gameObject.name+"上的事件绑定物体为空!");
+                return;
+            }
             GameEvent[] events = eventHandler.GetComponents<GameEvent>();
             foreach(var item in events)
             {
