@@ -14,6 +14,7 @@ namespace AiLing
         public bool canWalk = true;
         public bool canRun = true;
         public bool canJump = true;
+        public bool isRight = true;
 
         public PlayerController owner;
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }

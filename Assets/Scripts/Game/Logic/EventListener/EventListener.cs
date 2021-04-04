@@ -25,9 +25,6 @@ namespace AiLing
         [HideInInspector]
         public List<object> unartificialPara;
 
-        [HideInInspector]
-        public StatusInfo si;
-
         //[PropertyOrder(0)]
         //[PropertySpace]
         //[GUIColor(0.3f, 1f, 0.5f, 1)]
