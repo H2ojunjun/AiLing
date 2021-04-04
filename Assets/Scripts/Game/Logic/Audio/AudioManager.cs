@@ -81,31 +81,7 @@ namespace AiLing
 			pool[0].Stop();
 			return pool[0];
 		}
-		/// <summary>
-		/// 根据指定的次数来播放音效
-		/// </summary>
-		/// <returns>The sound coroutine.</returns>
-		//public void PlaySoundBySpecificTimes(EMusicName audioEnum, int times)
-		//{
-		//	Objecr是所有类型的祖先，用它来定义数组，数组中的元素可以存放不同类型的数据
-		//	Object[] objArray = new object[2];
-		//	objArray [0] = audioEnum;
-		//	objArray [1] = times;
-		//	当用StratCoroutine的第一种参数列表(即传一个字符串)时，只能传一个参数，用这个数组便可以将两个参数传入只能传一个参数的函数
-		//	StopAllCoroutines();
-		//	StartCoroutine(PlaySoundCoroutine(audioEnum, times));
-		//}
-		//IEnumerator PlaySoundCoroutine(AudioEnum audioEnum, int times)
-		//{
-		//	AudioClip clip = GetAudio(audioEnum);
-		//	for (int i = 0; i < times; i++)
-		//	{
-		//		AudioSource audioSource = GetFreeAudioSource();
-		//		audioSource.clip = clip;
-		//		audioSource.Play();
-		//		yield return new WaitForSeconds(clip.length + 0.5f);
-		//	}
-		//}
+
 		public void StopAllAudioSourceInPool(AudioSource[] pool)
 		{
 			for (int i = 0; i < pool.Length; i++)

@@ -6,15 +6,18 @@ using System;
 [Serializable]
 public class GameModel 
 {
+    //存档ID
     public int id;
-    public int chapter;
+    //当前场景名
+    public string sceneName;
+    //当前小存档点
     public int section;
 
     //新档才调用构造函数
     public GameModel()
     {
         id = 1;
-        chapter = 0;
+        //sceneName = ;
         section = 1;
     }
 }

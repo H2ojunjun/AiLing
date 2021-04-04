@@ -14,7 +14,7 @@ namespace AiLing
 
         void Start()
         {
-            DontDestroyOnLoad(gameObject);
+            
         }
 
         /// <summary>
