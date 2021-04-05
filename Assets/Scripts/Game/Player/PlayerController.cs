@@ -104,6 +104,13 @@ namespace AiLing
                     movement.speedVertical = 0;
                 movement.FallingDown(Time.fixedDeltaTime);
             }
+            else
+            {
+                //此举是为了保证玩家在下坡的时候isInAir始终为true，如果不让speedVertical减小的话，可能会出现如：
+                //跳跃到一个高坡上speedVertical为-1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
+                if(movement.speedVertical>-jumpSpeed)
+                    movement.speedVertical -= 0.01f;
+            }
             cc.Move(movement.moveVec * Time.fixedDeltaTime);
             _oldIsInAir = isInAir;
         }

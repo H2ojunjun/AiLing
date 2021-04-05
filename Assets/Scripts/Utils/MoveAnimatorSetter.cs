@@ -13,6 +13,7 @@ namespace AiLing
         int isRunID;
         int isInAirID;
         int moveSpeedID;
+        int speedHorizontalAbsID;
 
         public MovementAnimatorSetter(Animator animator)
         {
@@ -27,6 +28,7 @@ namespace AiLing
             isRunID = Animator.StringToHash("isRun");
             isInAirID = Animator.StringToHash("isInAir");
             moveSpeedID = Animator.StringToHash("moveSpeed");
+            speedHorizontalAbsID = Animator.StringToHash("speedHorizontalAbs");
         }
 
         public void SetMovementAnimatorInfo(Movement movement)
@@ -42,6 +44,7 @@ namespace AiLing
             animator.SetBool(isRunID, movement.isRun);
             animator.SetBool(isInAirID, movement.isInAir);
             animator.SetFloat(moveSpeedID, movement.moveSpeedFake);
+            animator.SetFloat(speedHorizontalAbsID,Mathf.Abs(movement.speedHorizontal));
         }
     }
 }
