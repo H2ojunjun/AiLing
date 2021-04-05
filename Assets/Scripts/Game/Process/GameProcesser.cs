@@ -22,7 +22,7 @@ namespace AiLing
         [HideInInspector]
         public GameModel currGameModel;
 
-        void Awake()
+        void Start()
         {
             if (enable == false)
                 return;
@@ -59,7 +59,6 @@ namespace AiLing
                 }
                 UIManager.Instance.CreateAndShow<UIMainMenu>();
             }
-            DontDestroyOnLoad(transform.parent.gameObject);
         }
 
         public void SaveGame(GameModel model)
@@ -72,8 +71,17 @@ namespace AiLing
 
         public void LoadGame(GameModel model)
         {
+            PlayerController.Instance.enabled = false;
             SceneManager.LoadScene(model.sceneName);
-            Debug.Log("load gameModel:" + model.id+"SceneName:"+model.sceneName);
+            SceneManager.sceneLoaded += (scene,loadMode) => {
+                GameMarkPointManager.Instance.GetRoot();
+                //如果存档中的坐标还没有被修改过
+                if (model.x == float.MinValue)
+                {
+                    GameMarkPointManager.Instance.GoToMark(1);
+                }
+                PlayerController.Instance.enabled = true;
+            };
         }
 
         public GameModel NewGame()

@@ -27,7 +27,6 @@ namespace AiLing
 
         void Start()
         {
-            DontDestroyOnLoad(gameObject);
             movement = new Movement(this);
             cc = GetComponent<CharacterController>();
             movementAnimSetter = new MovementAnimatorSetter(GetComponent<Animator>());
@@ -36,6 +35,7 @@ namespace AiLing
             body.useGravity = false;
             body.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
             rotationDelta = 90 / (roationTime / Time.fixedDeltaTime);
+            enabled = false;
         }
 
         private void Move()
@@ -124,13 +124,7 @@ namespace AiLing
                 isInAir = false;
             else
                 isInAir = true;
-        }
-
-        //private void Update()
-        //{
-        //    Move();
-        //    movementAnimSetter.SetMovementAnimatorInfo(movement);
-        //}
+        } 
 
         private void FixedUpdate()
         {
