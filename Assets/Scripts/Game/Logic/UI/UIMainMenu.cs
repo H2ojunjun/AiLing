@@ -30,7 +30,10 @@ namespace AiLing
 
         public void RigsterEvent()
         {
-            //l_choose.onClickItem.Set()
+            l_choose.onClickItem.Set((content) => {
+                GTextField tf = (content.data as GComponent).GetChild("t_num").asTextField;
+                GameProcesser.Instance.LoadGame(GameProcesser.Instance.archives[int.Parse(tf.text)-1]);
+            });
         }
 
         public override void OnShow()
@@ -39,8 +42,8 @@ namespace AiLing
             for (int i = 0; i < GameProcesser.Instance.archives.Count; i++)
             {
                 GComponent archiveItem = l_choose.AddItemFromPool().asCom;
-                GTextField t_title = archiveItem.GetChild("t_title").asTextField;
-                t_title.SetVar("name", (i + 1).ToString()).FlushVars();
+                GTextField t_num = archiveItem.GetChild("t_num").asTextField;
+                t_num.text = (i + 1).ToString();
             }
         }
 

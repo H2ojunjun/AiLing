@@ -9,6 +9,7 @@ namespace AiLing
     {
         private bool _oldIsInAir;
         private float rotationDelta;
+        private float speedVerticalMinOnGround = -3;
 
         public Movement movement;
         [LabelText("跳跃初速度")]
@@ -107,9 +108,11 @@ namespace AiLing
             else
             {
                 //此举是为了保证玩家在下坡的时候isInAir始终为true，如果不让speedVertical减小的话，可能会出现如：
-                //跳跃到一个高坡上speedVertical为-1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
-                if(movement.speedVertical>-jumpSpeed)
+                //跳跃到一个高坡上speedVertical为 - 1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
+                if (movement.speedVertical > speedVerticalMinOnGround)
                     movement.speedVertical -= 0.01f;
+                else if (movement.speedVertical < speedVerticalMinOnGround)
+                    movement.speedVertical += 0.01f;
             }
             cc.Move(movement.moveVec * Time.fixedDeltaTime);
             _oldIsInAir = isInAir;

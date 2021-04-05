@@ -133,7 +133,7 @@ namespace AiLing
 
         public bool GetConditionRealResult()
         {
-            bool realResult = false;
+            bool realResult = true;
             EGate gate = EGate.None;
             for (int i = 0; i < conditions.Count; i++)
             {
