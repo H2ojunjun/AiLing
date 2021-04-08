@@ -14,9 +14,6 @@ namespace AiLing
     //[ExecuteInEditMode]
     public class EventListener : MonoBehaviour
     {
-        //存储事件的中文名对应的结构，其中放着事件的参数信息（与GameEventInfoAttribute中的参数信息一致）和事件的类型Type，在运行时可以去反射
-        public static Dictionary<string, GameEventInfo> EventTypeDic = new Dictionary<string, GameEventInfo>();
-
         [LabelText("条件事件列表")]
         [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddConditionEvent", DraggableItems = false)]
         public List<ConditionEvents> conditionEvents = new List<ConditionEvents>();
@@ -87,7 +84,6 @@ namespace AiLing
         private void Awake()
         {
             unartificialPara = new List<object>();
-            Debug.Log(EventTypeDic.Values);
             RefreshAll();
         }
 

@@ -8,7 +8,9 @@ namespace AiLing
     {
         public static void TransPort(Transform from,Transform to)
         {
+            PlayerController.Instance.cc.enabled = false;
             from.position = to.position;
+            PlayerController.Instance.cc.enabled = true;
         }
     }
 }

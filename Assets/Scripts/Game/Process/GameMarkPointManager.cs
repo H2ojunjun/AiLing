@@ -13,6 +13,7 @@ namespace AiLing
 
         string _markRootName = "markRoot";
 
+        [HideInInspector]
         public List<GameObject> marks = new List<GameObject>();
 
         public void GetRoot()
@@ -21,16 +22,6 @@ namespace AiLing
             if (_markRoot == null)
                 Debug.LogError("cant find "+_markRootName+" in hierarchy,please mark sure you have created it!");
             InitAllMark();
-        }
-
-        private void InitAllMark()
-        {
-            marks.Clear();
-            for(int i = 0; i < _markRoot.transform.childCount; i++)
-            {
-                GameObject mark = _markRoot.transform.Find("mark"+(i+1).ToString()).gameObject;
-                marks.Add(mark);
-            }
         }
 
         //当前场景为新场景时调用，设置_currMark为出生点
@@ -42,8 +33,26 @@ namespace AiLing
         public void GoToMark(int index)
         {
             _currMark = marks[index-1];
-            PhsicsHelper.TransPort(PlayerController.Instance.transform,_currMark.transform);
+            PhsicsHelper.TransPort(GameMainManager.Instance.player.transform,_currMark.transform);
+            Debug.Log("position:"+ GameMainManager.Instance.player.transform.position+ "curr Mark pos:"+_currMark.transform.position);
+            //将之前的存档点禁用
+            for(int i = 0; i <= index-1; i++)
+            {
+                EventListener el = marks[i].GetComponent<EventListener>();
+                if (el != null)
+                    el.enabled = false;
+            }
             Debug.Log("goto index:"+index);
+        }
+
+        private void InitAllMark()
+        {
+            marks.Clear();
+            for (int i = 0; i < _markRoot.transform.childCount; i++)
+            {
+                GameObject mark = _markRoot.transform.Find("mark" + (i + 1).ToString()).gameObject;
+                marks.Add(mark);
+            }
         }
     }
 }

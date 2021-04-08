@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 namespace AiLing
 {
@@ -13,7 +14,7 @@ namespace AiLing
     {
         private string _savePath;
 
-        private string _firstScene= "Scene_00";
+        private string _firstScene = "Scene_00";
 
         public bool enable = false;
 
@@ -21,6 +22,10 @@ namespace AiLing
 
         [HideInInspector]
         public GameModel currGameModel;
+
+        private int saveGameAnimationTimer;
+
+        private Thread saveGameThread;
 
         void Start()
         {
@@ -55,31 +60,41 @@ namespace AiLing
                     GameModel model = bf.Deserialize(fs) as GameModel;
                     fs.Close();
                     archives.Add(model);
-                    Debug.Log("id:" + model.id+"sceneName:"+model.sceneName);
+                    Debug.Log("id:" + model.id + "sceneName:" + model.sceneName);
                 }
                 UIManager.Instance.CreateAndShow<UIMainMenu>();
             }
         }
 
-        public void SaveGame(GameModel model)
+        public void SaveGameAsyn()
+        {
+            //saveGameAnimationTimer = TimerManager.Instance.AddTimer();
+            saveGameThread = new Thread(SaveGame);
+            saveGameThread.Start();
+        }
+
+        private void SaveGame()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream stream = new FileStream(_savePath + "/gamesave" + model.id.ToString() + ".txt",FileMode.OpenOrCreate);
-            bf.Serialize(stream, model);
+            FileStream stream = new FileStream(_savePath + "/gamesave" + currGameModel.id.ToString() + ".txt", FileMode.OpenOrCreate);
+            bf.Serialize(stream, currGameModel);
             stream.Close();
+            return;
         }
 
         public void LoadGame(GameModel model)
         {
+            currGameModel = model;
             PlayerController.Instance.enabled = false;
             SceneManager.LoadScene(model.sceneName);
-            SceneManager.sceneLoaded += (scene,loadMode) => {
+            SceneManager.sceneLoaded += (scene, loadMode) =>
+            {
                 GameMarkPointManager.Instance.GetRoot();
                 //如果存档中的坐标还没有被修改过
-                if (model.x == float.MinValue)
-                {
+                if (model.mark == 0)
                     GameMarkPointManager.Instance.GoToMark(1);
-                }
+                else
+                    GameMarkPointManager.Instance.GoToMark(model.mark);
                 PlayerController.Instance.enabled = true;
             };
         }
@@ -89,8 +104,8 @@ namespace AiLing
             GameModel model = new GameModel();
             model.id = archives.Count + 1;
             model.sceneName = _firstScene;
-            model.section = 1;
-            SaveGame(model);
+            model.mark = 1;
+            SaveGameAsyn();
             Debug.Log("new archive");
             return model;
         }
@@ -98,6 +113,12 @@ namespace AiLing
         void Update()
         {
 
+        }
+
+        private void OnDestroy()
+        {
+            if (saveGameThread != null)
+                saveGameThread.Abort();
         }
     }
 }

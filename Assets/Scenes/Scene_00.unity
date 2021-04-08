@@ -1464,6 +1464,280 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1132118160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132118161}
+  - component: {fileID: 1132118164}
+  - component: {fileID: 1132118163}
+  - component: {fileID: 1132118162}
+  m_Layer: 0
+  m_Name: mark2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1132118161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132118160}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.6, y: -58.68065, z: -382.09616}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1382877828}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1132118162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132118160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94cf022e5ce71fe44b40123bf2338d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTimes: 1
+--- !u!114 &1132118163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132118160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditionEvents:
+  - listener: {fileID: 1132118163}
+    si: {fileID: 0}
+    conditions: []
+    events:
+    - conditionEvents:
+        listener: {fileID: 1132118163}
+        si: {fileID: 0}
+        conditions: []
+        events:
+        - conditionEvents:
+            listener: {fileID: 1132118163}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 1132118163}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+              eventHandler: {fileID: 1132118160}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+                realEvent: {fileID: 1132118162}
+                timing: 0
+          eventHandler: {fileID: 1132118160}
+          eventChooses:
+          - mod:
+              conditionEvents:
+                listener: {fileID: 1132118163}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+              eventHandler: {fileID: 1132118160}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+                realEvent: {fileID: 1132118162}
+                timing: 0
+            realEvent: {fileID: 1132118162}
+            timing: 0
+      eventHandler: {fileID: 1132118160}
+      eventChooses:
+      - mod:
+          conditionEvents:
+            listener: {fileID: 1132118163}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 1132118163}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+              eventHandler: {fileID: 1132118160}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+                realEvent: {fileID: 1132118162}
+                timing: 0
+          eventHandler: {fileID: 1132118160}
+          eventChooses:
+          - mod:
+              conditionEvents:
+                listener: {fileID: 1132118163}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+              eventHandler: {fileID: 1132118160}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 1132118163}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                  eventHandler: {fileID: 1132118160}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1132118160}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 1132118162}
+                    timing: 0
+                realEvent: {fileID: 1132118162}
+                timing: 0
+            realEvent: {fileID: 1132118162}
+            timing: 0
+        realEvent: {fileID: 1132118162}
+        timing: 0
+--- !u!65 &1132118164
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132118160}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 29.82, z: 69.95}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1382877827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,6 +1766,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 569102208}
+  - {fileID: 1132118161}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
