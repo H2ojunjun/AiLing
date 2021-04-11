@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/TestPostProcessShader"
+Shader "Custom/PostProcess/BlackScreen"
 {
 	Properties
 	{
@@ -20,9 +20,6 @@ Shader "Custom/TestPostProcessShader"
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;
-			// float _FadeIn;
-			// float _Duration;
-			// float _FadeOut;
 			float _Lerp;
 
 			struct appdata

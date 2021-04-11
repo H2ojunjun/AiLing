@@ -15,12 +15,6 @@ public class BlackScreenPostProcess : PostProcessBase
         }
     }
 
-    //public float fadeIn = 1.0f;
-
-    //public float duration = 1.0f;
-
-    //public float fadeOut = 1.0f;
-
     //当前颜色值到0，0，0的插值
     public float lerp = 0;
 
@@ -38,15 +32,6 @@ public class BlackScreenPostProcess : PostProcessBase
 
     private void Update()
     {
-        //if (fadeIn > 0)
-        //    fadeIn = fadeIn - Time.deltaTime;
-        //else if (duration > 0)
-        //    duration = duration - Time.deltaTime;
-        //else if (fadeOut > 0)
-        //    fadeOut = fadeOut - Time.deltaTime;
-        //BlackScreenMat.SetFloat("_FadeIn", fadeIn);
-        //BlackScreenMat.SetFloat("_Duration", duration);
-        //BlackScreenMat.SetFloat("_FadeOut", fadeOut);
         BlackScreenMat.SetFloat("_Lerp", lerp);
     }
 }
