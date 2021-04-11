@@ -10,11 +10,21 @@ namespace AiLing
         public override string PackageName { get { return "Pkg_MainMenu"; } }
         public override string componentName { get { return "UI_MainMenu"; } }
 
-        public GComponent c_chooseArchives;
+        private GComponent c_chooseArchives;
 
-        public GList l_choose;
+        private GList l_choose;
 
-        public bool hasShowed = false;
+        private GButton btn_newGame;
+
+        private GButton btn_loadGame;
+
+        private GButton btn_quit;
+
+        private GButton btn_back;
+
+        private Controller ctr_isChooseArchives;
+
+        private bool hasShowed = false;
 
         public override void Init()
         {
@@ -26,6 +36,11 @@ namespace AiLing
         {
             c_chooseArchives = mainCom.GetChild("c_chooseArchives").asCom;
             l_choose = c_chooseArchives.GetChild("l_choose").asList;
+            btn_newGame = mainCom.GetChild("btn_newGame").asButton;
+            btn_loadGame = mainCom.GetChild("btn_loadGame").asButton;
+            btn_quit = mainCom.GetChild("btn_quit").asButton;
+            btn_back = c_chooseArchives.GetChild("btn_back").asButton;
+            ctr_isChooseArchives = mainCom.GetController("ctr_isChooseArchives");
         }
 
         public void RigsterEvent()
@@ -33,6 +48,23 @@ namespace AiLing
             l_choose.onClickItem.Set((content) => {
                 GTextField tf = (content.data as GComponent).GetChild("t_num").asTextField;
                 GameProcesser.Instance.LoadGame(GameProcesser.Instance.archives[int.Parse(tf.text)-1]);
+            });
+
+            btn_newGame.onClick.Set(() => {
+                GameModel model =  GameProcesser.Instance.NewGame();
+                GameProcesser.Instance.LoadGame(model);
+            });
+
+            btn_loadGame.onClick.Set(() => {
+                ctr_isChooseArchives.selectedPage = "yes";
+            });
+
+            btn_quit.onClick.Set(() => {
+                Application.Quit();
+            });
+
+            btn_back.onClick.Set(() => {
+                ctr_isChooseArchives.selectedPage = "no";
             });
         }
 

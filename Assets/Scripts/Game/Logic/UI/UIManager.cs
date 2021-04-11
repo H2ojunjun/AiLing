@@ -16,7 +16,7 @@ namespace AiLing
             UIBase t = new T();
             if (uiDic.ContainsKey(t.componentName))
                 return null;
-            UIPackage.AddPackage("UI/"+t.PackageName);
+            UIPackage.AddPackage("UI/"+t.PackageName+"/"+t.PackageName);
             GameObject obj = Instantiate(Resources.Load(UI_PATH),Vector3.zero,Quaternion.identity) as GameObject;
             obj.layer = 5;
             obj.name = t.componentName;

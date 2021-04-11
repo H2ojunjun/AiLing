@@ -46,12 +46,7 @@ namespace AiLing
             }
 
             string[] files = Directory.GetFiles(_savePath);
-            if (files.Length == 0)
-            {
-                currGameModel = NewGame();
-                LoadGame(currGameModel);
-            }
-            else
+            if (files.Length != 0)
             {
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -62,15 +57,16 @@ namespace AiLing
                     archives.Add(model);
                     Debug.Log("id:" + model.id + "sceneName:" + model.sceneName);
                 }
-                UIManager.Instance.CreateAndShow<UIMainMenu>();
             }
+            UIManager.Instance.CreateAndShow<UIMainMenu>();
         }
 
-        public void SaveGameAsyn()
+        public void SaveGameAsyn(bool showAnim = true)
         {
-            //saveGameAnimationTimer = TimerManager.Instance.AddTimer();
             saveGameThread = new Thread(SaveGame);
             saveGameThread.Start();
+            if (showAnim)
+                UIManager.Instance.CreateAndShow<UISaving>();
         }
 
         private void SaveGame()
@@ -105,7 +101,7 @@ namespace AiLing
             model.id = archives.Count + 1;
             model.sceneName = _firstScene;
             model.mark = 1;
-            SaveGameAsyn();
+            SaveGameAsyn(false);
             Debug.Log("new archive");
             return model;
         }
