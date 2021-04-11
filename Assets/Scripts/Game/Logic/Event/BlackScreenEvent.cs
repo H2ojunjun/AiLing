@@ -16,12 +16,16 @@ namespace AiLing
         public float fadeIn;
         [LabelText("淡出时间")]
         public float fadeOut;
-        [LabelText("灯光")]
-        public Light blackLight;
+        [LabelText("黑屏shader")]
+        public Shader shader;
+
+        private BlackScreenPostProcess blackPP;
         int timer;
         public override void Excute(params object[] unartPara)
         {
             base.Excute(unartPara);
+            blackPP =  GameMainManager.Instance.mainCamera.gameObject.AddComponent<BlackScreenPostProcess>();
+            blackPP.blackScreenShader = shader;
             if (timer != 0)
                 TimerManager.Instance.RemoveTimer(timer);
             timer = TimerManager.Instance.AddTimer(blackTime, 0, 1, EventStart, FadeBlack, EventEnd);
@@ -30,11 +34,17 @@ namespace AiLing
         private void FadeBlack(float time)
         {
             if (blackTime - time < fadeIn && fadeIn != 0)
-                blackLight.intensity = 1 - (blackTime - time) / fadeIn;
+                blackPP.lerp = (blackTime - time) / fadeIn;
             else if (time < fadeOut && fadeOut != 0)
-                blackLight.intensity = 1 - time / fadeOut;
+                blackPP.lerp = time / fadeOut;
             else
-                blackLight.intensity = 0;
+                blackPP.lerp = 1;
+        }
+
+        public override void EventEnd()
+        {
+            base.EventEnd();
+            Destroy(blackPP);
         }
 
         public override GameEventInfoAttribute GetEventAttribute()

@@ -196,7 +196,7 @@ MonoBehaviour:
   blackTime: 0
   fadeIn: 0
   fadeOut: 0
-  blackLight: {fileID: 0}
+  shader: {fileID: 0}
 --- !u!1 &569102207
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,9 +278,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTimes: 1
   blackTime: 3
-  fadeIn: 1
+  fadeIn: 0
   fadeOut: 1
-  blackLight: {fileID: 705507994}
+  shader: {fileID: 4800000, guid: d21d60b90acab9546a11feeb1cbf80f0, type: 3}
 --- !u!114 &628127383
 MonoBehaviour:
   m_ObjectHideFlags: 0
