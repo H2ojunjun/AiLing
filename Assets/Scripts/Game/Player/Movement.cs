@@ -15,6 +15,8 @@ namespace AiLing
         public bool canRun = true;
         public bool canJump = true;
         public bool isRight = true;
+        public bool isPush = false;
+        public bool isPull = false;
 
         public PlayerController owner;
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
@@ -84,19 +86,6 @@ namespace AiLing
         public Movement(PlayerController owner)
         {
             this.owner = owner;
-        }
-
-        public void FallingDown(float time)
-        {
-            speedVertical = speedVertical - _gravity * time;
-        }
-
-        public void Jump(float speed = 0)
-        {
-            if (speed != 0)
-                speedVertical = speed;
-            else
-                speedVertical = _jumpSpeed;
         }
     }
 }

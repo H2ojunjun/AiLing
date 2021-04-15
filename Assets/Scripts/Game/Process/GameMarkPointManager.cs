@@ -33,15 +33,14 @@ namespace AiLing
         public void GoToMark(int index)
         {
             _currMark = marks[index-1];
-            PhsicsHelper.TransPort(GameMainManager.Instance.player.transform,_currMark.transform);
-            Debug.Log("position:"+ GameMainManager.Instance.player.transform.position+ "curr Mark pos:"+_currMark.transform.position);
             //将之前的存档点禁用
-            for(int i = 0; i <= index-1; i++)
+            for (int i = 0; i <= index - 1; i++)
             {
                 EventListener el = marks[i].GetComponent<EventListener>();
                 if (el != null)
-                    el.enabled = false;
+                    el.active = false;
             }
+            PhsicsHelper.TransPort(GameMainManager.Instance.player.transform,_currMark.transform);
             Debug.Log("goto index:"+index);
         }
 

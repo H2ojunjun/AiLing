@@ -11,9 +11,11 @@ using Sirenix.Serialization;
 
 namespace AiLing
 {
-    //[ExecuteInEditMode]
     public class EventListener : MonoBehaviour
     {
+        [LabelText("激活")]
+        public bool active = true;
+
         [LabelText("条件事件列表")]
         [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddConditionEvent", DraggableItems = false)]
         public List<ConditionEvents> conditionEvents = new List<ConditionEvents>();
@@ -21,32 +23,6 @@ namespace AiLing
         //非人为设置(人为无法预知)的事件参数，由程序判断，如发生碰撞后其他物体的碰撞器等
         [HideInInspector]
         public List<object> unartificialPara;
-
-        //[PropertyOrder(0)]
-        //[PropertySpace]
-        //[GUIColor(0.3f, 1f, 0.5f, 1)]
-        //[Button("初始化事件系统", ButtonSizes.Medium)]
-        //private void InitEventList()
-        //{
-        //    EventTypeDic.Clear();
-        //    var types = ReflectionHelper.GetSubtypes(typeof(GameEvent).Assembly, typeof(GameEvent), false);
-        //    foreach (var type in types)
-        //    {
-        //        var attribute = type.GetCustomAttribute<GameEventInfoAttribute>();
-        //        if (attribute != null)
-        //        {
-        //            string eventName = attribute.eventName;
-        //            int parameterNum = attribute.parameterNum;
-        //            string[] paraNames = attribute.paraNames;
-        //            int gameobjectNum = attribute.gameobjectNum;
-        //            string[] gameObjNames = attribute.gameObjNames;
-        //            bool isUnArtificial = attribute.isUnArtificial;
-        //            EventModifier.eventNames.Add(eventName);
-        //            GameEventInfo info = new GameEventInfo(type, parameterNum, paraNames, gameobjectNum, gameObjNames, isUnArtificial);
-        //            EventTypeDic.Add(eventName, info);
-        //        }
-        //    }
-        //}
 
         [Button("刷新")]
         [GUIColor(0.3f, 1f, 0.5f, 1)]
@@ -69,6 +45,8 @@ namespace AiLing
 
         public virtual void CallEvent()
         {
+            if (!active)
+                return;
             foreach (var item in conditionEvents)
             {
                 if (item.GetConditionRealResult())

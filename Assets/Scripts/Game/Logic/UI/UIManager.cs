@@ -17,7 +17,8 @@ namespace AiLing
             if (uiDic.ContainsKey(t.componentName))
                 return null;
             UIPackage.AddPackage("UI/"+t.PackageName+"/"+t.PackageName);
-            GameObject obj = Instantiate(Resources.Load(UI_PATH),Vector3.zero,Quaternion.identity) as GameObject;
+            GameObject ui = Resources.Load(UI_PATH) as GameObject;
+            GameObject obj = Instantiate(ui, Vector3.zero,Quaternion.identity);
             obj.layer = 5;
             obj.name = t.componentName;
             UIPanel panel = obj.GetComponent<UIPanel>();

@@ -86,11 +86,7 @@ namespace AiLing
             SceneManager.sceneLoaded += (scene, loadMode) =>
             {
                 GameMarkPointManager.Instance.GetRoot();
-                //如果存档中的坐标还没有被修改过
-                if (model.mark == 0)
-                    GameMarkPointManager.Instance.GoToMark(1);
-                else
-                    GameMarkPointManager.Instance.GoToMark(model.mark);
+                GameMarkPointManager.Instance.GoToMark(model.mark);
                 PlayerController.Instance.enabled = true;
             };
         }
@@ -101,6 +97,7 @@ namespace AiLing
             model.id = archives.Count + 1;
             model.sceneName = _firstScene;
             model.mark = 1;
+            currGameModel = model;
             SaveGameAsyn(false);
             Debug.Log("new archive");
             return model;
