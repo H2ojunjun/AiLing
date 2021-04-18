@@ -44,7 +44,17 @@ namespace AiLing
 
         //事件的结束callback
         public event Action finishCallBack { add { _finishCallBack += value; } remove { _finishCallBack -= value; } }
-        public virtual void Excute(params object[] unartPara)
+
+        public static void CallEventPrefab(GameObject prefab, List<GameObject> unartPara)
+        {
+            GameEvent[] events = prefab.GetComponents<GameEvent>();
+            foreach(var e in events)
+            {
+                e.Excute(unartPara);
+            }
+        }
+
+        public virtual void Excute( List<GameObject> unartPara)
         {
             currEvents.Add(this);
         }

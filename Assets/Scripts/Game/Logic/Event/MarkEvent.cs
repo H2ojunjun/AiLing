@@ -9,7 +9,7 @@ namespace AiLing
     [GameEventInfo("标记点更新")]
     public class MarkEvent : GameEvent
     {
-        public override void Excute(params object[] unartPara)
+        public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
             EventStart();

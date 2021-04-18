@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 namespace AiLing
 {
     //所有的玩家物理效果的接口都在此
-    [RequireComponent(typeof(CharacterController), typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController), typeof(Rigidbody),typeof(LogicContainer))]
     public class PlayerController : MonoSingleton<PlayerController>
     {
         private bool _oldIsInAir;
@@ -13,7 +13,6 @@ namespace AiLing
         //地面上垂直速度的最小值
         private float _speedVerticalMinOnGround = -3;
 
-        public Movement movement;
         [LabelText("跳跃初速度")]
         public float jumpSpeed = 6;
         [LabelText("重力加速度")]
@@ -35,15 +34,26 @@ namespace AiLing
         public CharacterController cc;
         [HideInInspector]
         public Rigidbody body;
+
+        public LogicContainer container;
+        public Movement movement;
+        public PlayerLife player;
+
         public bool isInAir { get { return movement.isInAir; } set { movement.isInAir = value; } }
         public MovementAnimatorSetter movementAnimSetter;
+        public PlayerLifeAnimatorSetter playerLifeAnimatorSetter;
 
         void Start()
         {
-            movement = new Movement(this);
+            container = GetComponent<LogicContainer>();
+            movement = container.AddSingletonLogicComponent<Movement>();
+            movement.runSpeedMin = horizontalSpeedMax/2;
+            player = container.AddSingletonLogicComponent<PlayerLife>();
             cc = GetComponent<CharacterController>();
             movementAnimSetter = new MovementAnimatorSetter(GetComponent<Animator>());
-            movementAnimSetter.InitMovementAnimatorInfo();
+            playerLifeAnimatorSetter = new PlayerLifeAnimatorSetter(GetComponent<Animator>());
+            movementAnimSetter.InitAnimatorInfo();
+            playerLifeAnimatorSetter.InitAnimatorInfo();
             body = GetComponent<Rigidbody>();
             body.useGravity = false;
             body.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
@@ -231,7 +241,8 @@ namespace AiLing
         {
             Move();
             Push();
-            movementAnimSetter.SetMovementAnimatorInfo(movement);
+            movementAnimSetter.SetAnimatorInfo(movement);
+            playerLifeAnimatorSetter.SetAnimatorInfo(player);
         }
     }
 }

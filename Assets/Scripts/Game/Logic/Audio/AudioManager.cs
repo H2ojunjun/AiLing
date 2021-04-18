@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace AiLing
 {
@@ -9,18 +10,20 @@ namespace AiLing
 	/// </summary>
 	public class AudioManager : MonoSingleton<AudioManager>
 	{
-		Dictionary<EMusicName, AudioSource> _audioSourceDic = new Dictionary<EMusicName, AudioSource>();
-		const string AUDIO_PATH = "Audios/";
+		Dictionary<AudioClip, AudioSource> _sourceDic = new Dictionary<AudioClip, AudioSource>();
+
+		[LabelText("默认背景音乐")]
+		public AudioClip defaultClip;
 		//用于播放背景音乐的音源组件
-		AudioSource _musicAudioSource = null;
+		AudioSource _bkgMusicAudioSource = null;
 		//音源资源池，专用于播放音效。
 		AudioSource[] _soundAudioSourceArr;
 
 		void Awake()
 		{
-			_musicAudioSource = gameObject.GetComponent<AudioSource>();
+			_bkgMusicAudioSource = gameObject.GetComponent<AudioSource>();
 			//将背景音乐的音源组件设置为循环播放模式。
-			_musicAudioSource.loop = true;
+			_bkgMusicAudioSource.loop = true;
 
 			//初始化音效数组
 			_soundAudioSourceArr = new AudioSource[5];
@@ -30,44 +33,35 @@ namespace AiLing
 				go.transform.parent = transform;
 				_soundAudioSourceArr[i] = go.AddComponent<AudioSource>();
 			}
-			PlayAudio(_musicAudioSource, EMusicName.BackGround);
+			if(defaultClip != null)
+				PlayAudio(_bkgMusicAudioSource, defaultClip);
 		}
 
 		/// <summary>
-		/// 播放指定背景音乐
+		/// 播放指定音乐
 		/// </summary>
-		private void PlayAudio(AudioSource audioSource, EMusicName music)
+		private void PlayAudio(AudioSource audioSource, AudioClip music)
 		{
-			audioSource.clip = GetAudio(music);
+			audioSource.clip = music;
 			audioSource.Play();
-			AudioSource asource = null;
-			if (!_audioSourceDic.TryGetValue(music, out asource))
-			{
-				_audioSourceDic.Add(music, audioSource);
-			}
-			else
-				_audioSourceDic[music] = audioSource;
-		}
-
-		/// <summary>
-		/// 根据提供的声音枚举，加载对应的声音文件
-		/// </summary>
-		/// <returns>The aduio.</returns>
-		/// <param name="audioEnum">Audio enum.</param>
-		AudioClip GetAudio(EMusicName audioEnum)
-		{
-			AudioClip clip = Resources.Load(AUDIO_PATH + audioEnum.ToString()) as AudioClip;
-			return clip;
+            if (!_sourceDic.ContainsKey(music))
+            {
+				_sourceDic.Add(music, audioSource);
+            }
+            else
+            {
+				_sourceDic[music] = audioSource;
+            }
 		}
 
         /// <summary>
         /// 播放枚举指定的音效
         /// </summary>
-        /// <param name="audioEnum">Audio enum.</param>
-        public void PlaySound(EMusicName audioEnum)
+        /// <param name="music">Audio enum.</param>
+        public void PlaySound(AudioClip music)
         {
             AudioSource audioSource = GetFreeAudioSource(_soundAudioSourceArr);
-			PlayAudio(audioSource, audioEnum);
+			PlayAudio(audioSource, music);
 		}
 
         AudioSource GetFreeAudioSource(AudioSource[] pool)
@@ -90,10 +84,20 @@ namespace AiLing
 			}
 		}
 
-		public void StopSpecificAudio(EMusicName music)
+		public void StopBkgMusic()
+        {
+			_bkgMusicAudioSource.Stop();
+        }
+
+		public void SetBkgMusic(AudioClip music)
+        {
+			PlayAudio(_bkgMusicAudioSource, music);
+		}
+
+		public void StopSpecificAudio(AudioClip music)
         {
 			AudioSource asource = null;
-			if (_audioSourceDic.TryGetValue(music, out asource))
+			if (_sourceDic.TryGetValue(music, out asource))
 			{
 				asource.Stop();
 			}

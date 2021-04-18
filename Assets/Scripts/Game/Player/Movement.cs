@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace AiLing
 {
-    public class Movement
+    public class Movement : LogicComponent
     {
+        private List<Movement> _allMovement = new List<Movement>();
+
         private float _speedHorizontal;
         private float _speedVertical;
-        private float _gravity = 10;
-        private float _jumpSpeed { get { return owner.jumpSpeed; } }
+        private float _runSpeedMin;
 
         public bool canWalk = true;
         public bool canRun = true;
@@ -18,14 +19,17 @@ namespace AiLing
         public bool isPush = false;
         public bool isPull = false;
 
-        public PlayerController owner;
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
         public bool isRun { get { return Mathf.Abs(speedHorizontal) >= runSpeedMin && !isInAir; } }
         public bool isInAir;
 
+
+
+        //记得设置
         public float runSpeedMin
         {
-            get { return owner.horizontalSpeedMax/2; }
+            get { return _runSpeedMin; }
+            set { _runSpeedMin = value; }
         }
 
         public float speedHorizontal
@@ -83,9 +87,16 @@ namespace AiLing
         //速度的向量
         public Vector3 moveVec { get { return Vector3.right * speedHorizontal + Vector3.up * speedVertical; } }
 
-        public Movement(PlayerController owner)
+        public override void OnCreate()
         {
-            this.owner = owner;
+            base.OnCreate();
+            _allMovement.Add(this);
+        }
+
+        public override void OnDestory()
+        {
+            base.OnDestory();
+            _allMovement.Remove(this);
         }
     }
 }

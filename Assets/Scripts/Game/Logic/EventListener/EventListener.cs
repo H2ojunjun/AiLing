@@ -22,7 +22,7 @@ namespace AiLing
 
         //非人为设置(人为无法预知)的事件参数，由程序判断，如发生碰撞后其他物体的碰撞器等
         [HideInInspector]
-        public List<object> unartificialPara;
+        public List<GameObject> unartificialPara;
 
         [Button("刷新")]
         [GUIColor(0.3f, 1f, 0.5f, 1)]
@@ -59,9 +59,9 @@ namespace AiLing
             }
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            unartificialPara = new List<object>();
+            unartificialPara = new List<GameObject>();
             RefreshAll();
         }
 
@@ -100,6 +100,11 @@ namespace AiLing
         private void AddCondition()
         {
             Condition cod = new Condition();
+            if (si == null)
+            {
+                Debug.LogError("未设置状态！");
+                return;
+            }
             cod.statusCNNames = si.myStatusCNNames;
             cod.owner = this;
             conditions.Add(cod);
@@ -338,7 +343,7 @@ namespace AiLing
         {
             foreach (var eve in eventChooses)
             {
-                GameEvent realEvent = eve.realEvent;
+                    GameEvent realEvent = eve.realEvent;
                 if (!hasSetStatusChangeCallBack)
                 {
                     if (eve.timing == ESetStatusTiming.Start)

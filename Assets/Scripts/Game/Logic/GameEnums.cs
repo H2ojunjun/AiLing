@@ -18,14 +18,6 @@ namespace AiLing
         }
     }
 
-    public enum EMusicName
-    {
-        [GameEnum("背景音乐")]
-        BackGround,
-        [GameEnum("汽车碰撞")]
-        CarCrash,
-    }
-
     public enum EOperation
     {
         [GameEnum("大于")]

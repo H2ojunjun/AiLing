@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace AiLing
 {
-    public class MovementAnimatorSetter
+    public class MovementAnimatorSetter : AnimatorSetter
     {
-        Animator animator;
         int speedHorizontalID;
         int speedVerticalID;
         int isWalkID;
@@ -18,12 +17,12 @@ namespace AiLing
         int isPushID;
         int isPullID;
 
-        public MovementAnimatorSetter(Animator animator)
+        public MovementAnimatorSetter(Animator animator) : base(animator)
         {
-            this.animator = animator;
+
         }
 
-        public void InitMovementAnimatorInfo()
+        public override void InitAnimatorInfo()
         {
             speedHorizontalID = Animator.StringToHash("speedHorizontal");
             speedVerticalID = Animator.StringToHash("speedVertical");
@@ -37,20 +36,21 @@ namespace AiLing
             isPullID = Animator.StringToHash("isPull");
         }
 
-        public void SetMovementAnimatorInfo(Movement movement)
+        public override void SetAnimatorInfo(LogicComponent component)
         {
             if (animator == null)
             {
                 Debug.LogError("animator is null!");
                 return;
             }
+            Movement movement = component as Movement;
             animator.SetFloat(speedHorizontalID, movement.speedHorizontal);
             animator.SetFloat(speedVerticalID, movement.speedVerticalFake);
             animator.SetBool(isWalkID, movement.isWalk);
             animator.SetBool(isRunID, movement.isRun);
             animator.SetBool(isInAirID, movement.isInAir);
             animator.SetFloat(moveSpeedID, movement.moveSpeedFake);
-            animator.SetFloat(speedHorizontalAbsID,Mathf.Abs(movement.speedHorizontal));
+            animator.SetFloat(speedHorizontalAbsID, Mathf.Abs(movement.speedHorizontal));
             animator.SetBool(isRightID, movement.isRight);
             animator.SetBool(isPushID, movement.isPush);
             animator.SetBool(isPullID, movement.isPull);

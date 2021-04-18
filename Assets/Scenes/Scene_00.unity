@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftTimes: 1
-  music: 1
+  music: {fileID: 8300000, guid: d595e83746af78549af2d63355ad8757, type: 3}
   time: 1
   interval: 0
   delay: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 1
   conditionEvents:
   - listener: {fileID: 628127383}
     si: {fileID: 0}
@@ -1150,11 +1151,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628127380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.78, y: 24.470001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1104204302}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &628127385
 BoxCollider:
@@ -1338,6 +1339,163 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &959933470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959933471}
+  - component: {fileID: 959933475}
+  - component: {fileID: 959933472}
+  m_Layer: 0
+  m_Name: Trigger_Death
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &959933471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959933470}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 20.18, y: -1.71, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1104204302}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &959933472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959933470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd65c848914106b49aba0f5446accc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTimes: -1
+  target: {fileID: 0}
+--- !u!114 &959933475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959933470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  conditionEvents:
+  - listener: {fileID: 959933475}
+    si: {fileID: 0}
+    conditions: []
+    events:
+    - conditionEvents:
+        listener: {fileID: 959933475}
+        si: {fileID: 0}
+        conditions: []
+        events:
+        - conditionEvents:
+            listener: {fileID: 959933475}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 959933475}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 959933475}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 0}
+          eventChooses: []
+      eventHandler: {fileID: 959933470}
+      eventChooses:
+      - mod:
+          conditionEvents:
+            listener: {fileID: 959933475}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 959933475}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 959933475}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 959933470}
+          eventChooses:
+          - mod:
+              conditionEvents:
+                listener: {fileID: 959933475}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 959933475}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 959933470}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 959933475}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 959933470}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 959933470}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 959933472}
+                    timing: 0
+                realEvent: {fileID: 959933472}
+                timing: 0
+            realEvent: {fileID: 959933472}
+            timing: 0
+        realEvent: {fileID: 959933472}
+        timing: 0
 --- !u!1 &980723840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,7 +1589,7 @@ Transform:
   m_LocalScale: {x: 42.6, y: 11.9, z: 86.6}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986369550
 GameObject:
@@ -1462,6 +1620,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1104204301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104204302}
+  m_Layer: 0
+  m_Name: triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1104204302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104204301}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 62.78, y: 24.470001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 628127384}
+  - {fileID: 959933471}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1132118160
 GameObject:
@@ -1521,6 +1711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 1
   conditionEvents:
   - listener: {fileID: 1132118163}
     si: {fileID: 0}
@@ -1767,7 +1958,7 @@ Transform:
   - {fileID: 569102208}
   - {fileID: 1132118161}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1523049054
 GameObject:
@@ -1893,7 +2084,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1523049061
 CharacterController:

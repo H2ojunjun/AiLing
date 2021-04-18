@@ -21,7 +21,7 @@ namespace AiLing
 
         private BlackScreenPostProcess blackPP;
         int timer;
-        public override void Excute(params object[] unartPara)
+        public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
             blackPP =  GameMainManager.Instance.mainCamera.gameObject.AddComponent<BlackScreenPostProcess>();

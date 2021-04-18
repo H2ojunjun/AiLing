@@ -7,15 +7,14 @@ namespace AiLing
 {
     public class TimerManager : MonoSingleton<TimerManager>
     {
-        //保存所有Timer的字典
-        public Dictionary<int, Timer> timerDic = new Dictionary<int, Timer>();
+        //已经发放的id的最大值
+        private int _allocID = -1;
+        //用于保存要删除的timer的索引的列表
+        private List<int> _removeIndexes = new List<int>();
+        //保存所有Timer的列表
+        private List<Timer> _allTimer = new List<Timer>();
         //保存在timerDic中空闲的index
         public Stack<int> freeTimerIndexes = new Stack<int>();
-
-        void Start()
-        {
-            
-        }
 
         /// <summary>
         /// 返回的值是timer在timerList中的index,如果该timer是有限循环的，则不需要对该int有全局引用
@@ -34,18 +33,19 @@ namespace AiLing
                 timer.timeChange += timeChange;
             if (timeEnd != null)
                 timer.timeEnd += timeEnd;
-            int timerKey = 0;
-            if (freeTimerIndexes.Count == 0)
+            int timerKey = -1;
+            if (freeTimerIndexes.Count == 0 || freeTimerIndexes == null)
             {
-                timerKey = timerDic.Count + 1;
+                timerKey = ++_allocID;
+                _allTimer.Add(timer);
             }
             else
             {
                 timerKey = freeTimerIndexes.Pop();
+                _allTimer[timerKey] = timer;
             }
-            timerDic.Add(timerKey, timer);
-            timer.Start();
             timer.id = timerKey;
+            timer.Start();
             return timerKey;
         }
 
@@ -71,24 +71,24 @@ namespace AiLing
 
         public Timer GetTimer(int id)
         {
-            if (timerDic.Count == 0 || timerDic == null || id == 0)
+            if (_allTimer.Count == 0 || _allTimer == null || id == 0)
             {
                 //Debug.LogError("timerList is null or no element");
                 return null;
             }
 
-            if (id < 0 || id > timerDic.Count)
+            if (id < 0 || id > _allTimer.Count)
             {
                 Debug.LogError("cant find timer by id:" + id);
                 return null;
             }
             else
-                return timerDic[id];
+                return _allTimer[id];
         }
 
         public void RemoveTimer(int id)
         {
-            timerDic.Remove(id);
+            _allTimer[id] = null;
             freeTimerIndexes.Push(id);
         }
 
@@ -116,15 +116,22 @@ namespace AiLing
 
         void Update()
         {
-            foreach (var timerItem in timerDic.ToList())
+            _removeIndexes.Clear();
+            foreach (var timer in _allTimer)
             {
-                Timer timer = timerItem.Value;
+                if (timer == null)
+                    continue;
                 if (timer.enable)
                 {
                     timer.Update();
                 }
                 if (timer.isFinished())
-                    RemoveTimer(timerItem.Key);
+                    _removeIndexes.Add(timer.id);
+            }
+
+            foreach(var index in _removeIndexes)
+            {
+                RemoveTimer(index);
             }
         }
     }
