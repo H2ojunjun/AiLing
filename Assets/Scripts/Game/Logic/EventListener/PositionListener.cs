@@ -8,6 +8,9 @@ namespace AiLing
     [RequireComponent(typeof(BoxCollider))]
     public class PositionListener : EventListener
     {
+        [LabelText("碰撞检测层")]
+        public LayerMask layer = 1<<10;
+
         private BoxCollider _collider;
 
         protected override void Awake()
@@ -20,7 +23,10 @@ namespace AiLing
         private void OnTriggerEnter(Collider other)
         {
             unartificialPara.Clear();
-            this.unartificialPara.Add(other.gameObject);
+            GameObject obj = other.gameObject;
+            if (((1 << obj.layer) & (1<<layer)) == 0)
+                return;
+            this.unartificialPara.Add(obj);
             base.CallEvent();
         }
     }

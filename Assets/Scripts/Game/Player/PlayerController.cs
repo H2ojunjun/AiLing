@@ -115,7 +115,7 @@ namespace AiLing
             {
                 movement.speedHorizontal = 0;
             }
-            if (InputManager.Instance.GetKeyDown(KeyCode.Joystick1Button0) || InputManager.Instance.GetKeyDown(KeyCode.Space))
+            if (InputManager.Instance.GetKeyDown(KeyCode.JoystickButton0) || InputManager.Instance.GetKeyDown(KeyCode.Space))
             {
                 if (!isInAir)
                 {
@@ -149,7 +149,7 @@ namespace AiLing
 
         private void Push()
         {
-            if ((InputManager.Instance.GetKeyPress(KeyCode.Mouse0) || InputManager.Instance.GetKeyPress(KeyCode.Joystick1Button1))&&!isInAir)
+            if ((InputManager.Instance.GetKeyPress(KeyCode.Mouse0) || InputManager.Instance.GetKeyPress(KeyCode.JoystickButton1))&&!isInAir)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position+Vector3.up, Vector3.right * (movement.isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
@@ -201,7 +201,7 @@ namespace AiLing
                 }
             }
 
-            if (InputManager.Instance.GetKeyUp(KeyCode.Mouse0) || InputManager.Instance.GetKeyUp(KeyCode.Joystick1Button1))
+            if (InputManager.Instance.GetKeyUp(KeyCode.Mouse0) || InputManager.Instance.GetKeyUp(KeyCode.JoystickButton1))
             {
                 if (pushObj != null)
                 {

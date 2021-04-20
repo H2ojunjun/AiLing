@@ -12,27 +12,29 @@ namespace AiLing
     {
         [LabelText("目标(想要player死就不传)")]
         public GameObject target;
+
+        private GameObject _realTarget;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
             if (target == null)
             {
-                target = unartPara[0] as GameObject;
+                _realTarget = unartPara[0] as GameObject;
             }
-            LogicContainer container = target.GetComponent<LogicContainer>();
+            else
+                _realTarget = target;
+            LogicContainer container = _realTarget.GetComponent<LogicContainer>();
             if (container == null)
             {
-                Debug.LogError("container is null，please check does:" + target.name + "have LogicContainer");
                 return;
             }
             Creature creature = container.GetSingletonLogicCompoent<Creature>();
             if (creature == null)
             {
-                Debug.LogError("creature is null，please check does creature attached on" + target.name + "'s LogicContainer");
                 return;
             }
             creature.OnDead();
-            GameObject deathEventPrefab = target.transform.Find("events/deathEvents").gameObject;
+            GameObject deathEventPrefab = _realTarget.transform.Find("events/deathEvents").gameObject;
             if (deathEventPrefab != null)
             {
                 GameEvent.CallEventPrefab(deathEventPrefab,unartPara);
