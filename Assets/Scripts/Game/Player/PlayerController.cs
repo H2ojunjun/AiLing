@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 namespace AiLing
 {
     //所有的玩家物理效果的接口都在此
-    [RequireComponent(typeof(CharacterController), typeof(Rigidbody),typeof(LogicContainer))]
+    [RequireComponent(typeof(CharacterController), typeof(Rigidbody), typeof(LogicContainer))]
     public class PlayerController : MonoSingleton<PlayerController>
     {
         private bool _oldIsInAir;
@@ -12,6 +12,19 @@ namespace AiLing
         private float _rotationDelta;
         //地面上垂直速度的最小值
         private float _speedVerticalMinOnGround = -3;
+        private int climbableMask = 11;
+        //竖直和水平控制攀爬的分界余弦值,接触平面的法向量和vector2.right的夹角的余弦值的绝对值小于改值则水平控制攀爬，否之亦然
+        private float horizontalVerticalDivide = Mathf.Cos(Mathf.PI / 4);
+        //攀爬平面的法向量
+        private Vector2 panelNormal = Vector2.zero;
+        //用于检测攀爬的碰撞器
+        private Collider climbCollider;
+        //碰撞器路径
+        private const string climbColliderPath = "colliders/climb";
+        //取消攀爬碰撞检测Timer
+        private int cancelClimbCollisionTimer;
+        //攀爬上的动画clip
+        private AnimationClip climbUpAnimationClip;
 
         [LabelText("跳跃初速度")]
         public float jumpSpeed = 6;
@@ -21,12 +34,18 @@ namespace AiLing
         public float horizontalAcceleration = 10;
         [LabelText("水平速度最大值")]
         public float horizontalSpeedMax = 50;
+        [LabelText("攀爬速度")]
+        public float climbSpeed = 50;
         [LabelText("转向时间")]
         public float roationTime = 1;
         [LabelText("射线检测距离")]
         public float raycastDistance;
         [LabelText("射线检测layer")]
         public LayerMask raycastMask;
+        [LabelText("右手")]
+        [ReadOnly]
+        public Transform rightHandTransform;
+
         [ReadOnly]
         [LabelText("被推物体")]
         public PushableObject pushObj;
@@ -34,8 +53,12 @@ namespace AiLing
         public CharacterController cc;
         [HideInInspector]
         public Rigidbody body;
-
+        [HideInInspector]
+        public Vector3 climbNormal = Vector3.zero;
+        [HideInInspector]
         public LogicContainer container;
+        [HideInInspector]
+        public Animator animator;
         public Movement movement;
         public PlayerLife player;
 
@@ -47,16 +70,20 @@ namespace AiLing
         {
             container = GetComponent<LogicContainer>();
             movement = container.AddSingletonLogicComponent<Movement>();
-            movement.runSpeedMin = horizontalSpeedMax/2;
+            movement.runSpeedMin = horizontalSpeedMax / 2;
             player = container.AddSingletonLogicComponent<PlayerLife>();
             cc = GetComponent<CharacterController>();
-            movementAnimSetter = new MovementAnimatorSetter(GetComponent<Animator>());
-            playerLifeAnimatorSetter = new PlayerLifeAnimatorSetter(GetComponent<Animator>());
+            animator = GetComponent<Animator>();
+            AddAnimationEvent(animator, "Sprint To Wall Climb", "ClimbUpFinish", -1);
+            movementAnimSetter = new MovementAnimatorSetter(animator);
+            playerLifeAnimatorSetter = new PlayerLifeAnimatorSetter(animator);
             movementAnimSetter.InitAnimatorInfo();
             playerLifeAnimatorSetter.InitAnimatorInfo();
             body = GetComponent<Rigidbody>();
             body.useGravity = false;
             body.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            body.sleepThreshold = 0;
+            climbCollider = transform.Find(climbColliderPath).GetComponent<Collider>();
             _rotationDelta = 90 / (roationTime / Time.fixedDeltaTime);
             enabled = false;
         }
@@ -119,7 +146,7 @@ namespace AiLing
             {
                 if (!isInAir)
                 {
-                    if(pushObj != null)
+                    if (pushObj != null)
                     {
                         pushObj.Break();
                         pushObj = null;
@@ -149,10 +176,10 @@ namespace AiLing
 
         private void Push()
         {
-            if ((InputManager.Instance.GetKeyPress(KeyCode.Mouse0) || InputManager.Instance.GetKeyPress(KeyCode.JoystickButton1))&&!isInAir)
+            if ((InputManager.Instance.GetKeyPress(KeyCode.Mouse0) || InputManager.Instance.GetKeyPress(KeyCode.JoystickButton1)) && !isInAir)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position+Vector3.up, Vector3.right * (movement.isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
+                if (Physics.Raycast(transform.position + Vector3.up, Vector3.right * (movement.isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
                 {
                     if (pushObj == null)
                     {
@@ -165,9 +192,9 @@ namespace AiLing
                         }
                     }
                 }
-                if(pushObj!= null)
+                if (pushObj != null)
                 {
-                    if(pushObj.gameObject.transform.position.x > transform.position.x)
+                    if (pushObj.gameObject.transform.position.x > transform.position.x)
                     {
                         if (movement.isRight)
                         {
@@ -180,7 +207,7 @@ namespace AiLing
                             movement.isPull = true;
                         }
                     }
-                    else if(pushObj.gameObject.transform.position.x < transform.position.x)
+                    else if (pushObj.gameObject.transform.position.x < transform.position.x)
                     {
                         if (movement.isRight)
                         {
@@ -211,6 +238,30 @@ namespace AiLing
             }
         }
 
+        private void Climb()
+        {
+            Debug.Log("climb");
+            if (movement.isClimbUp == true|| climbNormal == Vector3.zero)
+                return;
+            panelNormal.x = climbNormal.x;
+            panelNormal.y = climbNormal.y;
+            panelNormal = panelNormal.normalized;
+            //求出realNormal和right的夹角的余弦值
+            float dot = Vector2.Dot(panelNormal, Vector2.right);
+            float input = 0;
+            if (Mathf.Abs(dot) < horizontalVerticalDivide)
+            {
+                //水平方向按键控制攀爬
+                input = InputManager.Instance.GetHorizontal();
+            }
+            else
+                input = InputManager.Instance.GetVertical();
+            //Debug.Log("input:"+input);
+            //Debug.Log("climbSpeed:" + climbSpeed);
+            movement.moveVec = Quaternion.AngleAxis(90f, Vector3.forward) * panelNormal * climbSpeed * input;
+            cc.Move(movement.moveVec * Time.fixedDeltaTime);
+        }
+
         private void FallDown(float time)
         {
             movement.speedVertical = movement.speedVertical - gravity * time;
@@ -224,9 +275,99 @@ namespace AiLing
                 movement.speedVertical = jumpSpeed;
         }
 
-        private void OnDrawGizmos()
+        /// <summary>
+        /// 添加动画事件
+        /// </summary>    /// <param name="animator"></param>
+        /// <param name="clipName">动画名称</param>
+        /// <param name="eventFunctionName">事件方法名称</param>
+        /// <param name="time">添加事件时间。单位：秒</param>
+        private void AddAnimationEvent(Animator animator, string clipName, string eventFunctionName, float time)
         {
-            Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + Vector3.right * raycastDistance);
+            AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+            for (int i = 0; i < clips.Length; i++)
+            {
+                if (clips[i].name == clipName)
+                {
+                    AnimationEvent _event = new AnimationEvent();
+                    _event.functionName = eventFunctionName;
+                    if (time == -1)
+                        time = clips[i].length;
+                    _event.time = time;
+                    clips[i].AddEvent(_event);
+                    break;
+                }
+            }
+            animator.Rebind();
+        }
+
+        private void ClimbUpFinish()
+        {
+            movement.isClimb = false;
+            movement.isClimbUp = false;
+            animator.applyRootMotion = false;
+            rightHandTransform = null;
+            cc.enabled = true;
+            Debug.LogError("finish:"+transform.position);
+        }
+
+        public void SetRightHandClimbUpPoint(Transform trans)
+        {
+            Debug.LogError("SetRightHandClimbUpPoint");
+            if (movement.isClimb == false)
+                return;
+            cc.enabled = false;
+            Debug.LogError("rightHandTransform"+ rightHandTransform.name);
+            rightHandTransform = trans;
+            animator.applyRootMotion = true;
+            movement.isClimbUp = true;
+            Debug.LogError("start" + transform.position);
+            animator.MatchTarget(rightHandTransform.position, rightHandTransform.rotation,
+                AvatarTarget.RightHand, new MatchTargetWeightMask(new Vector3(1, 1, 1), 0), 0f, 0f);
+            Debug.LogError("rightHandTransform  1" + rightHandTransform.name);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            EvaluateCollision(collision);
+        }
+
+        private void OnCollisionStay(Collision collision)
+        {
+            Debug.LogError("OnCollisionStay");
+            EvaluateCollision(collision);
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            Debug.LogError("OnCollisionExit");
+            EvaluateExit(collision);
+        }
+
+        private void EvaluateCollision(Collision collision)
+        {
+            if (collision.gameObject.layer == climbableMask)
+            {
+                movement.isClimb = true;
+                movement.isInAir = false;
+                for (int i = 0; i < collision.contactCount; i++)
+                {
+                    climbNormal += collision.GetContact(i).normal;
+                }
+            }
+        }
+
+        private void EvaluateExit(Collision collision)
+        {
+            Debug.LogError("exit");
+            if (collision.gameObject.layer == climbableMask)
+            {
+                movement.isClimb = false;
+            }
+        }
+
+        private void ClearStastus()
+        {
+            climbNormal = Vector3.zero;
         }
 
         private void CheckOnGround()
@@ -239,10 +380,17 @@ namespace AiLing
 
         private void FixedUpdate()
         {
-            Move();
-            Push();
+            if (!movement.isClimbUp)
+            {
+                if (movement.isClimb)
+                    Climb();
+                else
+                    Move();
+                Push();
+            }
             movementAnimSetter.SetAnimatorInfo(movement);
             playerLifeAnimatorSetter.SetAnimatorInfo(player);
+            ClearStastus();
         }
     }
 }

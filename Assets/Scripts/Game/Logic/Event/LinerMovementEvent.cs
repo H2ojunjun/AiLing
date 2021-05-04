@@ -8,10 +8,5 @@ namespace AiLing
     [GameEventInfo("直线运动")]
     public class LinerMovementEvent : GameEvent
     {
-        public override GameEventInfoAttribute GetEventAttribute()
-        {
-            throw new System.NotImplementedException();
-        }
     }
-
 }

@@ -14,6 +14,7 @@ namespace AiLing
     public class EventListener : MonoBehaviour
     {
         [LabelText("激活")]
+        [ReadOnly]
         public bool active = true;
 
         [LabelText("条件事件列表")]
@@ -309,7 +310,7 @@ namespace AiLing
         public GameObject eventHandler;
 
         [LabelText("事件选择器")]
-        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventChoose", DraggableItems = false)]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventChoose",DraggableItems = false)]
         public List<EventChoose> eventChooses = new List<EventChoose>();
 
         public void OnGameObjectChange()
@@ -320,10 +321,11 @@ namespace AiLing
                 return;
             }
             GameEvent[] events = eventHandler.GetComponents<GameEvent>();
-            foreach(var item in events)
+            eventNames.Clear();
+            foreach (var item in events)
             {
-                GameEventInfoAttribute eventInfo = item.GetEventAttribute();
-                eventNames.Add(eventInfo.eventName,item);
+                GameEventInfoAttribute eventInfo = ReflectionHelper.GetGameEventAttribute(item);
+                eventNames.Add(eventInfo.eventName, item);
             }
         }
 

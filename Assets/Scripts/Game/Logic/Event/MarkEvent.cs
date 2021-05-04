@@ -29,13 +29,6 @@ namespace AiLing
             EventEnd();
             Debug.Log("mark!"+gameObject.name);
         }
-
-        public override GameEventInfoAttribute GetEventAttribute()
-        {
-            Type t = typeof(MarkEvent);
-            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
-            return attri;
-        }
     }
 }
 

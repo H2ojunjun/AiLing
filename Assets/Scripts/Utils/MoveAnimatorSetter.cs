@@ -16,6 +16,8 @@ namespace AiLing
         int isRightID;
         int isPushID;
         int isPullID;
+        int isClimbID;
+        int isClimbUpID;
 
         public MovementAnimatorSetter(Animator animator) : base(animator)
         {
@@ -34,6 +36,8 @@ namespace AiLing
             isRightID = Animator.StringToHash("isRight");
             isPushID = Animator.StringToHash("isPush");
             isPullID = Animator.StringToHash("isPull");
+            isClimbID = Animator.StringToHash("isClimb");
+            isClimbUpID = Animator.StringToHash("isClimbUp");
         }
 
         public override void SetAnimatorInfo(LogicComponent component)
@@ -54,6 +58,8 @@ namespace AiLing
             animator.SetBool(isRightID, movement.isRight);
             animator.SetBool(isPushID, movement.isPush);
             animator.SetBool(isPullID, movement.isPull);
+            animator.SetBool(isClimbID, movement.isClimb);
+            animator.SetBool(isClimbUpID, movement.isClimbUp);
         }
     }
 }

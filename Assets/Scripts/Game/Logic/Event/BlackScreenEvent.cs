@@ -46,13 +46,6 @@ namespace AiLing
             base.EventEnd();
             Destroy(blackPP);
         }
-
-        public override GameEventInfoAttribute GetEventAttribute()
-        {
-            Type t = typeof(BlackScreenEvent);
-            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
-            return attri;
-        }
     }
 }
 

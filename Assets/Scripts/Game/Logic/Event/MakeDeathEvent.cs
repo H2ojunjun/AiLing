@@ -40,13 +40,6 @@ namespace AiLing
                 GameEvent.CallEventPrefab(deathEventPrefab,unartPara);
             }
         }
-
-        public override GameEventInfoAttribute GetEventAttribute()
-        {
-            Type t = typeof(MakeDeathEvent);
-            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
-            return attri;
-        }
     }
 }
 

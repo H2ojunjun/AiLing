@@ -27,12 +27,5 @@ namespace AiLing
                 EventEnd();
             });
         }
-
-        public override GameEventInfoAttribute GetEventAttribute()
-        {
-            Type t = typeof(PlayAudioEvent);
-            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
-            return attri;
-        }
     }
 }

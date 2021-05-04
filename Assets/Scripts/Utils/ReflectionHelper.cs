@@ -20,6 +20,13 @@ namespace AiLing
                                    return baseType.IsAssignableFrom(type) && type != baseType;
                            });
         }
+
+        public static GameEventInfoAttribute GetGameEventAttribute(GameEvent eve)
+        {
+            Type t = eve.GetType();
+            GameEventInfoAttribute attri = t.GetCustomAttribute<GameEventInfoAttribute>();
+            return attri;
+        }
     }
 }
 

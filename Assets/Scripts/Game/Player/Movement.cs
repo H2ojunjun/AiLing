@@ -18,7 +18,8 @@ namespace AiLing
         public bool isRight = true;
         public bool isPush = false;
         public bool isPull = false;
-
+        public bool isClimb = false;
+        public bool isClimbUp = false;
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
         public bool isRun { get { return Mathf.Abs(speedHorizontal) >= runSpeedMin && !isInAir; } }
         public bool isInAir;
@@ -84,8 +85,24 @@ namespace AiLing
 
         //总速度的模
         public float moveSpeed { get { return moveVec.magnitude; } }
+
+        private Vector3 _moveVec;
         //速度的向量
-        public Vector3 moveVec { get { return Vector3.right * speedHorizontal + Vector3.up * speedVertical; } }
+        public Vector3 moveVec { get 
+            {
+                if (isClimb)
+                    return _moveVec;
+                _moveVec = Vector3.right * speedHorizontal + Vector3.up * speedVertical;
+                return _moveVec; 
+            }
+            set
+            {
+                if (isClimb)
+                    _moveVec = value;
+                else
+                    return;
+            }
+        }
 
         public override void OnCreate()
         {

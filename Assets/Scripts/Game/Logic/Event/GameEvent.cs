@@ -59,8 +59,6 @@ namespace AiLing
             currEvents.Add(this);
         }
 
-        public abstract GameEventInfoAttribute GetEventAttribute();
-
         /// <summary>
         /// 开始事件，特定时间点调用
         /// </summary>

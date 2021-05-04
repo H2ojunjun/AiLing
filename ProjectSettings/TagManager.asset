@@ -16,8 +16,8 @@ TagManager:
   - Pushable
   - Creature
   - Player
-  - 
-  - 
+  - Climbable
+  - detection
   - 
   - 
   - 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace AiLing
 {
+    //参数为float time，该timer所剩余的时间
     public delegate void TimeChangeCallBack(float time);
 
     public delegate void TimerEndCallBack();
@@ -98,6 +99,8 @@ namespace AiLing
                 return;
             }
             leftTime -= Time.deltaTime;
+            if (leftTime < 0)
+                leftTime = 0;
             _timeChange?.Invoke(leftTime);
         }
 
