@@ -146,6 +146,8 @@ namespace AiLing
         public void SetStatus()
         {
             Dictionary<string, Status> statusInfoes = new Dictionary<string, Status>();
+            if (si == null)
+                return;
             foreach (var sta in si.statusInfoes)
             {
                 statusInfoes.Add(sta.statusCN, sta);

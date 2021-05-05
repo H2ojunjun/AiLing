@@ -17,6 +17,8 @@ namespace AiLing
         {
             base.Awake();
             _collider = GetComponent<BoxCollider>();
+            if (_collider == null)
+                _collider = gameObject.AddComponent<BoxCollider>();
             _collider.isTrigger = true;
         }
 
