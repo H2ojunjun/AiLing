@@ -14,7 +14,7 @@ namespace AiLing
     {
         private string _savePath;
 
-        private string _firstScene = "Scene_01";
+        private string _firstScene = "Scene_00";
 
         public bool enable = false;
 

@@ -15,6 +15,7 @@ Shader "Custom/Fog"
         _ScrollDirY ("Scroll along Y", Range(-1., 1.)) = 1.
         _Speed ("Speed", float) = 1.
         _Distance ("Fading distance", Range(1., 10.)) = 1.
+        _AlphaChangeRatio("AlphaChangeRatio",Range(0,2))=1
     }
  
     SubShader
@@ -99,13 +100,15 @@ Shader "Custom/Fog"
             fixed _ScrollDirX;
             fixed _ScrollDirY;
             fixed4 _Color;
- 
+            float _AlphaChangeRatio;
+
             fixed4 frag(v2f i) : SV_Target
             {
                 float2 uv = i.uv + fixed2(_ScrollDirX, _ScrollDirY) * _Speed * _Time.x;
                 fixed4 col = tex2D(_MainTex, uv) * _Color * i.vertCol;
-                col.a *= 0.75 - distance(uv,float2(0.5,0.5));
+                col.a *= min(1,tex2D(_Mask, i.uv2).r*_AlphaChangeRatio);
                 col.a *= 1 - (abs(i.pos.z) * _Distance);
+                //return clamp(distance(i.uv,float2(0.5,0.5))*(-10)+5,0,1);
                 return col;
             }
             ENDCG
