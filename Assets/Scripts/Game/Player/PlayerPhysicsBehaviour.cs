@@ -49,6 +49,8 @@ namespace AiLing
         public float horizontalAcceleration = 3;
         [LabelText("水平速度最大值")]
         public float horizontalSpeedMax = 6;
+        [LabelText("拉速度最大值")]
+        public float pullHorizontalSpeedMax = 4;
         [LabelText("最小奔跑速度")]
         public float horizontalRunSpeedMin = 3;
         [LabelText("转向时间")]
@@ -132,6 +134,10 @@ namespace AiLing
                 float realHorizontalSpeedMax = horizontalSpeedMax;
                 if (!canRun)
                     realHorizontalSpeedMax = horizontalRunSpeedMin;
+                else if (movement.isPull)
+                {
+                    realHorizontalSpeedMax = pullHorizontalSpeedMax;
+                }
                 if (Mathf.Abs(movement.speedHorizontal) < realHorizontalSpeedMax)
                 {
                     float horizontalMove = horizontal > 0 ? 1 : -1;
