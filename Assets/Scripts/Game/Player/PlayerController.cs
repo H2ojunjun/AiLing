@@ -42,6 +42,8 @@ namespace AiLing
         public float raycastDistance;
         [LabelText("射线检测layer")]
         public LayerMask raycastMask;
+        [LabelText("切断push距离")]
+        public float breakPushDis=5;
         [LabelText("右手")]
         [ReadOnly]
         public Transform rightHandTransform;
@@ -227,13 +229,15 @@ namespace AiLing
                     movement.isPull = false;
                 }
             }
-
-            if (InputManager.Instance.GetKeyUp(KeyCode.Mouse0) || InputManager.Instance.GetKeyUp(KeyCode.JoystickButton1))
+            if (pushObj != null)
             {
-                if (pushObj != null)
+                if (InputManager.Instance.GetKeyUp(KeyCode.Mouse0) || InputManager.Instance.GetKeyUp(KeyCode.JoystickButton1) || Vector3.Distance(transform.position, pushObj.transform.position)> breakPushDis)
                 {
+
                     pushObj.Break();
                     pushObj = null;
+                    movement.isPush = false;
+                    movement.isPull = false;
                 }
             }
         }
@@ -241,7 +245,7 @@ namespace AiLing
         private void Climb()
         {
             Debug.Log("climb");
-            if (movement.isClimbUp == true|| climbNormal == Vector3.zero)
+            if (movement.isClimbUp == true || climbNormal == Vector3.zero)
                 return;
             panelNormal.x = climbNormal.x;
             panelNormal.y = climbNormal.y;
@@ -307,7 +311,7 @@ namespace AiLing
             animator.applyRootMotion = false;
             rightHandTransform = null;
             cc.enabled = true;
-            Debug.LogError("finish:"+transform.position);
+            Debug.LogError("finish:" + transform.position);
         }
 
         public void SetRightHandClimbUpPoint(Transform trans)
@@ -316,7 +320,7 @@ namespace AiLing
             if (movement.isClimb == false)
                 return;
             cc.enabled = false;
-            Debug.LogError("rightHandTransform"+ rightHandTransform.name);
+            Debug.LogError("rightHandTransform" + rightHandTransform.name);
             rightHandTransform = trans;
             animator.applyRootMotion = true;
             movement.isClimbUp = true;
