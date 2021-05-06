@@ -116,12 +116,13 @@ namespace AiLing
             float small = transform.localRotation.eulerAngles.y;
             float angle = big < small ? -big : small;
 
-            if (movement.isRight && angle < 90)
+            AnimatorStateInfo info = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+            if (movement.isRight && angle < 90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
             {
                 //向右转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y + _rotationDelta, transform.localRotation.z));
             }
-            if (!movement.isRight && angle > -90)
+            if (!movement.isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
             {
                 //向左转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y - _rotationDelta, transform.localRotation.z));
@@ -158,6 +159,15 @@ namespace AiLing
             else
             {
                 movement.speedHorizontal = 0;
+            }
+
+            if ((info.IsName("PushMotion")|| info.IsName("PullMotion"))&&movement.speedHorizontal == 0&&(movement.isPush||movement.isPull))
+            {
+                GetComponent<Animator>().speed = 0;
+            }
+            else
+            {
+                GetComponent<Animator>().speed = 1;
             }
         }
 
