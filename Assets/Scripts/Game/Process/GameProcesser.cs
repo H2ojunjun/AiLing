@@ -14,7 +14,7 @@ namespace AiLing
     {
         private string _savePath;
 
-        private string _firstScene = "Scene_01";
+        public string _firstScene = "Scene_00";
 
         public bool enable = false;
 
@@ -81,13 +81,13 @@ namespace AiLing
         public void LoadGame(GameModel model)
         {
             currGameModel = model;
-            PlayerController.Instance.enabled = false;
+            GameMainManager.Instance.mainPlayerController.enabled = false;
             SceneManager.LoadScene(model.sceneName);
             SceneManager.sceneLoaded += (scene, loadMode) =>
             {
                 GameMarkPointManager.Instance.GetRoot();
                 GameMarkPointManager.Instance.GoToMark(model.mark);
-                PlayerController.Instance.enabled = true;
+                GameMainManager.Instance.mainPlayerController.enabled = true;
             };
         }
 

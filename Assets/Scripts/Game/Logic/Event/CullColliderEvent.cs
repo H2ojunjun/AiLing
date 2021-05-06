@@ -5,14 +5,16 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("剔除碰撞",true)]
+    [GameEventInfo("开启/关闭碰撞",true)]
     public class CullColliderEvent:GameEvent
     {
         [LabelText("目标")]
         public Collider target;
         [LabelText("延迟时间")]
         public float time;
-
+        [LabelText("是否开启")]
+        public bool isOpen = false;
+        private int _timer;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
@@ -22,7 +24,10 @@ namespace AiLing
                 if (target == null)
                     return;
             }
-            target.enabled = false;
+            _timer = TimerManager.Instance.AddTimer(time, 0, 1, EventStart, null,()=> {
+                target.enabled = isOpen;
+                EventEnd();
+            });
         }
     }
 }

@@ -32,6 +32,21 @@ namespace AiLing
             if (delayUpTime > 0)
                 delayUpTime--;
         }
+
+        public void ClearDown()
+        {
+            delayDownTime = 0;
+        }
+
+        public void ClearPress()
+        {
+            delayPressTime = 0;
+        }
+
+        public void ClearUp()
+        {
+            delayUpTime = 0;
+        }
     }
 
     public class InputManager : MonoSingleton<InputManager>
@@ -53,6 +68,7 @@ namespace AiLing
             KeyStatus ks;
             if (_keyStatus.TryGetValue(key, out ks))
             {
+                ks.ClearDown();
                 return ks.down;
             }
             return false;
@@ -63,6 +79,7 @@ namespace AiLing
             KeyStatus ks;
             if (_keyStatus.TryGetValue(key, out ks))
             {
+                ks.ClearUp();
                 return ks.up;
             }
             return false;
@@ -73,6 +90,7 @@ namespace AiLing
             KeyStatus ks;
             if (_keyStatus.TryGetValue(key, out ks))
             {
+                ks.ClearPress();
                 return ks.press;
             }
             return false;

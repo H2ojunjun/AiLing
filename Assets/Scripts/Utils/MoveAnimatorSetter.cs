@@ -58,8 +58,6 @@ namespace AiLing
             animator.SetBool(isRightID, movement.isRight);
             animator.SetBool(isPushID, movement.isPush);
             animator.SetBool(isPullID, movement.isPull);
-            animator.SetBool(isClimbID, movement.isClimb);
-            animator.SetBool(isClimbUpID, movement.isClimbUp);
         }
     }
 }

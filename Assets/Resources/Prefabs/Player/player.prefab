@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952613532797293252}
   - component: {fileID: 8892712734239624806}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: climb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4920350569429839176}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LookAtPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 4920350569496783367}
   - component: {fileID: 4920350569496783417}
   - component: {fileID: 4920350569496783366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: deathEvents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,9 +184,10 @@ GameObject:
   - component: {fileID: 8930624944628275277}
   - component: {fileID: 4294682241751034152}
   - component: {fileID: 2771004637414911866}
-  - component: {fileID: 4164418365141804168}
   - component: {fileID: 7216440691970947538}
-  m_Layer: 0
+  - component: {fileID: 7591593601658449144}
+  - component: {fileID: 38617038358120253}
+  m_Layer: 10
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,35 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e69e78173cae14cba5c5b73b0854b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4164418365141804168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4920350569764179535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff34d94595362fd4086cb2987dcd4ab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpSpeed: 5
-  gravity: 10
-  horizontalAcceleration: 3
-  horizontalSpeedMax: 6
-  climbSpeed: 50
-  roationTime: 0.2
-  raycastDistance: 0.5
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 256
-  rightHandTransform: {fileID: 0}
-  pushObj: {fileID: 0}
-  cc: {fileID: 0}
-  body: {fileID: 0}
-  climbNormal: {x: 0, y: 0, z: 0}
-  container: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!95 &7216440691970947538
 Animator:
   serializedVersion: 3
@@ -295,7 +267,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4920350569764179535}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e54e1438bddc8024a978d1f7815bf228, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
   m_Controller: {fileID: 9100000, guid: 05d9dcac77e6e14438825cd91fb3430a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -305,6 +277,44 @@ Animator:
   m_HasTransformHierarchy: 0
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7591593601658449144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920350569764179535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed67bdded6c4b6b4ba8b14692473b9d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSpeed: 7
+  gravity: 10
+  horizontalAcceleration: 3
+  horizontalSpeedMax: 6
+  horizontalRunSpeedMin: 3
+  roationTime: 0.2
+  raycastDistance: 0.5
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
+  breakPushDis: 5
+  pushObj: {fileID: 0}
+  cc: {fileID: 0}
+  body: {fileID: 0}
+--- !u!114 &38617038358120253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920350569764179535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1208a5eaa6df53b4ea06dc1b8aabf8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7508627472397672887
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7560791308381773019}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: events
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +401,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: appearance
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6057140222963153312, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
 --- !u!4 &413203410167552587 stripped
 Transform:

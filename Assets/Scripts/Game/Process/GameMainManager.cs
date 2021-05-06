@@ -3,22 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMainManager : MonoSingleton<GameMainManager>
+namespace AiLing
 {
-    public Camera mainCamera;
-
-    public GameObject player;
-
-    public CinemachineVirtualCamera virtualCam;
-
-    private void Awake()
+    public class GameMainManager : MonoSingleton<GameMainManager>
     {
-        DontDestroyOnLoad(mainCamera.gameObject);
+        public Camera mainCamera;
 
-        DontDestroyOnLoad(player);
+        public GameObject player;
 
-        DontDestroyOnLoad(transform.parent.gameObject);
+        public CinemachineVirtualCamera virtualCam;
 
-        DontDestroyOnLoad(virtualCam.gameObject);
+        public PlayerControllerInstance mainPlayerController;
+
+        private void Awake()
+        {
+            DontDestroyOnLoad(mainCamera.gameObject);
+
+            DontDestroyOnLoad(player);
+
+            DontDestroyOnLoad(transform.parent.gameObject);
+
+            DontDestroyOnLoad(virtualCam.gameObject);
+        }
     }
 }
+

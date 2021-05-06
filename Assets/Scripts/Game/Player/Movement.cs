@@ -11,20 +11,19 @@ namespace AiLing
         private float _speedHorizontal;
         private float _speedVertical;
         private float _runSpeedMin;
+        private Vector3 _moveVec;
 
-        public bool canWalk = true;
-        public bool canRun = true;
-        public bool canJump = true;
-        public bool isRight = true;
-        public bool isPush = false;
-        public bool isPull = false;
-        public bool isClimb = false;
-        public bool isClimbUp = false;
+        private bool _isRight = true;
+        private bool _isPush = false;
+        private bool _isPull = false;
+        private bool _isInAir = false;
+
+        public bool isRight { get { return _isRight; }set { _isRight = value; } }
+        public bool isPush { get { return _isPush; } set { _isPush = value; } }
+        public bool isPull { get { return _isPull; } set { _isPull = value; } }
+        public bool isInAir { get { return _isInAir; } set { _isInAir = value; } }
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
         public bool isRun { get { return Mathf.Abs(speedHorizontal) >= runSpeedMin && !isInAir; } }
-        public bool isInAir;
-
-
 
         //记得设置
         public float runSpeedMin
@@ -39,14 +38,6 @@ namespace AiLing
             { return _speedHorizontal; }
             set
             {
-                if (!canWalk)
-                {
-                    _speedHorizontal = 0;
-                }
-                else if (!canRun)
-                {
-                    _speedHorizontal = Mathf.Min(value, runSpeedMin);
-                }
                 _speedHorizontal = value;
             }
         }
@@ -86,21 +77,13 @@ namespace AiLing
         //总速度的模
         public float moveSpeed { get { return moveVec.magnitude; } }
 
-        private Vector3 _moveVec;
         //速度的向量
-        public Vector3 moveVec { get 
+        public Vector3 moveVec
+        {
+            get
             {
-                if (isClimb)
-                    return _moveVec;
                 _moveVec = Vector3.right * speedHorizontal + Vector3.up * speedVertical;
-                return _moveVec; 
-            }
-            set
-            {
-                if (isClimb)
-                    _moveVec = value;
-                else
-                    return;
+                return _moveVec;
             }
         }
 

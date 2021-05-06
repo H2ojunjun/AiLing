@@ -23,7 +23,7 @@ namespace AiLing
             foreach (var item in _components)
             {
                 if (item is T)
-                    return null;
+                    return item as T;
             }
             T component = new T();
             component.OnCreate();

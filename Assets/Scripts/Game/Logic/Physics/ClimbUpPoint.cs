@@ -19,11 +19,11 @@ namespace AiLing
 
         private void OnTriggerEnter(Collider other)
         {
-            if (((1 << other.gameObject.layer) & (1 << _mask)) != 0)
-            {
-                PlayerController pc = other.gameObject.GetComponent<PlayerController>();
-                pc.SetRightHandClimbUpPoint(transform);
-            }
+            //if (((1 << other.gameObject.layer) & (1 << _mask)) != 0)
+            //{
+            //    PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+            //    pc.SetRightHandClimbUpPoint(transform);
+            //}
         }
 
         // Update is called once per frame
