@@ -803,7 +803,7 @@ MonoBehaviour:
   unartificialPara: []
   layer:
     serializedVersion: 2
-    m_Bits: 522
+    m_Bits: 1536
 --- !u!1001 &459191669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -992,6 +992,183 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5680187020114396302, guid: 581db2abf07bc6f4da34a7f39653e99c, type: 3}
+--- !u!1 &488496221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 488496222}
+  - component: {fileID: 488496225}
+  - component: {fileID: 488496224}
+  - component: {fileID: 488496223}
+  m_Layer: 0
+  m_Name: Trigger_Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &488496222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488496221}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -181.7, y: -79.4, z: -13.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 625053389}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &488496223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488496221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f471eaf00560a47bcc29f941e48ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTimes: 1
+  newTarget: {fileID: 0}
+  isChangBack: 1
+  changeTime: 3
+--- !u!65 &488496224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488496221}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 62.75, y: 2.49, z: 72.4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &488496225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488496221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  conditionEvents:
+  - listener: {fileID: 488496225}
+    si: {fileID: 0}
+    conditions: []
+    events:
+    - conditionEvents:
+        listener: {fileID: 488496225}
+        si: {fileID: 0}
+        conditions: []
+        events:
+        - conditionEvents:
+            listener: {fileID: 488496225}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 488496225}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 488496225}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 0}
+          eventChooses: []
+      eventHandler: {fileID: 488496221}
+      eventChooses:
+      - mod:
+          conditionEvents:
+            listener: {fileID: 488496225}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 488496225}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 488496225}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 488496221}
+          eventChooses:
+          - mod:
+              conditionEvents:
+                listener: {fileID: 488496225}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 488496225}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 488496221}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 488496225}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 488496221}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 488496221}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 0}
+                    timing: 0
+                realEvent: {fileID: 0}
+                timing: 0
+            realEvent: {fileID: 0}
+            timing: 0
+        realEvent: {fileID: 488496223}
+        timing: 0
+  unartificialPara: []
+  layer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &541626600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,7 +2394,7 @@ MonoBehaviour:
   unartificialPara: []
   layer:
     serializedVersion: 2
-    m_Bits: 10
+    m_Bits: 1024
 --- !u!1001 &572449299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2341,6 +2518,7 @@ Transform:
   - {fileID: 959933471}
   - {fileID: 359063314}
   - {fileID: 1573932210}
+  - {fileID: 488496222}
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2994,7 +3172,7 @@ MonoBehaviour:
   unartificialPara: []
   layer:
     serializedVersion: 2
-    m_Bits: 522
+    m_Bits: 1536
 --- !u!1 &990363847
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,7 +6530,7 @@ MonoBehaviour:
   unartificialPara: []
   layer:
     serializedVersion: 2
-    m_Bits: 522
+    m_Bits: 1536
 --- !u!1 &1666007739
 GameObject:
   m_ObjectHideFlags: 0

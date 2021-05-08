@@ -26,7 +26,7 @@ namespace AiLing
         {
             unartificialPara.Clear();
             GameObject obj = other.gameObject;
-            if (((1 << obj.layer) & (1<<layer)) == 0)
+            if (((1 << obj.layer) & layer) == 0)
                 return;
             this.unartificialPara.Add(obj);
             base.CallEvent();
