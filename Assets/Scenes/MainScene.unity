@@ -925,6 +925,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
+      propertyPath: gravityMask.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
       propertyPath: horizontalSpeedMax
       value: 5
       objectReference: {fileID: 0}
