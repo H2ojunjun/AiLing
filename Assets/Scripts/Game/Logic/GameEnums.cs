@@ -32,6 +32,12 @@ namespace AiLing
         LowerEqual,
     }
 
+    public enum EEaseType
+    {
+        [GameEnum("线性插值")]
+        Liner
+    }
+
     public enum EGate
     {
         [GameEnum("无")]

@@ -20,7 +20,7 @@ namespace AiLing
         {
             _markRoot = GameObject.Find(_markRootName);
             if (_markRoot == null)
-                Debug.LogError("cant find "+_markRootName+" in hierarchy,please mark sure you have created it!");
+                DebugHelper.LogError("cant find "+_markRootName+" in hierarchy,please mark sure you have created it!");
             InitAllMark();
         }
 
@@ -41,7 +41,7 @@ namespace AiLing
                     el.active = false;
             }
             PhsicsHelper.TransPort(GameMainManager.Instance.player.transform,_currMark.transform);
-            Debug.Log("goto index:"+index);
+            DebugHelper.Log("goto index:"+index);
         }
 
         private void InitAllMark()

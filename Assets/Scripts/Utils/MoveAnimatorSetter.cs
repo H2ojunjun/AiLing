@@ -44,7 +44,7 @@ namespace AiLing
         {
             if (animator == null)
             {
-                Debug.LogError("animator is null!");
+                DebugHelper.LogError("animator is null!");
                 return;
             }
             Movement movement = component as Movement;

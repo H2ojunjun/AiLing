@@ -36,7 +36,7 @@ namespace AiLing
         {
             if (ui == null)
             {
-                Debug.LogError("ui is null when InitUI");
+                DebugHelper.LogError("ui is null when InitUI");
                 return;
             }
             ui.Init();
@@ -46,7 +46,7 @@ namespace AiLing
         {
             if (ui == null)
             {
-                Debug.LogError("ui is null when ShowUI");
+                DebugHelper.LogError("ui is null when ShowUI");
                 return;
             }
             ui.OnShow();
@@ -57,7 +57,7 @@ namespace AiLing
         {
             if (ui == null)
             {
-                Debug.LogError("ui is null when CloseUI");
+                DebugHelper.LogError("ui is null when CloseUI");
                 return;
             }
             ui.OnClose();
@@ -69,7 +69,7 @@ namespace AiLing
         {
             if (ui == null)
             {
-                Debug.LogError("ui is null when HideUI");
+                DebugHelper.LogError("ui is null when HideUI");
                 return;
             }
             ui.OnHide();

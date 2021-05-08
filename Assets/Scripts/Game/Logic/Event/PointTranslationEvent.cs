@@ -29,11 +29,11 @@ namespace AiLing
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
-            Debug.Log("change point");
+            DebugHelper.Log("change point");
             _render = obj.GetComponent<MeshRenderer>();
             if (_render == null)
             {
-                Debug.LogError(obj.name + "没有meshRender");
+                DebugHelper.LogError(obj.name + "没有meshRender");
                 return;
             }
             _width = _render.bounds.size.x;
@@ -41,7 +41,7 @@ namespace AiLing
             _col = obj.GetComponent<BoxCollider>();
             if (_col == null)
             {
-                Debug.LogError(obj.name + "没有BoxCollider");
+                DebugHelper.LogError(obj.name + "没有BoxCollider");
                 return;
             }
             _colOriginSize = _col.size;
@@ -59,7 +59,7 @@ namespace AiLing
         {
             Vector3 change = offset * ((time - leftTime) / time);
             _mat.SetVector("_Offset", change);
-            Debug.Log("_Offset:" + change);
+            DebugHelper.Log("_Offset:" + change);
             Vector3 size;
             //如果改变量和改变方向同号，则size必然增加
             if (change.x * dir.x > 0)

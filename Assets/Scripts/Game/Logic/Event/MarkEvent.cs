@@ -21,13 +21,13 @@ namespace AiLing
             }
             if (index == -1)
             {
-                Debug.LogError("找不到标记点!请检查该gameobject是否在GameMarkPointManager.Instance.marks中");
+                DebugHelper.LogError("找不到标记点!请检查该gameobject是否在GameMarkPointManager.Instance.marks中");
                 return;
             }
             GameProcesser.Instance.currGameModel.mark = index;
             GameProcesser.Instance.SaveGameAsyn();
             EventEnd();
-            Debug.Log("mark!"+gameObject.name);
+            DebugHelper.Log("mark!"+gameObject.name);
         }
     }
 }

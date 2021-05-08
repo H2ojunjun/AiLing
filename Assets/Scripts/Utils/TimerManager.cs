@@ -79,7 +79,7 @@ namespace AiLing
 
             if (id < 0 || id > _allTimer.Count)
             {
-                Debug.LogError("cant find timer by id:" + id);
+                DebugHelper.LogError("cant find timer by id:" + id);
                 return null;
             }
             else

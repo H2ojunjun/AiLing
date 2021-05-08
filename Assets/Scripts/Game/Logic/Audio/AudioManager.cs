@@ -71,7 +71,7 @@ namespace AiLing
 				if (pool[i].isPlaying == false)
 					return pool[i];
 			}
-			Debug.LogError("音源数组大小不足，导致需要提前终止音效的播放，请增加数组容量");
+			DebugHelper.LogError("音源数组大小不足，导致需要提前终止音效的播放，请增加数组容量");
 			pool[0].Stop();
 			return pool[0];
 		}
@@ -102,7 +102,7 @@ namespace AiLing
 				asource.Stop();
 			}
 			else
-				Debug.Log("找不到正在播放 " + music.ToString() + " 的音源组件");
+				DebugHelper.Log("找不到正在播放 " + music.ToString() + " 的音源组件");
 		}
 	}
 }

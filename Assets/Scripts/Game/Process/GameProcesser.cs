@@ -32,7 +32,6 @@ namespace AiLing
             if (enable == false)
                 return;
             _savePath = Application.persistentDataPath + "/Archives";
-            //Debug.LogError(_savePath);
             if (!File.Exists(_savePath))
             {
                 try
@@ -41,7 +40,7 @@ namespace AiLing
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError("create directory fail" + ex.ToString());
+                    DebugHelper.LogError("create directory fail" + ex.ToString());
                 }
             }
 
@@ -55,7 +54,6 @@ namespace AiLing
                     GameModel model = bf.Deserialize(fs) as GameModel;
                     fs.Close();
                     archives.Add(model);
-                    Debug.Log("id:" + model.id + "sceneName:" + model.sceneName);
                 }
             }
             UIManager.Instance.CreateAndShow<UIMainMenu>();
@@ -99,7 +97,7 @@ namespace AiLing
             model.mark = 1;
             currGameModel = model;
             SaveGameAsyn(false);
-            Debug.Log("new archive");
+            DebugHelper.Log("new archive");
             return model;
         }
 

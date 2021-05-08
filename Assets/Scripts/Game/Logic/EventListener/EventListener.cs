@@ -41,7 +41,7 @@ namespace AiLing
                     condition.Refresh();
                 }
             }
-            Debug.Log("刷新成功");
+            DebugHelper.Log("刷新成功");
         }
 
         public virtual void CallEvent()
@@ -103,7 +103,7 @@ namespace AiLing
             Condition cod = new Condition();
             if (si == null)
             {
-                Debug.LogError("未设置状态！");
+                DebugHelper.LogError("未设置状态！");
                 return;
             }
             cod.statusCNNames = si.myStatusCNNames;
@@ -160,7 +160,7 @@ namespace AiLing
                     sta.value = condi.nextValue;
                 }
                 else
-                    Debug.LogError("条件中的状态:" + condi.currStatus + "在绑定的StatusInfo中找不到！");
+                    DebugHelper.LogError("条件中的状态:" + condi.currStatus + "在绑定的StatusInfo中找不到！");
             }
         }
     }
@@ -262,7 +262,7 @@ namespace AiLing
         {
             if (owner.si == null)
             {
-                Debug.LogError("没有为该条件列表绑定statusInfo");
+                DebugHelper.LogError("没有为该条件列表绑定statusInfo");
                 return false;
             }
             foreach (var item in owner.si.statusInfoes)
@@ -286,7 +286,7 @@ namespace AiLing
                     }
                 }
             }
-            Debug.LogError("绑定的statusInfo中没有与当前状态值相同的状态");
+            DebugHelper.LogError("绑定的statusInfo中没有与当前状态值相同的状态");
             return false;
         }
 
@@ -319,7 +319,7 @@ namespace AiLing
         {
             if (eventHandler == null)
             {
-                Debug.LogError(conditionEvents.listener.gameObject.name+"上的事件绑定物体为空!");
+                DebugHelper.LogError(conditionEvents.listener.gameObject.name+"上的事件绑定物体为空!");
                 return;
             }
             GameEvent[] events = eventHandler.GetComponents<GameEvent>();
@@ -409,7 +409,7 @@ namespace AiLing
                     changeNum++;
             }
             if (changeNum > 1)
-                Debug.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
+                DebugHelper.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
         }
     }
 }
