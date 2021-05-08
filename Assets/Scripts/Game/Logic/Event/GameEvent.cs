@@ -13,12 +13,9 @@ namespace AiLing
         //事件名
         public string eventName;
 
-        //是否包含非人为设置参数
-        public bool isUnArtificial;
-        public GameEventInfoAttribute(string eventName,bool isUnArtificial = false)
+        public GameEventInfoAttribute(string eventName)
         {
             this.eventName = eventName;
-            this.isUnArtificial = isUnArtificial;
         }
     }
 

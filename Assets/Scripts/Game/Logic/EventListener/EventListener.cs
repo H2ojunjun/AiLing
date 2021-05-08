@@ -347,7 +347,7 @@ namespace AiLing
         {
             foreach (var eve in eventChooses)
             {
-                    GameEvent realEvent = eve.realEvent;
+                GameEvent realEvent = eve.realEvent;
                 if (!hasSetStatusChangeCallBack)
                 {
                     if (eve.timing == ESetStatusTiming.Start)
@@ -363,10 +363,7 @@ namespace AiLing
                 }
                 if (realEvent.leftTimes == 0)
                     return;
-                if (conditionEvents.listener.unartificialPara.Count == 0)
-                    realEvent.Excute(null);
-                else
-                    realEvent.Excute(conditionEvents.listener.unartificialPara);
+                realEvent.Excute(conditionEvents.listener.unartificialPara);
                 realEvent.leftTimes--;
             }
         }

@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("杀死事件", true)]
+    [GameEventInfo("杀死事件")]
     public class MakeDeathEvent : GameEvent
     {
         [LabelText("目标(想要player死就不传)")]
@@ -19,7 +19,7 @@ namespace AiLing
             base.Excute(unartPara);
             if (target == null)
             {
-                _realTarget = unartPara[0] as GameObject;
+                _realTarget = unartPara[0];
             }
             else
                 _realTarget = target;

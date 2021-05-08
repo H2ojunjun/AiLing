@@ -18,6 +18,8 @@ namespace AiLing
         public float fadeOut;
         [LabelText("黑屏shader")]
         public Shader shader;
+        [LabelText("延迟")]
+        public float delay;
 
         private BlackScreenPostProcess blackPP;
         int timer;
@@ -28,7 +30,7 @@ namespace AiLing
             blackPP.blackScreenShader = shader;
             if (timer != 0)
                 TimerManager.Instance.RemoveTimer(timer);
-            timer = TimerManager.Instance.AddTimer(blackTime, 0, 1, EventStart, FadeBlack, EventEnd);
+            timer = TimerManager.Instance.AddTimer(blackTime, delay, 1, EventStart, FadeBlack, EventEnd);
         }
 
         private void FadeBlack(float time)

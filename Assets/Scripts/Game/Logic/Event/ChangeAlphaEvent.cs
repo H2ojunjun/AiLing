@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("改变透明度",true)]
+    [GameEventInfo("改变透明度")]
     public class ChangeAlphaEvent : GameEvent
     {
         [LabelText("目标")]
@@ -45,7 +45,6 @@ namespace AiLing
             }
             else
                 _render.sharedMaterial.color = col;
-            //_render.material.SetFloat("_Alpha", Mathf.Lerp(start, end, (time - leftTime) / time));
         }
     }
 }

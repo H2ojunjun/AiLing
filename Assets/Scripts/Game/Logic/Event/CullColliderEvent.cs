@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("开启/关闭碰撞",true)]
+    [GameEventInfo("开启/关闭碰撞")]
     public class CullColliderEvent:GameEvent
     {
         [LabelText("目标")]

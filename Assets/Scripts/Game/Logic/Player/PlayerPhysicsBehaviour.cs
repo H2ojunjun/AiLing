@@ -67,7 +67,6 @@ namespace AiLing
         public bool readyForMoveTowardsEndInSpeed { get { return _readyForMoveTowardsEndInSpeed; } set { _readyForMoveTowardsEndInSpeed = value; } }
         [HideInInspector]
         public MoveTowardsParameter moveTowardsPara { get { return _moveTowardsPara; } set { _moveTowardsPara = value; } }
-        [HideInInspector]
 
         [LabelText("跳跃初速度")]
         [OnValueChanged("ResetRealJumpSpeed")]

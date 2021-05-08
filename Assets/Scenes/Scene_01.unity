@@ -992,7 +992,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5680187020114396302, guid: 581db2abf07bc6f4da34a7f39653e99c, type: 3}
---- !u!1 &488496221
+--- !u!1 &462082522
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1000,67 +1000,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 488496222}
-  - component: {fileID: 488496225}
-  - component: {fileID: 488496224}
-  - component: {fileID: 488496223}
+  - component: {fileID: 462082523}
+  - component: {fileID: 462082526}
+  - component: {fileID: 462082525}
+  - component: {fileID: 462082524}
   m_Layer: 0
-  m_Name: Trigger_Test
+  m_Name: Trigger_Test (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &488496222
+--- !u!4 &462082523
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488496221}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -181.7, y: -79.4, z: -13.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 462082522}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1033.41, y: 22.1, z: -13.200016}
+  m_LocalScale: {x: 10, y: 30, z: 20}
   m_Children: []
   m_Father: {fileID: 625053389}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &488496223
+--- !u!114 &462082524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488496221}
+  m_GameObject: {fileID: 462082522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f471eaf00560a47bcc29f941e48ad6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0399133defc0cd64b80ef97d3adf9769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftTimes: 1
-  newTarget: {fileID: 0}
-  isChangBack: 1
-  changeTime: 3
---- !u!65 &488496224
+  leftTimes: -1
+  isPositive: 0
+  target: {fileID: 990363848}
+--- !u!65 &462082525
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488496221}
+  m_GameObject: {fileID: 462082522}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 62.75, y: 2.49, z: 72.4}
+  m_Size: {x: 5.9, y: 0.1, z: 5.4}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &488496225
+--- !u!114 &462082526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488496221}
+  m_GameObject: {fileID: 462082522}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
@@ -1068,27 +1067,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   conditionEvents:
-  - listener: {fileID: 488496225}
+  - listener: {fileID: 462082526}
     si: {fileID: 0}
     conditions: []
     events:
     - conditionEvents:
-        listener: {fileID: 488496225}
+        listener: {fileID: 462082526}
         si: {fileID: 0}
         conditions: []
         events:
         - conditionEvents:
-            listener: {fileID: 488496225}
+            listener: {fileID: 462082526}
             si: {fileID: 0}
             conditions: []
             events:
             - conditionEvents:
-                listener: {fileID: 488496225}
+                listener: {fileID: 462082526}
                 si: {fileID: 0}
                 conditions: []
                 events:
                 - conditionEvents:
-                    listener: {fileID: 488496225}
+                    listener: {fileID: 462082526}
                     si: {fileID: 0}
                     conditions: []
                     events:
@@ -1100,21 +1099,21 @@ MonoBehaviour:
               eventChooses: []
           eventHandler: {fileID: 0}
           eventChooses: []
-      eventHandler: {fileID: 488496221}
+      eventHandler: {fileID: 462082522}
       eventChooses:
       - mod:
           conditionEvents:
-            listener: {fileID: 488496225}
+            listener: {fileID: 462082526}
             si: {fileID: 0}
             conditions: []
             events:
             - conditionEvents:
-                listener: {fileID: 488496225}
+                listener: {fileID: 462082526}
                 si: {fileID: 0}
                 conditions: []
                 events:
                 - conditionEvents:
-                    listener: {fileID: 488496225}
+                    listener: {fileID: 462082526}
                     si: {fileID: 0}
                     conditions: []
                     events:
@@ -1124,16 +1123,16 @@ MonoBehaviour:
                   eventChooses: []
               eventHandler: {fileID: 0}
               eventChooses: []
-          eventHandler: {fileID: 488496221}
+          eventHandler: {fileID: 462082522}
           eventChooses:
           - mod:
               conditionEvents:
-                listener: {fileID: 488496225}
+                listener: {fileID: 462082526}
                 si: {fileID: 0}
                 conditions: []
                 events:
                 - conditionEvents:
-                    listener: {fileID: 488496225}
+                    listener: {fileID: 462082526}
                     si: {fileID: 0}
                     conditions: []
                     events:
@@ -1141,20 +1140,20 @@ MonoBehaviour:
                       eventChooses: []
                   eventHandler: {fileID: 0}
                   eventChooses: []
-              eventHandler: {fileID: 488496221}
+              eventHandler: {fileID: 462082522}
               eventChooses:
               - mod:
                   conditionEvents:
-                    listener: {fileID: 488496225}
+                    listener: {fileID: 462082526}
                     si: {fileID: 0}
                     conditions: []
                     events:
                     - eventHandler: {fileID: 0}
                       eventChooses: []
-                  eventHandler: {fileID: 488496221}
+                  eventHandler: {fileID: 462082522}
                   eventChooses:
                   - mod:
-                      eventHandler: {fileID: 488496221}
+                      eventHandler: {fileID: 462082522}
                       eventChooses:
                       - timing: 0
                     realEvent: {fileID: 0}
@@ -1163,7 +1162,7 @@ MonoBehaviour:
                 timing: 0
             realEvent: {fileID: 0}
             timing: 0
-        realEvent: {fileID: 488496223}
+        realEvent: {fileID: 462082524}
         timing: 0
   unartificialPara: []
   layer:
@@ -1529,6 +1528,7 @@ MonoBehaviour:
   fadeIn: 0
   fadeOut: 1
   shader: {fileID: 4800000, guid: d21d60b90acab9546a11feeb1cbf80f0, type: 3}
+  delay: 0
 --- !u!114 &542841672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2518,7 +2518,8 @@ Transform:
   - {fileID: 959933471}
   - {fileID: 359063314}
   - {fileID: 1573932210}
-  - {fileID: 488496222}
+  - {fileID: 1752814073}
+  - {fileID: 462082523}
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3209,6 +3210,7 @@ MonoBehaviour:
   horizontalSpeedLimit: 4
   gravityFieldDuration: 0.5
   nextConnectPortal: {fileID: 0}
+  autoChangeDirection: 1
 --- !u!136 &990363849
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3280,7 +3282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990363847}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 121.27, y: 2.12, z: -14.377}
+  m_LocalPosition: {x: 121.54, y: 1.82, z: -14.29}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 1512291211}
@@ -6192,7 +6194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512291210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.9, z: 0}
+  m_LocalPosition: {x: 0, y: -0.449, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 990363852}
@@ -7089,6 +7091,182 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 51.3, z: 69.95}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1752814072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1752814073}
+  - component: {fileID: 1752814076}
+  - component: {fileID: 1752814075}
+  - component: {fileID: 1752814074}
+  m_Layer: 0
+  m_Name: Trigger_Test (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1752814073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752814072}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -921.5, y: -55.3, z: -8.8}
+  m_LocalScale: {x: 10, y: 30, z: 20}
+  m_Children: []
+  m_Father: {fileID: 625053389}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1752814074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752814072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0399133defc0cd64b80ef97d3adf9769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTimes: -1
+  isPositive: 1
+  target: {fileID: 990363848}
+--- !u!65 &1752814075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752814072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.9, y: 0.1, z: 5.4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1752814076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752814072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de726afc99e50c428b7067d27d76ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  conditionEvents:
+  - listener: {fileID: 1752814076}
+    si: {fileID: 0}
+    conditions: []
+    events:
+    - conditionEvents:
+        listener: {fileID: 1752814076}
+        si: {fileID: 0}
+        conditions: []
+        events:
+        - conditionEvents:
+            listener: {fileID: 1752814076}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 1752814076}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1752814076}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 0}
+          eventChooses: []
+      eventHandler: {fileID: 1752814072}
+      eventChooses:
+      - mod:
+          conditionEvents:
+            listener: {fileID: 1752814076}
+            si: {fileID: 0}
+            conditions: []
+            events:
+            - conditionEvents:
+                listener: {fileID: 1752814076}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1752814076}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 0}
+              eventChooses: []
+          eventHandler: {fileID: 1752814072}
+          eventChooses:
+          - mod:
+              conditionEvents:
+                listener: {fileID: 1752814076}
+                si: {fileID: 0}
+                conditions: []
+                events:
+                - conditionEvents:
+                    listener: {fileID: 1752814076}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 0}
+                  eventChooses: []
+              eventHandler: {fileID: 1752814072}
+              eventChooses:
+              - mod:
+                  conditionEvents:
+                    listener: {fileID: 1752814076}
+                    si: {fileID: 0}
+                    conditions: []
+                    events:
+                    - eventHandler: {fileID: 0}
+                      eventChooses: []
+                  eventHandler: {fileID: 1752814072}
+                  eventChooses:
+                  - mod:
+                      eventHandler: {fileID: 1752814072}
+                      eventChooses:
+                      - timing: 0
+                    realEvent: {fileID: 0}
+                    timing: 0
+                realEvent: {fileID: 0}
+                timing: 0
+            realEvent: {fileID: 0}
+            timing: 0
+        realEvent: {fileID: 1752814074}
+        timing: 0
+  unartificialPara: []
+  layer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1796402286
 GameObject:
   m_ObjectHideFlags: 0
