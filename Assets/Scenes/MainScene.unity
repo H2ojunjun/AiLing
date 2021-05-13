@@ -725,7 +725,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1626785775}
   player: {fileID: 2110547990}
   virtualCam: {fileID: 613459635}
-  mainPlayerController: {fileID: 2110547991}
+  mainPlayerInput: {fileID: 2110547991}
 --- !u!4 &1624721052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4920350569429839176, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
@@ -872,10 +872,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4920350569496783417, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: delay
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4920350569764179534, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -923,26 +919,6 @@ PrefabInstance:
     - target: {fileID: 4920350569764179535, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
       propertyPath: m_Name
       value: player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4992393365554583137, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: gravityMask.m_Bits
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: horizontalSpeedMax
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: raycastMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 7591593601658449144, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
-      propertyPath: pullHorizontalSpeedMax
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}

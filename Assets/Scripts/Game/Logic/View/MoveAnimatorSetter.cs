@@ -19,11 +19,6 @@ namespace AiLing
         int isClimbID;
         int isClimbUpID;
 
-        public MovementAnimatorSetter(Animator animator) : base(animator)
-        {
-
-        }
-
         public override void InitAnimatorInfo()
         {
             speedHorizontalID = Animator.StringToHash("speedHorizontal");

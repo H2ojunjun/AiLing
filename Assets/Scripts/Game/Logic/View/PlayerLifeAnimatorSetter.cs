@@ -8,11 +8,6 @@ namespace AiLing
     {
         int isDeadlID;
 
-        public PlayerLifeAnimatorSetter(Animator animator) : base(animator)
-        {
-
-        }
-
         public override void InitAnimatorInfo()
         {
             isDeadlID = Animator.StringToHash("isDead");

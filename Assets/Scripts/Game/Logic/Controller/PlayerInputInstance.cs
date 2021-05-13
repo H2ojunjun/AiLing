@@ -5,27 +5,13 @@ using UnityEngine;
 namespace AiLing
 {
     [RequireComponent(typeof(LogicContainer),typeof(PlayerPhysicsBehaviour))]
-    public class PlayerControllerInstance : MonoBehaviour
+    public class PlayerInputInstance : MonoBehaviour
     {
-        private LogicContainer _container;
-        private Movement _movement;
-        private PlayerLife _playerLife;
-        private MovementAnimatorSetter _movementAnimSetter;
-        private PlayerLifeAnimatorSetter _playerLifeAnimatorSetter;
-        private Animator _animator;
         private PlayerPhysicsBehaviour _physicsBehaviour;
 
         void Start()
         {
-            _animator = GetComponent<Animator>();
             _physicsBehaviour = GetComponent<PlayerPhysicsBehaviour>();
-            _container = GetComponent<LogicContainer>();
-            _movement = _container.AddSingletonLogicComponent<Movement>();
-            _playerLife = _container.AddSingletonLogicComponent<PlayerLife>();
-            _movementAnimSetter = new MovementAnimatorSetter(_animator);
-            _playerLifeAnimatorSetter = new PlayerLifeAnimatorSetter(_animator);
-            _movementAnimSetter.InitAnimatorInfo();
-            _playerLifeAnimatorSetter.InitAnimatorInfo();
         }
 
         private void Jump()
@@ -46,13 +32,18 @@ namespace AiLing
                 _physicsBehaviour.readyForBreakPush = true;
         }
 
+        private void HorizontalMove()
+        {
+            float horizontalInput = InputManager.Instance.GetHorizontal();
+            _physicsBehaviour.horizontalInput = horizontalInput;
+        }
+
         private void FixedUpdate()
         {
+            HorizontalMove();
             Jump();
             Push();
             BreakPush();
-            _movementAnimSetter.SetAnimatorInfo(_movement);
-            _playerLifeAnimatorSetter.SetAnimatorInfo(_playerLife);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AiLing
 
         public CinemachineVirtualCamera virtualCam;
 
-        public PlayerControllerInstance mainPlayerController;
+        public PlayerInputInstance mainPlayerInput;
 
         private void Awake()
         {

@@ -30,20 +30,19 @@ namespace AiLing
         private float _rotationDelta;
         //地面上垂直速度的最小值
         private float _speedVerticalMinOnGround = -3;
-        private LogicContainer _container;
-        private Movement movement;
         private bool _shouldFallDown;
 
         private bool _canWalk = true;
         private bool _canRun = true;
         private bool _canJump = true;
 
-        //突发事件触发条件和参数
+        //输入的条件和参数
         private bool _readyForJump = false;
         private bool _readyForPush = false;
         private bool _readyForBreakPush = false;
         private bool _readyForMoveTowardsEndInSpeed = false;
         private MoveTowardsParameter _moveTowardsPara = null;
+        private float _horizontalInput;
         //真正的属性
         private float _realJumpSpeed;
         private float _realHorizontalSpeedMax;
@@ -51,22 +50,15 @@ namespace AiLing
         private float _realGravity;
         private Vector3 _realGravityVec;
 
-        [HideInInspector]
         public bool canMove { get { return _canWalk; } set { _canWalk = value; } }
-        [HideInInspector]
         public bool canRun { get { return _canRun; } set { _canRun = value; } }
-        [HideInInspector]
         public bool canJump { get { return _canJump; } set { _canJump = value; } }
-        [HideInInspector]
         public bool readyForJump { get { return _readyForJump; } set { _readyForJump = value; } }
-        [HideInInspector]
         public bool readyForPush { get { return _readyForPush; } set { _readyForPush = value; } }
-        [HideInInspector]
         public bool readyForBreakPush { get { return _readyForBreakPush; } set { _readyForBreakPush = value; } }
-        [HideInInspector]
         public bool readyForMoveTowardsEndInSpeed { get { return _readyForMoveTowardsEndInSpeed; } set { _readyForMoveTowardsEndInSpeed = value; } }
-        [HideInInspector]
         public MoveTowardsParameter moveTowardsPara { get { return _moveTowardsPara; } set { _moveTowardsPara = value; } }
+        public float horizontalInput { get { return _horizontalInput; } set { _horizontalInput = value; } }
 
         [LabelText("跳跃初速度")]
         [OnValueChanged("ResetRealJumpSpeed")]
@@ -103,27 +95,54 @@ namespace AiLing
         [ReadOnly]
         [LabelText("被推物体")]
         public PushableObject pushObj;
+        private CharacterController _cc;
+        private Rigidbody _body;
+        private LogicContainer _container;
+        private Movement _movement;
+        private Animator _animator;
+        private MovementAnimatorSetter _movementAnimSetter;
         [HideInInspector]
-        public CharacterController cc;
-        [HideInInspector]
-        public Rigidbody body;
-        [HideInInspector]
-        public Vector3 center { get { return transform.position + cc.center; } }
+        public Vector3 center { get { return transform.position + _cc.center; } }
+
+        private bool _isInAir;
+        private bool _isRight;
+        private float _speedHorizontal;
+        private float _speedVertical;
+        private bool _isPull;
+        private bool _isPush;
+        private Vector3 _moveVec;
+
+        private void SetMovementInfo()
+        {
+            _movement.isInAir = _isInAir;
+            _movement.isRight = _isRight;
+            _movement.speedHorizontal = _speedHorizontal;
+            _movement.speedVertical = _speedVertical;
+            _movement.isPull = _isPull;
+            _movement.isPush = _isPush;
+            _movement.moveVec = _moveVec;
+        }
 
         void Start()
         {
+            _animator = GetComponent<Animator>();
+            _container = GetComponent<LogicContainer>();
+            _movement = _container.AddSingletonLogicComponent<Movement>();
+            _movementAnimSetter = _container.AddSingletonLogicComponent<MovementAnimatorSetter>();
+            _movementAnimSetter.animator = _animator;
+            _movementAnimSetter.InitAnimatorInfo();
             _realJumpSpeed = jumpSpeed;
             _realHorizontalSpeedMax = horizontalSpeedMax;
             _realGravity = gravity;
             _realGravityVec = gravityVec;
             _container = GetComponent<LogicContainer>();
-            movement = _container.AddSingletonLogicComponent<Movement>();
-            movement.runSpeedMin = horizontalRunSpeedMin;
-            cc = GetComponent<CharacterController>();
-            body = GetComponent<Rigidbody>();
-            body.useGravity = false;
-            body.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-            body.sleepThreshold = 0;
+            _movement = _container.AddSingletonLogicComponent<Movement>();
+            _movement.runSpeedMin = horizontalRunSpeedMin;
+            _cc = GetComponent<CharacterController>();
+            _body = GetComponent<Rigidbody>();
+            _body.useGravity = false;
+            _body.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            _body.sleepThreshold = 0;
             _rotationDelta = 90 / (roationTime / Time.fixedDeltaTime);
         }
 
@@ -180,15 +199,15 @@ namespace AiLing
 
         private void CheckOnGround()
         {
-            if (cc.isGrounded)
+            if (_cc.isGrounded)
             {
-                movement.isInAir = false;
+                _isInAir = false;
                 if (_changeHorizontalSpeedLock == false)
                     ResetRealHorizontalSpeed(false);
             }
             else
             {
-                movement.isInAir = true;
+                _isInAir = true;
                 if (_changeHorizontalSpeedLock == false)
                     SetRealHorizontalSpeed(horizontalSpeedMaxInAir, false);
             }
@@ -203,17 +222,16 @@ namespace AiLing
             return true;
         }
 
-        private void Move()
+        private void HorizontalMove()
         {
             if (!CheckMove())
                 return;
-            DebugHelper.Log(movement.isInAir ? "isInAir" : "notInAir");
-            float horizontal = InputManager.Instance.GetHorizontal();
+            DebugHelper.Log(_isInAir ? "isInAir" : "notInAir");
             bool isMove = false;
-            if (horizontal != 0)
+            if (_horizontalInput != 0)
             {
                 isMove = true;
-                movement.isRight = horizontal > 0;
+                _isRight = _horizontalInput > 0;
             }
             //真正的角度,localRotation.eulerAngles.y永远为正数（即使在Inspector面板中可以为负数）,将该正数转化成inspector面板中的数。
             float big = 360 - transform.localRotation.eulerAngles.y;
@@ -221,12 +239,12 @@ namespace AiLing
             float angle = big < small ? -big : small;
 
             AnimatorStateInfo info = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-            if (movement.isRight && angle < 90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            if (_isRight && angle < 90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
             {
                 //向右转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y + _rotationDelta, transform.localRotation.z));
             }
-            if (!movement.isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            if (!_isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
             {
                 //向左转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y - _rotationDelta, transform.localRotation.z));
@@ -238,38 +256,38 @@ namespace AiLing
                     if (_changeHorizontalSpeedLock == false)
                         _realHorizontalSpeedMax = horizontalRunSpeedMin;
                 }
-                if (Mathf.Abs(movement.speedHorizontal) < _realHorizontalSpeedMax)
+                if (Mathf.Abs(_speedHorizontal) < _realHorizontalSpeedMax)
                 {
-                    float horizontalMove = horizontal > 0 ? 1 : -1;
+                    float horizontalMove = _horizontalInput > 0 ? 1 : -1;
                     //水平速度
-                    movement.speedHorizontal += horizontalMove * horizontalAcceleration * Time.fixedDeltaTime;
+                    _speedHorizontal += horizontalMove * horizontalAcceleration * Time.fixedDeltaTime;
                 }
                 else
                 {
                     //如果水平速度大于水平速度最大值且当前前进方向和速度方向一致，则将水平速度设置为最大值。
-                    if (movement.speedHorizontal < 0 && !movement.isRight)
+                    if (_speedHorizontal < 0 && !_isRight)
                     {
-                        movement.speedHorizontal = -_realHorizontalSpeedMax;
+                        _speedHorizontal = -_realHorizontalSpeedMax;
                     }
-                    else if (movement.speedHorizontal > 0 && movement.isRight)
+                    else if (_speedHorizontal > 0 && _isRight)
                     {
-                        movement.speedHorizontal = _realHorizontalSpeedMax;
+                        _speedHorizontal = _realHorizontalSpeedMax;
                     }
                 }
-                if (movement.speedHorizontal < 0 && movement.isRight || movement.speedHorizontal > 0 && !movement.isRight)
+                if (_speedHorizontal < 0 && _isRight || _speedHorizontal > 0 && !_isRight)
                 {
                     //当水平速度大于水平速度最大值且当前前进方向和速度方向不一致时，要将速度设置为0，否则就会出现按了D键还是在往左走的情况。
-                    movement.speedHorizontal = 0;
+                    _speedHorizontal = 0;
                 }
             }
             else
             {
-                if(!movement.isInAir)
-                    movement.speedHorizontal = 0;
+                if(!_isInAir)
+                    _speedHorizontal = 0;
             }
             
             //暂停拉/推动画
-            if ((info.IsName("PushMotion") || info.IsName("PullMotion")) && movement.speedHorizontal == 0 && (movement.isPush || movement.isPull))
+            if ((info.IsName("PushMotion") || info.IsName("PullMotion")) && _speedHorizontal == 0 && (_isPush || _isPull))
             {
                 GetComponent<Animator>().speed = 0;
             }
@@ -281,7 +299,7 @@ namespace AiLing
 
         private bool CheckJump()
         {
-            return !movement.isInAir && canJump;
+            return !_isInAir && canJump;
         }
 
         private void Jump()
@@ -289,13 +307,13 @@ namespace AiLing
             if (!CheckJump())
                 return;
             BreakPush();
-            movement.speedVertical = _realJumpSpeed;
+            _speedVertical = _realJumpSpeed;
             _readyForJump = false;
         }
 
         private bool CheckFallDown()
         {
-            return movement.isInAir || _shouldFallDown;
+            return _isInAir || _shouldFallDown;
         }
 
         private void FallDown()
@@ -304,29 +322,29 @@ namespace AiLing
                 return;
 
             //如果从高处跳下，则要将垂直速度置0
-            if (movement.isInAir != _oldIsInAir && movement.speedVertical < 0)
-                movement.speedVertical = 0;
-            movement.speedHorizontal += _realGravityVec.x * _realGravity * Time.fixedDeltaTime;
-            movement.speedVertical += _realGravityVec.y * _realGravity * Time.fixedDeltaTime;
-            _oldIsInAir = movement.isInAir;
+            if (_isInAir != _oldIsInAir && _speedVertical < 0)
+                _speedVertical = 0;
+            _speedHorizontal += _realGravityVec.x * _realGravity * Time.fixedDeltaTime;
+            _speedVertical += _realGravityVec.y * _realGravity * Time.fixedDeltaTime;
+            _oldIsInAir = _isInAir;
         }
 
         private void ChangeVerticalSpeedOnGround()
         {
-            if (!movement.isInAir)
+            if (!_isInAir)
             {
                 //此举是为了保证玩家在下坡的时候isInAir始终为true，如果不让speedVertical减小的话，可能会出现如：
                 //跳跃到一个高坡上speedVertical为 - 1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
-                if (movement.speedVertical > _speedVerticalMinOnGround)
-                    movement.speedVertical -= 0.01f;
-                else if (movement.speedVertical < _speedVerticalMinOnGround)
-                    movement.speedVertical += 0.01f;
+                if (_speedVertical > _speedVerticalMinOnGround)
+                    _speedVertical -= 0.01f;
+                else if (_speedVertical < _speedVerticalMinOnGround)
+                    _speedVertical += 0.01f;
             }
         }
 
         private bool CheckPush()
         {
-            if (movement.isInAir)
+            if (_isInAir)
                 return false;
             return true;
         }
@@ -336,7 +354,7 @@ namespace AiLing
             if (!CheckPush())
                 return;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + Vector3.up, Vector3.right * (movement.isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.right * (_isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
             {
                 if (pushObj == null)
                 {
@@ -344,7 +362,7 @@ namespace AiLing
                     PushableObject push = obj.GetComponent<PushableObject>();
                     if (push != null)
                     {
-                        push.Connect(movement);
+                        push.Connect(_movement);
                         pushObj = push;
                         if (_changeHorizontalSpeedLock == false)
                         {
@@ -358,35 +376,35 @@ namespace AiLing
             {
                 if (pushObj.gameObject.transform.position.x > transform.position.x)
                 {
-                    if (movement.isRight)
+                    if (_isRight)
                     {
-                        movement.isPush = true;
-                        movement.isPull = false;
+                        _isPush = true;
+                        _isPull = false;
                     }
                     else
                     {
-                        movement.isPush = false;
-                        movement.isPull = true;
+                        _isPush = false;
+                        _isPull = true;
                     }
                 }
                 else if (pushObj.gameObject.transform.position.x < transform.position.x)
                 {
-                    if (movement.isRight)
+                    if (_isRight)
                     {
-                        movement.isPush = false;
-                        movement.isPull = true;
+                        _isPush = false;
+                        _isPull = true;
                     }
                     else
                     {
-                        movement.isPush = true;
-                        movement.isPull = false;
+                        _isPush = true;
+                        _isPull = false;
                     }
                 }
             }
             else
             {
-                movement.isPush = false;
-                movement.isPull = false;
+                _isPush = false;
+                _isPull = false;
             }
             _readyForPush = false;
         }
@@ -411,14 +429,15 @@ namespace AiLing
             pushObj = null;
             _realHorizontalSpeedMax = horizontalSpeedMax;
             _changeHorizontalSpeedLock = false;
-            movement.isPush = false;
-            movement.isPull = false;
+            _isPush = false;
+            _isPull = false;
             _readyForBreakPush = false;
         }
 
         private void CharacterControllerMove()
         {
-            cc.Move(movement.moveVec * Time.fixedDeltaTime);
+            _moveVec = Vector3.right * _speedHorizontal + Vector3.up * _speedVertical;
+            _cc.Move(_moveVec * Time.fixedDeltaTime);
         }
 
         private void ClearStatus()
@@ -462,12 +481,12 @@ namespace AiLing
             }
             if (!CheckMoveTowardsEndInSpeed())
                 return;
-            cc.enabled = false;
-            transform.DOMove(_moveTowardsPara.target - cc.center, _moveTowardsPara.duration, false).onComplete = () =>
+            _cc.enabled = false;
+            transform.DOMove(_moveTowardsPara.target - _cc.center, _moveTowardsPara.duration, false).onComplete = () =>
             {
-                cc.enabled = true;
-                movement.speedHorizontal = _moveTowardsPara.endSpeedVec.x * _moveTowardsPara.endSpeed;
-                movement.speedVertical = _moveTowardsPara.endSpeedVec.y * _moveTowardsPara.endSpeed;
+                _cc.enabled = true;
+                _speedHorizontal = _moveTowardsPara.endSpeedVec.x * _moveTowardsPara.endSpeed;
+                _speedVertical = _moveTowardsPara.endSpeedVec.y * _moveTowardsPara.endSpeed;
                 _moveTowardsPara = null;
             };
             _readyForMoveTowardsEndInSpeed = false;
@@ -484,10 +503,12 @@ namespace AiLing
                 BreakPush();
             if (readyForMoveTowardsEndInSpeed)
                 MoveTowardsEndInSpeed();
-            Move();
+            HorizontalMove();
             FallDown();
             ChangeVerticalSpeedOnGround();
             CharacterControllerMove();
+            SetMovementInfo();
+            _movementAnimSetter.SetAnimatorInfo(_movement);
             ClearStatus();
         }
     }

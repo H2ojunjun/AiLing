@@ -73,7 +73,6 @@ namespace AiLing
         {
             if (_allTimer.Count == 0 || _allTimer == null || id == 0)
             {
-                //Debug.LogError("timerList is null or no element");
                 return null;
             }
 

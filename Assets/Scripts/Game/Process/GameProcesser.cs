@@ -79,13 +79,13 @@ namespace AiLing
         public void LoadGame(GameModel model)
         {
             currGameModel = model;
-            GameMainManager.Instance.mainPlayerController.enabled = false;
+            GameMainManager.Instance.mainPlayerInput.enabled = false;
             SceneManager.LoadScene(model.sceneName);
             SceneManager.sceneLoaded += (scene, loadMode) =>
             {
                 GameMarkPointManager.Instance.GetRoot();
                 GameMarkPointManager.Instance.GoToMark(model.mark);
-                GameMainManager.Instance.mainPlayerController.enabled = true;
+                GameMainManager.Instance.mainPlayerInput.enabled = true;
             };
         }
 
@@ -99,11 +99,6 @@ namespace AiLing
             SaveGameAsyn(false);
             DebugHelper.Log("new archive");
             return model;
-        }
-
-        void Update()
-        {
-
         }
 
         private void OnDestroy()

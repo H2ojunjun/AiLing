@@ -10,7 +10,8 @@ namespace AiLing
     [GameEventInfo("杀死事件")]
     public class MakeDeathEvent : GameEvent
     {
-        [LabelText("目标(想要player死就不传)")]
+        [InfoBox("想要player死就不传")]
+        [LabelText("目标")]
         public GameObject target;
 
         private GameObject _realTarget;
@@ -33,12 +34,8 @@ namespace AiLing
             {
                 return;
             }
-            creature.OnDead();
-            GameObject deathEventPrefab = _realTarget.transform.Find("events/deathEvents").gameObject;
-            if (deathEventPrefab != null)
-            {
-                GameEvent.CallEventPrefab(deathEventPrefab,unartPara);
-            }
+            creature.unartPara = unartPara;
+            creature.Dead();
         }
     }
 }

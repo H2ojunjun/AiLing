@@ -11,7 +11,8 @@ namespace AiLing
     {
         [LabelText("新目标")]
         public Transform newTarget;
-        [LabelText("改变完成后过段时间是否改回来")]
+        [InfoBox("改变完成后过段时间是否改回来")]
+        [LabelText("是否恢复目标")]
         public bool isChangBack;
         [LabelText("时间")]
         public float changeTime;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace AiLing
 {
+    //玩家移动信息储存地
     public class Movement : LogicComponent
     {
         private List<Movement> _allMovement = new List<Movement>();
@@ -82,8 +83,11 @@ namespace AiLing
         {
             get
             {
-                _moveVec = Vector3.right * speedHorizontal + Vector3.up * speedVertical;
                 return _moveVec;
+            }
+            set
+            {
+                _moveVec = value;
             }
         }
 

@@ -24,7 +24,6 @@ namespace AiLing
 
         public float totalTime;
         public float leftTime;
-        //public float minTime;
         public float totalDelay;
         //如果delay>0，则timeStart和后面的一系列操作都会在delay完后调用
         public float delay;
