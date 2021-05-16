@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace AiLing
 {
+    //用于处理游戏各种逻辑的纯C#对象
     public abstract class LogicComponent 
     {
         //已经分配的id的最大值
@@ -45,10 +47,15 @@ namespace AiLing
             }
         }
 
+        //得到逻辑组件需要的初始化信息
+        public abstract void Init(GameObject obj);
+
         //RemoveLogicComponent函数后调用
         public virtual void OnDestory()
         {
             _idFreeSeats.Enqueue(id);
+            if (_allComponents == null || _allComponents.Count == 0)
+                return;
             _allComponents[id] = null;
         }
     }

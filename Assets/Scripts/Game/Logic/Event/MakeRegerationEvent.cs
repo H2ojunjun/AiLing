@@ -4,18 +4,17 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("死亡")]
-    public class MakeDeathEvent : GameEvent
+    [GameEventInfo("重生")]
+    public class MakeRegerationEvent : GameEvent
     {
         private int _timer;
         private GameObject _realTarget;
 
-        [InfoBox("想要player死就不传")]
+        [InfoBox("想要player复活就不传")]
         [LabelText("目标")]
         public GameObject target;
         [LabelText("延迟时间")]
         public float time;
-
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
@@ -37,9 +36,9 @@ namespace AiLing
             }
             if (_timer != 0)
                 return;
-            _timer = TimerManager.Instance.AddTimer(time, 0, 1, null, null, () => {
+            _timer = TimerManager.Instance.AddTimer(time, 0, 1, null, null,()=> {
                 creature.SetUnartPara(unartPara);
-                creature.Dead();
+                creature.Regenerate();
                 _timer = 0;
             });
         }

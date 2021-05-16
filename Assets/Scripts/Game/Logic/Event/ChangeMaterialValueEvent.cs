@@ -40,6 +40,12 @@ namespace AiLing
         {
             _mat.SetFloat(propertyName, Mathf.Lerp(start, end, (time - leftTime) / time));
         }
+
+        public override void EventEnd()
+        {
+            base.EventEnd();
+            _timer = 0;
+        }
     }
 }
 

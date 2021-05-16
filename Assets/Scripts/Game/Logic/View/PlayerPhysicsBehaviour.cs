@@ -127,16 +127,24 @@ namespace AiLing
         {
             _animator = GetComponent<Animator>();
             _container = GetComponent<LogicContainer>();
-            _movement = _container.AddSingletonLogicComponent<Movement>();
-            _movementAnimSetter = _container.AddSingletonLogicComponent<MovementAnimatorSetter>();
-            _movementAnimSetter.animator = _animator;
+            _movement = _container.GetSingletonLogicCompoent<Movement>();
+            if(_movement == null)
+            {
+                DebugHelper.LogError(gameObject.name+"没有movement");
+                return;
+            }
+            _movementAnimSetter = _container.GetSingletonLogicCompoent<MovementAnimatorSetter>();
+            if (_movement == null)
+            {
+                DebugHelper.LogError(gameObject.name + "没有MovementAnimatorSetter");
+                return;
+            }
             _movementAnimSetter.InitAnimatorInfo();
             _realJumpSpeed = jumpSpeed;
             _realHorizontalSpeedMax = horizontalSpeedMax;
             _realGravity = gravity;
             _realGravityVec = gravityVec;
             _container = GetComponent<LogicContainer>();
-            _movement = _container.AddSingletonLogicComponent<Movement>();
             _movement.runSpeedMin = horizontalRunSpeedMin;
             _cc = GetComponent<CharacterController>();
             _body = GetComponent<Rigidbody>();

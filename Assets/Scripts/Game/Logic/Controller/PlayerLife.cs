@@ -6,23 +6,25 @@ namespace AiLing
 {
     public class PlayerLife : Creature
     {
+        private PlayerLogicView _realView;
+
+        public override void Init(GameObject obj)
+        {
+            base.Init(obj);
+            _realView = view as PlayerLogicView;
+        }
+
         public override void Dead()
         {
             base.Dead();
+            _realView.OnDead();
+        }
+
+        public override void Regenerate()
+        {
+            base.Regenerate();
             GameMarkPointManager.Instance.GoToMark(GameProcesser.Instance.currGameModel.mark);
-            Transform deathTrans = container.transform.Find(DEATH_LISTENER_PATH);
-            if(deathTrans == null)
-            {
-                DebugHelper.LogError("cant find deathTrans via path:" + DEATH_LISTENER_PATH+" on"+container.gameObject.name);
-                return;
-            }
-            PassiveListener deathListener = deathTrans.GetComponent<PassiveListener>();
-            if (deathListener == null)
-            {
-                DebugHelper.LogError("cant find PassiveListener via path:" + DEATH_LISTENER_PATH + " on" + container.gameObject.name);
-                return;
-            }
-            deathListener.Call(unartPara);
+            _realView.OnRegenerate();
         }
     }
 }

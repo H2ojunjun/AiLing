@@ -72,6 +72,12 @@ namespace AiLing
             _mat.SetFloat("_uvChangeValueY", change.y);
         }
 
+        public override void EventEnd()
+        {
+            base.EventEnd();
+            _timer = 0;
+        }
+
         private void ChangeDir()
         {
             Vector3 realDir = Vector3.zero;

@@ -9,20 +9,33 @@ namespace AiLing
     {
         private static List<Creature> _creatures = new List<Creature>();
 
-        public bool isDead = false;
+        protected BaseView view;
 
-        protected const string DEATH_LISTENER_PATH = "listeners/deathListener";
+        public bool isDead = false;
 
         public event Action OnDead;
 
         public event Action OnRegenerate;
 
-        public List<GameObject> unartPara;
-
         public override void OnCreate()
         {
             base.OnCreate();
             _creatures.Add(this);
+        }
+
+        public override void Init(GameObject obj)
+        {
+            this.view = obj.GetComponent<BaseView>();
+            if(view == null)
+            {
+                DebugHelper.LogError(container.name+ "没有BaseView");
+                return;
+            }
+        }
+
+        public void SetUnartPara(List<GameObject> unartPara)
+        {
+            view.unartPara = unartPara;
         }
 
         //重生

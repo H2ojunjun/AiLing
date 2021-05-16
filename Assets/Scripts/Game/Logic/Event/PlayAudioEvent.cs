@@ -23,6 +23,7 @@ namespace AiLing
         {
             timer = TimerManager.Instance.AddTimer(delay, interval, time, EventStart, null, () =>
             {
+                timer = 0;
                 AudioManager.Instance.PlaySound(music);
                 EventEnd();
             });

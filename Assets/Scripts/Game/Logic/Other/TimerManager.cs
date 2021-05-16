@@ -8,7 +8,11 @@ namespace AiLing
     public class TimerManager : MonoSingleton<TimerManager>
     {
         //已经发放的id的最大值
-        private int _allocID = -1;
+        private int _allocID = 0;
+        //是否在update中，此变量的作用是防止在循环中添加timer
+        private bool _isInUpdate = false;
+        //缓存的timer，有时AddTimer会在某一个Timer的回调中被调用，此时应该把它缓存起来，在循环外再添加到_allTimer中去
+        private Dictionary<int,Timer> _cacheTimerDic = new Dictionary<int, Timer>();
         //用于保存要删除的timer的索引的列表
         private List<int> _removeIndexes = new List<int>();
         //保存所有Timer的列表
@@ -17,7 +21,7 @@ namespace AiLing
         public Stack<int> freeTimerIndexes = new Stack<int>();
 
         /// <summary>
-        /// 返回的值是timer在timerList中的index,如果该timer是有限循环的，则不需要对该int有全局引用
+        /// 返回的值是timer在timerList中的index+1,保留的int的值为0则表示该timer还没被启动或者已经完成
         /// 如果是无限次的，请保留全局引用并且在不需要使用的时候调用RemoveTimer(id)
         /// </summary>
         /// <param name="totalTime"></param>
@@ -33,16 +37,22 @@ namespace AiLing
                 timer.timeChange += timeChange;
             if (timeEnd != null)
                 timer.timeEnd += timeEnd;
-            int timerKey = -1;
+            int timerKey = 0;
             if (freeTimerIndexes.Count == 0 || freeTimerIndexes == null)
             {
                 timerKey = ++_allocID;
-                _allTimer.Add(timer);
+                if (_isInUpdate)
+                    _cacheTimerDic.Add(timerKey, timer);
+                else
+                    _allTimer.Add(timer);
             }
             else
             {
                 timerKey = freeTimerIndexes.Pop();
-                _allTimer[timerKey] = timer;
+                if (_isInUpdate)
+                    _cacheTimerDic.Add(timerKey, timer);
+                else
+                    _allTimer[timerKey-1] = timer;
             }
             timer.id = timerKey;
             timer.Start();
@@ -87,7 +97,7 @@ namespace AiLing
 
         public void RemoveTimer(int id)
         {
-            _allTimer[id] = null;
+            _allTimer[id-1] = null;
             freeTimerIndexes.Push(id);
         }
 
@@ -115,6 +125,8 @@ namespace AiLing
 
         void Update()
         {
+            _isInUpdate = true;
+            _cacheTimerDic.Clear();
             _removeIndexes.Clear();
             foreach (var timer in _allTimer)
             {
@@ -127,11 +139,21 @@ namespace AiLing
                 if (timer.isFinished())
                     _removeIndexes.Add(timer.id);
             }
-
+            if (_cacheTimerDic.Count != 0)
+            {
+                foreach(var item in _cacheTimerDic)
+                {
+                    if (item.Key > _allTimer.Count)
+                        _allTimer.Add(item.Value);
+                    else
+                        _allTimer[item.Key - 1] = item.Value;
+                }
+            }
             foreach(var index in _removeIndexes)
             {
                 RemoveTimer(index);
             }
+            _isInUpdate = false;
         }
     }
 

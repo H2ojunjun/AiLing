@@ -46,6 +46,7 @@ namespace AiLing
         public override void EventEnd()
         {
             base.EventEnd();
+            timer = 0;
             Destroy(blackPP);
         }
     }

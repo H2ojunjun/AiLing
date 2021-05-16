@@ -31,6 +31,7 @@ namespace AiLing
                     EventStart();
                 },null,()=> {
                     _virtualCam.Follow = _oldTarget;
+                    _timer = 0;
                     EventEnd();
                 });
             }

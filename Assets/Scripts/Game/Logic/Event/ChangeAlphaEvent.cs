@@ -46,6 +46,12 @@ namespace AiLing
             else
                 _render.sharedMaterial.color = col;
         }
+
+        public override void EventEnd()
+        {
+            base.EventEnd();
+            _timer = 0;
+        }
     }
 }
 

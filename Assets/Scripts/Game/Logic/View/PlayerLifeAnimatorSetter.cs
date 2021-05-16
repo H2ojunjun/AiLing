@@ -20,8 +20,8 @@ namespace AiLing
                 DebugHelper.LogError("animator is null!");
                 return;
             }
-            PlayerLife playerLife = component as PlayerLife;
-            animator.SetBool(isDeadlID, playerLife.isDead);
+            CreatureInfo creatureInfo = component as CreatureInfo;
+            animator.SetBool(isDeadlID, creatureInfo.isDead);
         }
     }
 }

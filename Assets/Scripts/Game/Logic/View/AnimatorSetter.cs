@@ -8,6 +8,11 @@ namespace AiLing
     {
         public Animator animator;
 
+        public override void Init(GameObject obj)
+        {
+            animator = obj.GetComponent<Animator>();
+        }
+
         public abstract void InitAnimatorInfo();
 
         public abstract void SetAnimatorInfo(LogicComponent component);

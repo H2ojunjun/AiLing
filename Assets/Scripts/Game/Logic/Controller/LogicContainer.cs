@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Sirenix.OdinInspector;
+using System;
+using System.Reflection;
 
 namespace AiLing
 {
@@ -9,12 +11,51 @@ namespace AiLing
     {
         private List<LogicComponent> _components = new List<LogicComponent>();
 
+        [LabelText("逻辑组件")]
+        [ValueDropdown("_componentName")]
+        [ListDrawerSettings(Expanded = true,DraggableItems = false)]
+        public List<string> components = new List<string>();
+
+        private ValueDropdownList<string> _componentName = new ValueDropdownList<string>();
+
+        [Button("刷新")]
+        private void Refresh()
+        {
+            _componentName.Clear();
+            IEnumerable<Type> types =ReflectionHelper.GetSubtypes(Assembly.GetExecutingAssembly(),typeof(LogicComponent),false);
+            foreach(var type in types)
+            {
+                string name = type.Name;
+                string fullName = type.FullName;
+                _componentName.Add(name,fullName);
+            }
+        }
+
+        private void Awake()
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            foreach(var component in components)
+            {
+                Type t = Type.GetType(component);
+                LogicComponent com = Activator.CreateInstance(t) as LogicComponent;
+                com.OnCreate();
+                com.container = this;
+                com.Init(gameObject);
+                _components.Add(com);
+            }
+        }
+
         public T AddNormalComponent<T>() where T : LogicComponent, new()
         {
             T component = new T();
             component.OnCreate();
             component.container = this;
             _components.Add(component);
+            component.Init(gameObject);
             return component;
         }
 
@@ -28,6 +69,7 @@ namespace AiLing
             T component = new T();
             component.OnCreate();
             component.container = this;
+            component.Init(gameObject);
             _components.Add(component);
             return component;
         }

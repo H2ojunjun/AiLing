@@ -689,6 +689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTimes: -1
   target: {fileID: 0}
+  time: 1
 --- !u!114 &359063317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8116,6 +8117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTimes: -1
   target: {fileID: 0}
+  time: 1
 --- !u!65 &959933473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11601,6 +11603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTimes: -1
   target: {fileID: 0}
+  time: 1
 --- !u!114 &1573932213
 MonoBehaviour:
   m_ObjectHideFlags: 0

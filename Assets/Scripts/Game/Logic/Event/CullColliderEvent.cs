@@ -26,6 +26,7 @@ namespace AiLing
             }
             _timer = TimerManager.Instance.AddTimer(time, 0, 1, EventStart, null,()=> {
                 target.enabled = isOpen;
+                _timer = 0;
                 EventEnd();
             });
         }

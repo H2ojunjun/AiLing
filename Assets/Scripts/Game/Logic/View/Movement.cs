@@ -97,6 +97,10 @@ namespace AiLing
             _allMovement.Add(this);
         }
 
+        public override void Init(GameObject obj)
+        {
+        }
+
         public override void OnDestory()
         {
             base.OnDestory();
