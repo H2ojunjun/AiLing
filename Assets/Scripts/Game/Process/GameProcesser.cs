@@ -76,7 +76,7 @@ namespace AiLing
             return;
         }
 
-        public void LoadGame(GameModel model)
+        public void LoadGame(GameModel model,Action finishCallBack = null)
         {
             currGameModel = model;
             GameMainManager.Instance.mainPlayerInput.enabled = false;
@@ -86,6 +86,7 @@ namespace AiLing
                 GameMarkPointManager.Instance.GetRoot();
                 GameMarkPointManager.Instance.GoToMark(model.mark);
                 GameMainManager.Instance.mainPlayerInput.enabled = true;
+                finishCallBack?.Invoke();
             };
         }
 

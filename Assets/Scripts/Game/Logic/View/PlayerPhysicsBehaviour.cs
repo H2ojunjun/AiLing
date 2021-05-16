@@ -334,6 +334,10 @@ namespace AiLing
                 _speedVertical = 0;
             _speedHorizontal += _realGravityVec.x * _realGravity * Time.fixedDeltaTime;
             _speedVertical += _realGravityVec.y * _realGravity * Time.fixedDeltaTime;
+        }
+
+        private void ChangeOldIsInAir()
+        {
             _oldIsInAir = _isInAir;
         }
 
@@ -513,6 +517,7 @@ namespace AiLing
                 MoveTowardsEndInSpeed();
             HorizontalMove();
             FallDown();
+            ChangeOldIsInAir();
             ChangeVerticalSpeedOnGround();
             CharacterControllerMove();
             SetMovementInfo();

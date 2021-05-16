@@ -17,6 +17,8 @@ namespace AiLing
 
         public GComponent mainCom;
 
+        public bool isShowing;
+
         public abstract void Init();
 
         public abstract void OnShow();

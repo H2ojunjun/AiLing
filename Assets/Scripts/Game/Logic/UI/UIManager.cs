@@ -50,6 +50,7 @@ namespace AiLing
             }
             ui.OnShow();
             ui.owner.SetActive(true);
+            ui.isShowing = true;
         }
 
         public void CloseUI(UIBase ui)
@@ -61,6 +62,7 @@ namespace AiLing
             }
             ui.OnClose();
             uiDic.Remove(ui.componentName);
+            ui.isShowing = false;
             Destroy(ui.owner);
         }
 
@@ -73,6 +75,7 @@ namespace AiLing
             }
             ui.OnHide();
             ui.owner.SetActive(false);
+            ui.isShowing = false;
         }
 
         public void CreateAndShow<T>() where T : UIBase, new()

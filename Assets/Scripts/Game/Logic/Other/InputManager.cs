@@ -71,6 +71,7 @@ namespace AiLing
                 ks.ClearDown();
                 return ks.down;
             }
+            DebugHelper.LogError("未在listenKeys中设置"+key);
             return false;
         }
 
@@ -82,6 +83,7 @@ namespace AiLing
                 ks.ClearUp();
                 return ks.up;
             }
+            DebugHelper.LogError("未在listenKeys中设置" + key);
             return false;
         }
 
@@ -93,6 +95,7 @@ namespace AiLing
                 ks.ClearPress();
                 return ks.press;
             }
+            DebugHelper.LogError("未在listenKeys中设置" + key);
             return false;
         }
 

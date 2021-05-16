@@ -24,8 +24,6 @@ namespace AiLing
 
         private Controller ctr_isChooseArchives;
 
-        private bool hasShowed = false;
-
         public override void Init()
         {
             BindProperty();
@@ -47,12 +45,16 @@ namespace AiLing
         {
             l_choose.onClickItem.Set((content) => {
                 GTextField tf = (content.data as GComponent).GetChild("t_num").asTextField;
-                GameProcesser.Instance.LoadGame(GameProcesser.Instance.archives[int.Parse(tf.text)-1]);
+                GameProcesser.Instance.LoadGame(GameProcesser.Instance.archives[int.Parse(tf.text)-1],()=> {
+                    UIManager.Instance.CloseUI(this);
+                });
             });
 
             btn_newGame.onClick.Set(() => {
                 GameModel model =  GameProcesser.Instance.NewGame();
-                GameProcesser.Instance.LoadGame(model);
+                GameProcesser.Instance.LoadGame(model,()=> {
+                    UIManager.Instance.CloseUI(this);
+                });
             });
 
             btn_loadGame.onClick.Set(() => {
@@ -81,12 +83,10 @@ namespace AiLing
 
         public override void OnClose()
         {
-            hasShowed = true;
         }
 
         public override void OnHide()
         {
-            hasShowed = true;
         }
     }
 }

@@ -44,6 +44,12 @@ namespace AiLing
             DebugHelper.Log("goto index:"+index);
         }
 
+        //从最近的已经到达的存档点复活
+        public void GetBackToClosestMark()
+        {
+            GoToMark(GameProcesser.Instance.currGameModel.mark);
+        }
+
         private void InitAllMark()
         {
             marks.Clear();
