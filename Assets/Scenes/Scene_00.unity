@@ -197,6 +197,7 @@ MonoBehaviour:
   fadeIn: 0
   fadeOut: 0
   shader: {fileID: 0}
+  delay: 0
 --- !u!1 &208459537
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +397,7 @@ MonoBehaviour:
   fadeIn: 0
   fadeOut: 1
   shader: {fileID: 4800000, guid: d21d60b90acab9546a11feeb1cbf80f0, type: 3}
+  delay: 0
 --- !u!114 &628127383
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,12 +7,13 @@ using System.Reflection;
 
 namespace AiLing
 {
-    [GameEventInfo("改变顶点位置")]
+    [GameEventInfo("扩散")]
     public class PointTranslationEvent : GameEvent
     {
         [LabelText("物体")]
         public GameObject obj;
         [LabelText("方向向量和")]
+        [OnValueChanged("ChangeDir")]
         public Vector3 dir;
         [LabelText("偏移量")]
         public Vector3 offset;
@@ -23,13 +24,16 @@ namespace AiLing
         private BoxCollider _col;
         private float _width;
         private float _height;
+        private float _depth;
         private int _timer;
-        private Vector3 _colOriginCenter;
-        private Vector3 _colOriginSize;
+        private Vector3 _originScale;
+        private Vector3 _originPos;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
             DebugHelper.Log("change point");
+            _originScale = obj.transform.localScale;
+            _originPos = obj.transform.localPosition;
             _render = obj.GetComponent<MeshRenderer>();
             if (_render == null)
             {
@@ -38,18 +42,14 @@ namespace AiLing
             }
             _width = _render.bounds.size.x;
             _height = _render.bounds.size.y;
+            _depth = _render.bounds.size.z;
             _col = obj.GetComponent<BoxCollider>();
             if (_col == null)
             {
                 DebugHelper.LogError(obj.name + "没有BoxCollider");
                 return;
             }
-            _colOriginSize = _col.size;
-            _colOriginCenter = _col.center;
             _mat = _render.material;
-            _mat.SetFloat("_OriginWidth", _width);
-            _mat.SetFloat("_OriginHeight", _height);
-            _mat.SetVector("_Dir", dir);
             if (_timer != 0)
                 TimerManager.Instance.RemoveTimer(_timer);
             _timer = TimerManager.Instance.AddTimer(time, 0, 1, EventStart, ChangeValue, EventEnd);
@@ -58,31 +58,45 @@ namespace AiLing
         private void ChangeValue(float leftTime)
         {
             Vector3 change = offset * ((time - leftTime) / time);
-            _mat.SetVector("_Offset", change);
-            DebugHelper.Log("_Offset:" + change);
-            Vector3 size;
-            //如果改变量和改变方向同号，则size必然增加
-            if (change.x * dir.x > 0)
+            Vector3 realScale;
+            realScale.x = _originScale.x * (1 + change.x);
+            realScale.y = _originScale.y * (1 + change.y);
+            realScale.z = _originScale.z * (1 + change.z);
+            obj.transform.localScale = realScale;
+            Vector3 realPos;
+            realPos.x = _originPos.x + (_width * change.x * dir.x)/2;
+            realPos.y = _originPos.y + (_height * change.y * dir.y) / 2;
+            realPos.z = _originPos.z + (_width * change.z * dir.z) / 2;
+            obj.transform.localPosition = realPos;
+            _mat.SetFloat("_uvChangeValueX", change.x);
+            _mat.SetFloat("_uvChangeValueY", change.y);
+        }
+
+        private void ChangeDir()
+        {
+            Vector3 realDir = Vector3.zero;
+            if (dir.x != 0)
             {
-                size.x = _colOriginSize.x*(1 + Mathf.Abs(change.x));
+                if (dir.x > 0)
+                    realDir.x = 1;
+                else
+                    realDir.x = -1;
             }
-            else
-                size.x = _colOriginSize.x*(1 - Mathf.Abs(change.x));
-            //如果改变量和改变方向同号，则size必然增加
-            if (change.y * dir.y > 0)
+            if (dir.y != 0)
             {
-                size.y = _colOriginSize.y*(1 + Mathf.Abs(change.y));
+                if (dir.y > 0)
+                    realDir.y = 1;
+                else
+                    realDir.y = -1;
             }
-            else
-                size.y = _colOriginSize.y*(1 - Mathf.Abs(change.y));
-            if (change.z * dir.z > 0)
+            if (dir.z != 0)
             {
-                size.z = _colOriginSize.z*(1 + Mathf.Abs(change.z));
+                if (dir.z > 0)
+                    realDir.z = 1;
+                else
+                    realDir.z = -1;
             }
-            else
-                size.z = _colOriginSize.y*(1 - Mathf.Abs(change.z));
-            _col.center =_colOriginCenter + change/2 ;
-            _col.size = size;
+            dir = realDir;
         }
     }
 }
