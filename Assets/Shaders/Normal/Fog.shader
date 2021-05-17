@@ -43,15 +43,11 @@ Shader "Custom/Fog"
  
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _uvChangeValueX;
-            float _uvChangeValueY;
 
             v2f vert(appdata_full v)
             {
                 v2f o;
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-                o.uv.x *= 1 + _uvChangeValueX;
-                o.uv.y *= 1 + _uvChangeValueY;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv2 = v.texcoord;
                 o.vertCol = v.color;

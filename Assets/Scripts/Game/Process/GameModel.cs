@@ -14,6 +14,8 @@ namespace AiLing
         public string sceneName;
         //当前小存档点
         public int mark;
+
+        public Dictionary<string, Dictionary<string,int>> statusDic = new Dictionary<string, Dictionary<string,int>>();
     }
 }
 

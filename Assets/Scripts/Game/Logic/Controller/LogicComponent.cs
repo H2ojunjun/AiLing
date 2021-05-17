@@ -20,6 +20,9 @@ namespace AiLing
 
         public LogicContainer container;
 
+        //标记，当一个容器中可能出现多个同种组件的时候需要用该字段进行区分
+        public string mark;
+
         public static LogicComponent GetComponentGlobally(int id)
         {
             return _allComponents[id];

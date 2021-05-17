@@ -62,12 +62,21 @@ namespace AiLing
         Start = 2
     }
 
+    //此枚举中字段对应的枚举必须严格按照从1开始连续的值！
     public enum EStatus
     {
         [GameEnum("两态开关", typeof(EDoubleSwitch))]
         EDoubleSwitch = 1,
         [GameEnum("三态电梯", typeof(EElevator3))]
         EElevator3,
+    }
+
+    public enum EReferenceContent
+    {
+        [GameEnum("TransForm", typeof(TransformReferenceCache))]
+        ETransform = 1,
+        [GameEnum("Material", typeof(MaterialReferenceCache))]
+        EMaterial,
     }
 
     public enum EDoubleSwitch

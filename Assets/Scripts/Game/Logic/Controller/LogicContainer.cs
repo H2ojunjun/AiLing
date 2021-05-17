@@ -49,10 +49,23 @@ namespace AiLing
             }
         }
 
-        public T AddNormalComponent<T>() where T : LogicComponent, new()
+        public T AddNormalComponent<T>(string mark = null) where T : LogicComponent, new()
         {
             T component = new T();
             component.OnCreate();
+            if (mark != null)
+                component.mark = mark;
+            component.container = this;
+            _components.Add(component);
+            component.Init(gameObject);
+            return component;
+        }
+
+        public LogicComponent AddNormalComponent(Type t,string mark = null)
+        {
+            LogicComponent component = Activator.CreateInstance(t) as LogicComponent;
+            component.OnCreate();
+            component.mark = mark;
             component.container = this;
             _components.Add(component);
             component.Init(gameObject);
@@ -74,6 +87,21 @@ namespace AiLing
             return component;
         }
 
+        public LogicComponent AddSingletonLogicComponent(Type t)
+        {
+            foreach (var item in _components)
+            {
+                if (item.GetType() == t)
+                    return item;
+            }
+            LogicComponent component = Activator.CreateInstance(t) as LogicComponent;
+            component.OnCreate();
+            component.container = this;
+            component.Init(gameObject);
+            _components.Add(component);
+            return component;
+        }
+
         public T GetSingletonLogicCompoent<T>() where T : LogicComponent
         {
             foreach (var item in _components)
@@ -86,7 +114,19 @@ namespace AiLing
             return null;
         }
 
-        public List<T> GetLogicComponents<T>() where T : LogicComponent
+        public LogicComponent GetSingletonLogicCompoent(Type t)
+        {
+            foreach (var item in _components)
+            {
+                if (item.GetType() == t)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public List<T> GetLogicComponentsByCommonType<T>() where T : LogicComponent
         {
             List<T> array = new List<T>();
             foreach (var item in _components)
@@ -99,14 +139,88 @@ namespace AiLing
             return array;
         }
 
-        public void RemoveLogicComponent<T>()
+        public List<LogicComponent> GetLogicComponentsByCommonType(Type t)
+        {
+            List<LogicComponent> array = new List<LogicComponent>();
+            foreach (var item in _components)
+            {
+                if (item.GetType() == t)
+                {
+                    array.Add(item);
+                }
+            }
+            return array;
+        }
+
+        public T GetSingleComponent<T>(string mark = null) where T : LogicComponent
+        {
+            foreach (var item in _components)
+            {
+                if (item is T)
+                {
+                    if (mark == null)
+                        return item as T;
+                    else if(item.mark == mark)
+                    {
+                        return item as T;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public LogicComponent GetSingleComponent(Type t, string mark = null)
+        {
+            foreach (var item in _components)
+            {
+                if (item.GetType() == t)
+                {
+                    if (mark == null)
+                        return item;
+                    else if (item.mark == mark)
+                    {
+                        return item;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void RemoveLogicComponent<T>(string mark = null)
         {
             List<int> _indexPrepareForDelete = new List<int>();
             for (int i = 0; i < _components.Count; i++)
             {
                 if (_components[i] is T)
                 {
-                    _indexPrepareForDelete.Add(i);
+                    if (mark == null || _components[i].mark == mark)
+                        _indexPrepareForDelete.Add(i);
+                }
+            }
+            foreach (var index in _indexPrepareForDelete)
+            {
+                _components[index].OnDestory();
+                _components.RemoveAt(index);
+            }
+        }
+
+        public void RemoveLogicComponent(Type t,string mark = null)
+        {
+            List<int> _indexPrepareForDelete = new List<int>();
+            for (int i = 0; i < _components.Count; i++)
+            {
+                if (_components[i].GetType() == t)
+                {
+                    if (mark == null || _components[i].mark == mark)
+                        _indexPrepareForDelete.Add(i);
                 }
             }
             foreach (var index in _indexPrepareForDelete)

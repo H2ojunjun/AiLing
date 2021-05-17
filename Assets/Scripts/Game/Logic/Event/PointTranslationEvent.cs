@@ -28,10 +28,10 @@ namespace AiLing
         private int _timer;
         private Vector3 _originScale;
         private Vector3 _originPos;
+        private Vector2 _originMainTexScale;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
-            DebugHelper.Log("change point");
             _originScale = obj.transform.localScale;
             _originPos = obj.transform.localPosition;
             _render = obj.GetComponent<MeshRenderer>();
@@ -50,6 +50,7 @@ namespace AiLing
                 return;
             }
             _mat = _render.material;
+            _originMainTexScale = _mat.mainTextureScale;
             if (_timer != 0)
                 TimerManager.Instance.RemoveTimer(_timer);
             _timer = TimerManager.Instance.AddTimer(time, 0, 1, EventStart, ChangeValue, EventEnd);
@@ -66,10 +67,12 @@ namespace AiLing
             Vector3 realPos;
             realPos.x = _originPos.x + (_width * change.x * dir.x)/2;
             realPos.y = _originPos.y + (_height * change.y * dir.y) / 2;
-            realPos.z = _originPos.z + (_width * change.z * dir.z) / 2;
+            realPos.z = _originPos.z + (_depth * change.z * dir.z) / 2;
             obj.transform.localPosition = realPos;
-            _mat.SetFloat("_uvChangeValueX", change.x);
-            _mat.SetFloat("_uvChangeValueY", change.y);
+            Vector2 uvScale;
+            uvScale.x = _originMainTexScale.x * (1 + change.x);
+            uvScale.y = _originMainTexScale.y * (1 + change.y);
+            _mat.mainTextureScale = uvScale;
         }
 
         public override void EventEnd()

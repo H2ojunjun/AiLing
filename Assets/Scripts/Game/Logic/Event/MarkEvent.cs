@@ -24,7 +24,7 @@ namespace AiLing
                 DebugHelper.LogError("找不到标记点!请检查该gameobject是否在GameMarkPointManager.Instance.marks中");
                 return;
             }
-            GameProcesser.Instance.currGameModel.mark = index;
+            GameProcesser.Instance.ChangeCurrMark(index);
             GameProcesser.Instance.SaveGameAsyn();
             EventEnd();
             DebugHelper.Log("mark!"+gameObject.name);

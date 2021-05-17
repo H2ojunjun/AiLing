@@ -23,7 +23,11 @@ namespace AiLing
         public override void Regenerate()
         {
             base.Regenerate();
-            GameMarkPointManager.Instance.GoToMark(GameProcesser.Instance.currGameModel.mark);
+            GameMarkPointManager.Instance.GoToMark(GameProcesser.Instance.GetCurrMark());
+            foreach(var item in StatusInfo.allStatusInfo)
+            {
+                item.StartReference();
+            }
             _realView.OnRegenerate();
         }
     }

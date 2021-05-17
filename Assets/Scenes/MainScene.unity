@@ -575,10 +575,6 @@ MonoBehaviour:
   _firstScene: Scene_01
   enable: 1
   archives: []
-  currGameModel:
-    id: 1
-    sceneName: 
-    mark: 0
 --- !u!4 &1084215367
 Transform:
   m_ObjectHideFlags: 0

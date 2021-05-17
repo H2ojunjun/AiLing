@@ -45,6 +45,8 @@ namespace AiLing
             this.totalDelay = totalDelay;
             this.delay = totalDelay;
             this.enable = true;
+            if (loopTime == 0)
+                loopTime = 1;
             this.loopTime = loopTime;
             if (totalDelay > 0)
                 isDelaying = true;
@@ -80,7 +82,7 @@ namespace AiLing
                 loopTime--;
                 _timeEnd?.Invoke();
                 enable = false;
-                if (loopTime > 0)
+                if (loopTime > 0||loopTime<0)
                 {
                     Loop();
                 }

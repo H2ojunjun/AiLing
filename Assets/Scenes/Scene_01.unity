@@ -9963,6 +9963,7 @@ GameObject:
   - component: {fileID: 1383186469}
   - component: {fileID: 1383186468}
   - component: {fileID: 1383186467}
+  - component: {fileID: 1383186472}
   m_Layer: 0
   m_Name: fog
   m_TagString: Untagged
@@ -10063,6 +10064,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1383186472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383186466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc69e9bf0a940aa408e5db37e6605643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusInfoes:
+  - owner: {fileID: 1383186472}
+    isBack: 0
+    status: EDoubleSwitch
+    statusCN: "\u4E24\u6001\u5F00\u5173"
+    _value: 2
+    statusReferences:
+    - CNname: "\u5F00"
+      reference: {fileID: 0}
+      referenceContent: 
+    - CNname: "\u5173"
+      reference: {fileID: 1383186466}
+      referenceContent: 0100000002000000
+  myStatusCNNames:
+  - "\u4E24\u6001\u5F00\u5173"
 --- !u!1001 &1409390150
 PrefabInstance:
   m_ObjectHideFlags: 0

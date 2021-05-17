@@ -21,7 +21,6 @@ namespace AiLing
                     int id = 1;
                     foreach (StatusInfo sta in Object.FindObjectsOfType(typeof(StatusInfo)))
                     {
-                        sta.id = id;
                         id++;
                     }
                 }

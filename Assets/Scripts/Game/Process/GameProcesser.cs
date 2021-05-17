@@ -21,7 +21,7 @@ namespace AiLing
         public List<GameModel> archives = new List<GameModel>();
 
         [HideInInspector]
-        public GameModel currGameModel;
+        private GameModel _currGameModel;
 
         private int saveGameAnimationTimer;
 
@@ -70,15 +70,15 @@ namespace AiLing
         private void SaveGame()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream stream = new FileStream(_savePath + "/gamesave" + currGameModel.id.ToString() + ".txt", FileMode.OpenOrCreate);
-            bf.Serialize(stream, currGameModel);
+            FileStream stream = new FileStream(_savePath + "/gamesave" + _currGameModel.id.ToString() + ".txt", FileMode.OpenOrCreate);
+            bf.Serialize(stream, _currGameModel);
             stream.Close();
             return;
         }
 
         public void LoadGame(GameModel model,Action finishCallBack = null)
         {
-            currGameModel = model;
+            _currGameModel = model;
             GameMainManager.Instance.mainPlayerInput.enabled = false;
             SceneManager.LoadScene(model.sceneName);
             SceneManager.sceneLoaded += (scene, loadMode) =>
@@ -96,10 +96,38 @@ namespace AiLing
             model.id = archives.Count + 1;
             model.sceneName = _firstScene;
             model.mark = 1;
-            currGameModel = model;
+            _currGameModel = model;
             SaveGameAsyn(false);
             DebugHelper.Log("new archive");
             return model;
+        }
+
+        public void ChangeCurrMark(int mark)
+        {
+            _currGameModel.mark = mark;
+        }
+
+        public int GetCurrMark()
+        {
+            return _currGameModel.mark;
+        }
+
+        public void ChangeItemInStatusDic(string key,Dictionary<string,int> status)
+        {
+            Dictionary<string, int> tem;
+            if(_currGameModel.statusDic.TryGetValue(key,out tem))
+            {
+                tem = status;
+                return;
+            }
+            _currGameModel.statusDic.Add(key,status);
+        }
+
+        public Dictionary<string, int> GetItemInStatusDic(string key)
+        {
+            Dictionary<string, int> tem;
+            _currGameModel.statusDic.TryGetValue(key, out tem);
+            return tem;
         }
 
         private void OnDestroy()
