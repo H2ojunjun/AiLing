@@ -21,13 +21,12 @@ namespace AiLing
         [LabelText("延迟")]
         public float delay;
 
-        private BlackScreenPostProcess blackPP;
+        private LerpPostProcess blackPP;
         int timer;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
-            blackPP =  GameMainManager.Instance.mainCamera.gameObject.AddComponent<BlackScreenPostProcess>();
-            blackPP.blackScreenShader = shader;
+            blackPP =  EffectManager.Instance.CreatePostProcess<LerpPostProcess>(shader);
             if (timer != 0)
                 TimerManager.Instance.RemoveTimer(timer);
             timer = TimerManager.Instance.AddTimer(blackTime, delay, 1, EventStart, FadeBlack, EventEnd);
@@ -47,7 +46,7 @@ namespace AiLing
         {
             base.EventEnd();
             timer = 0;
-            Destroy(blackPP);
+            EffectManager.Instance.RemovePostProcess<LerpPostProcess>();
         }
     }
 }

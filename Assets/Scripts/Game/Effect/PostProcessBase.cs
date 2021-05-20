@@ -5,20 +5,15 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PostProcessBase : MonoBehaviour
 {
-    protected void NotSupported()
+    public Shader shader;
+    public Material material;
+
+    protected Material CheckShaderAndMaterial()
     {
-        enabled = false;
-    }
-
-    protected Material CheckShaderAndMaterial(Shader shader, Material material)
-    {
-        if (shader == null)
-            return null;
-
-
-        if (shader.isSupported && material != null && material.shader == shader)
+        if (material != null)
             return material;
-        else
+
+        if (shader != null && shader.isSupported)
         {
             material = new Material(shader)
             {
@@ -26,5 +21,6 @@ public class PostProcessBase : MonoBehaviour
             };
             return material;
         }
+        return null;
     }
 }

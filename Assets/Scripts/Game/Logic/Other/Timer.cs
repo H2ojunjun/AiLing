@@ -82,7 +82,7 @@ namespace AiLing
                 loopTime--;
                 _timeEnd?.Invoke();
                 enable = false;
-                if (loopTime > 0||loopTime<0)
+                if (loopTime != 0)
                 {
                     Loop();
                 }

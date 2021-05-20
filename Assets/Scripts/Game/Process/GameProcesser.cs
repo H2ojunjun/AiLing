@@ -16,6 +16,8 @@ namespace AiLing
 
         public string _firstScene = "Scene_00";
 
+        public string _mainMenuScene = "MainPanelUI";
+
         public bool enable = false;
 
         public List<GameModel> archives = new List<GameModel>();
@@ -26,6 +28,8 @@ namespace AiLing
         private int saveGameAnimationTimer;
 
         private Thread saveGameThread;
+
+        private Action loadSceneFinishCallBack;
 
         void Start()
         {
@@ -56,7 +60,20 @@ namespace AiLing
                     archives.Add(model);
                 }
             }
+            OpenMainMenu();
+        }
+
+        public void OpenMainMenu()
+        {
+            SceneManager.LoadScene(_mainMenuScene);
+            SceneManager.sceneLoaded += OpenMainMenuCallBack;
+        }
+
+        public void OpenMainMenuCallBack(Scene s,LoadSceneMode mode)
+        {
+            GameMainManager.Instance.mainCamera.enabled = false;
             UIManager.Instance.CreateAndShow<UIMainMenu>();
+            SceneManager.sceneLoaded -= OpenMainMenuCallBack;
         }
 
         public void SaveGameAsyn(bool showAnim = true)
@@ -78,14 +95,19 @@ namespace AiLing
         {
             _currGameModel = model;
             GameMainManager.Instance.mainPlayerInput.enabled = false;
+            loadSceneFinishCallBack = finishCallBack;
             SceneManager.LoadScene(model.sceneName);
-            SceneManager.sceneLoaded += (scene, loadMode) =>
-            {
-                GameMarkPointManager.Instance.GetRoot();
-                GameMarkPointManager.Instance.GoToMark(model.mark);
-                GameMainManager.Instance.mainPlayerInput.enabled = true;
-                finishCallBack?.Invoke();
-            };
+            SceneManager.sceneLoaded += LoadGameSceneCallBack;
+        }
+
+        public void LoadGameSceneCallBack(Scene scene, LoadSceneMode loadMode)
+        {
+            GameMainManager.Instance.mainCamera.enabled = true;
+            GameMarkPointManager.Instance.GetRoot();
+            GameMarkPointManager.Instance.GoToMark(_currGameModel.mark);
+            GameMainManager.Instance.mainPlayerInput.enabled = true;
+            loadSceneFinishCallBack?.Invoke();
+            SceneManager.sceneLoaded -= LoadGameSceneCallBack;
         }
 
         public GameModel NewGame()
