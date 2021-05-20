@@ -11,6 +11,8 @@ namespace AiLing
 
         public abstract string componentName { get; }
 
+        public abstract bool isSingle { get; }
+
         public GameObject owner;
 
         public UIPanel panel;

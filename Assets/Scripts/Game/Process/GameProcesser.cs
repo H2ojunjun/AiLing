@@ -63,8 +63,6 @@ namespace AiLing
         {
             saveGameThread = new Thread(SaveGame);
             saveGameThread.Start();
-            if (showAnim)
-                UIManager.Instance.CreateAndShow<UISaving>();
         }
 
         private void SaveGame()

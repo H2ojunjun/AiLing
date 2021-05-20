@@ -9,6 +9,7 @@ namespace AiLing
     [GameEventInfo("标记点更新")]
     public class MarkEvent : GameEvent
     {
+        public bool showAnim = true;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
@@ -26,6 +27,8 @@ namespace AiLing
             }
             GameProcesser.Instance.ChangeCurrMark(index);
             GameProcesser.Instance.SaveGameAsyn();
+            if(showAnim)
+                UIManager.Instance.CreateAndShow<UISaving>();
             EventEnd();
             DebugHelper.Log("mark!"+gameObject.name);
         }

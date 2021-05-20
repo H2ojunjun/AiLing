@@ -10,6 +10,8 @@ namespace AiLing
         public override string PackageName { get { return "Pkg_ESC"; } }
         public override string componentName { get { return "UI_ESC"; } }
 
+        public override bool isSingle { get { return true; } }
+
         private GButton btn_Continue;
 
         private GButton btn_loadGame;

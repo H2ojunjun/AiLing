@@ -34,7 +34,6 @@ namespace AiLing
         private List<PathPoint> _points = new List<PathPoint>();
         private List<Line> _lines = new List<Line>();
         private Dictionary<PlayerPhysicsBehaviour, Line> _pbLineDic = new Dictionary<PlayerPhysicsBehaviour, Line>();
-        //private Dictionary<Line, PathPoint> _lineStartPathPointDic = new Dictionary<Line, PathPoint>();
         private const string PATH_POINT_NAME = "pathPoint";
         private Material _mat;
         private void Start()
@@ -68,7 +67,6 @@ namespace AiLing
                 Line line = _points[i].BuildLine(_points[i + 1]);
                 _lines.Add(line);
                 line.index = i;
-                //_lineStartPathPointDic.Add(line, _points[i]);
             }
         }
         private void OnTriggerEnter(Collider other)

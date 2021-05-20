@@ -10,6 +10,8 @@ namespace AiLing
         public override string PackageName { get { return "Pkg_MainMenu"; } }
         public override string componentName { get { return "UI_MainMenu"; } }
 
+        public override bool isSingle { get { return true; } }
+
         private GComponent c_chooseArchives;
 
         private GList l_choose;

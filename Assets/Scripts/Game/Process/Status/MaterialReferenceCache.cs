@@ -20,7 +20,7 @@ namespace AiLing
 
         public override void Read()
         {
-            _render.material = _mat;
+            container.GetComponent<Renderer>().material = _mat;
         }
     }
 }

@@ -25,9 +25,9 @@ namespace AiLing
 
         public override void Read()
         {
-            _obj.transform.localPosition = _localPosition;
-            _obj.transform.localRotation = _localRotation;
-            _obj.transform.localScale = _localSacle;
+            container.transform.localPosition = _localPosition;
+            container.transform.localRotation = _localRotation;
+            container.transform.localScale = _localSacle;
         }
     }
 }

@@ -31,7 +31,6 @@ Shader "Custom/Normal/Protal"
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
-                float4 pos : TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -51,13 +50,11 @@ Shader "Custom/Normal/Protal"
 
             float4 frag (v2f i) : SV_Target
             {
-                // sample the texture
                 float2 uv = i.uv + _Direction.xy*_Time.y*_Speed;
                 float4 col = tex2D(_MainTex, uv);
-                col.a *= 1-col.r;
+                col.a -= col.r;
                 col*=_Tint; 
                 return col;
-                //return i.pos;
             }
             ENDCG
         }

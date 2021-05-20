@@ -11,6 +11,8 @@ namespace AiLing
 
         public override string componentName { get { return "UI_Saving"; } }
 
+        public override bool isSingle { get { return true; } }
+
         private Transition tr_floating;
 
         public override void Init()
