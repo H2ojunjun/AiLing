@@ -347,10 +347,11 @@ namespace AiLing
             {
                 //此举是为了保证玩家在下坡的时候isInAir始终为true，如果不让speedVertical减小的话，可能会出现如：
                 //跳跃到一个高坡上speedVertical为 - 1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
-                if (_speedVertical > _speedVerticalMinOnGround)
-                    _speedVertical -= 0.01f;
-                else if (_speedVertical < _speedVerticalMinOnGround)
-                    _speedVertical += 0.01f;
+                //if (_speedVertical > _speedVerticalMinOnGround)
+                //    _speedVertical -= 0.01f;
+                //else if (_speedVertical < _speedVerticalMinOnGround)
+                //    _speedVertical += 0.01f;
+                _speedVertical = _speedVerticalMinOnGround;
             }
         }
 
@@ -507,6 +508,7 @@ namespace AiLing
         private void FixedUpdate()
         {
             CheckOnGround();
+            ChangeVerticalSpeedOnGround();
             if (readyForJump)
                 Jump();
             if (readyForPush)
@@ -518,7 +520,6 @@ namespace AiLing
             HorizontalMove();
             FallDown();
             ChangeOldIsInAir();
-            ChangeVerticalSpeedOnGround();
             CharacterControllerMove();
             SetMovementInfo();
             _movementAnimSetter.SetAnimatorInfo(_movement);
