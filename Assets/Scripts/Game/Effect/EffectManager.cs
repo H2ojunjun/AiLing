@@ -78,6 +78,19 @@ namespace AiLing
         {
             pp.shader = shader;
         }
+
+        public void FollowParticle(ParticleSystem ps,GameObject owner,Vector3 offset)
+        {
+            ps.transform.position = owner.transform.position+ offset;
+            ps.transform.parent = owner.transform;
+        }
+
+        public void BreakFollowParticle(ParticleSystem ps)
+        {
+            if (ps == null)
+                return;
+            ps.transform.parent = null;
+        }
     }
 }
 

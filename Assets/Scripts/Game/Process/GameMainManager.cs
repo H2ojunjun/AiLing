@@ -7,23 +7,35 @@ namespace AiLing
 {
     public class GameMainManager : MonoSingleton<GameMainManager>
     {
-        public Camera mainCamera;
+        [SerializeField]
+        private Camera _mainCamera;
 
-        public GameObject player;
+        public Camera mainCamera { get { return _mainCamera; }set{ _mainCamera = value; } }
 
-        public CinemachineVirtualCamera virtualCam;
+        [SerializeField]
+        private GameObject _player;
 
-        public PlayerInputInstance mainPlayerInput;
+        public GameObject player { get { return _player; } set { _player = value; } }
+
+        [SerializeField]
+        private CinemachineVirtualCamera _virtualCam;
+
+        public CinemachineVirtualCamera virtualCam { get { return _virtualCam; } set { _virtualCam = value; } }
+
+        [SerializeField]
+        private PlayerInputInstance _mainPlayerInput;
+
+        public PlayerInputInstance mainPlayerInput { get { return _mainPlayerInput; } set { _mainPlayerInput = value; } }
 
         private void Awake()
         {
-            DontDestroyOnLoad(mainCamera.gameObject);
+            DontDestroyOnLoad(_mainCamera.gameObject);
 
-            DontDestroyOnLoad(player);
+            DontDestroyOnLoad(_player);
 
             DontDestroyOnLoad(transform.parent.gameObject);
 
-            DontDestroyOnLoad(virtualCam.gameObject);
+            DontDestroyOnLoad(_virtualCam.gameObject);
         }
     }
 }

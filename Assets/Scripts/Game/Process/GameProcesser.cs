@@ -22,7 +22,6 @@ namespace AiLing
 
         public List<GameModel> archives = new List<GameModel>();
 
-        [HideInInspector]
         private GameModel _currGameModel;
 
         private int saveGameAnimationTimer;
@@ -65,13 +64,12 @@ namespace AiLing
 
         public void OpenMainMenu()
         {
-            SceneManager.LoadScene(_mainMenuScene);
             SceneManager.sceneLoaded += OpenMainMenuCallBack;
+            SceneManager.LoadScene(_mainMenuScene);
         }
 
         public void OpenMainMenuCallBack(Scene s,LoadSceneMode mode)
         {
-            GameMainManager.Instance.mainCamera.enabled = false;
             UIManager.Instance.CreateAndShow<UIMainMenu>();
             SceneManager.sceneLoaded -= OpenMainMenuCallBack;
         }
@@ -96,8 +94,8 @@ namespace AiLing
             _currGameModel = model;
             GameMainManager.Instance.mainPlayerInput.enabled = false;
             loadSceneFinishCallBack = finishCallBack;
-            SceneManager.LoadScene(model.sceneName);
             SceneManager.sceneLoaded += LoadGameSceneCallBack;
+            SceneManager.LoadScene(model.sceneName);
         }
 
         public void LoadGameSceneCallBack(Scene scene, LoadSceneMode loadMode)
