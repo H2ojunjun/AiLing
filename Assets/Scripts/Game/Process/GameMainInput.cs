@@ -17,6 +17,11 @@ namespace AiLing
                     if (ui.isShowing == true)
                         return;
                 }
+                if (UIManager.Instance.uiDic.TryGetValue("UI_Tips", out ui))
+                {
+                    if (ui.isShowing == true)
+                        UIManager.Instance.HideUI(ui);
+                }
                 UIManager.Instance.CreateAndShow<UIESC>();
             }
         }
