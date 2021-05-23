@@ -81,6 +81,7 @@ namespace AiLing
         public EventListener listener;
 
         [LabelText("状态")]
+        [OnValueChanged("OnStatusInfoChange")]
         public StatusInfo si;
 
         [LabelText("条件列表")]
@@ -109,6 +110,12 @@ namespace AiLing
             cod.statusCNNames = si.myStatusCNNames;
             cod.owner = this;
             conditions.Add(cod);
+        }
+
+        private void OnStatusInfoChange()
+        {
+            //foreach(var item in conditions)
+            //    conditions.
         }
 
         public bool GetConditionRealResult()

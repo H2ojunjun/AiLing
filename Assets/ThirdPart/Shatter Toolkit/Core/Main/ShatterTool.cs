@@ -19,10 +19,10 @@ public class ShatterTool : MonoBehaviour
 	private bool fillCut = true;
 	
 	[SerializeField]
-	private bool sendPreSplitMessage = false;
+	private bool sendPreSplitMessage = true;
 	
 	[SerializeField]
-	private bool sendPostSplitMessage = false;
+	private bool sendPostSplitMessage = true;
 	
 	[SerializeField]
 	private HullType internalHullType = HullType.FastHull;
@@ -185,7 +185,8 @@ public class ShatterTool : MonoBehaviour
 		if (!IsLastGeneration)
 		{
 			// Increase generation
-			generation++;
+			if(isDestroy)
+				generation++;
 			
 			// Split the hull using randomly generated planes passing through the point
 			Plane[] planes = new Plane[cuts];
@@ -228,7 +229,7 @@ public class ShatterTool : MonoBehaviour
 				CreateNewHulls(uvMapper, points, normals, out newHulls);
 				
 				GameObject[] newGameObjects;
-				
+
 				CreateNewGameObjects(newHulls, out newGameObjects);
 				
 				if (sendPostSplitMessage)
@@ -238,12 +239,12 @@ public class ShatterTool : MonoBehaviour
 
 				if (isDestroy)
 					Destroy(gameObject);
-				else
-					gameObject.SetActive(false);
-			}
+                else
+                    gameObject.SetActive(false);
+            }
 			else
 			{
-				Debug.LogWarning(name + " has no UvMapper attached! Please attach a UvMapper to use the ShatterTool.", this);
+				DebugHelper.LogError(name + " has no UvMapper attached! Please attach a UvMapper to use the ShatterTool.");
 			}
 		}
 	}
@@ -325,14 +326,14 @@ public class ShatterTool : MonoBehaviour
 		}
 		
 		// Remove mesh references to speed up instantiation
-		GetComponent<MeshFilter>().sharedMesh = null;
+		//GetComponent<MeshFilter>().sharedMesh = null;
 		
-		MeshCollider meshCollider = GetComponent<MeshCollider>();
+		//MeshCollider meshCollider = GetComponent<MeshCollider>();
 		
-		if (meshCollider != null)
-		{
-			meshCollider.sharedMesh = null;
-		}
+		//if (meshCollider != null)
+		//{
+		//	meshCollider.sharedMesh = null;
+		//}
 		
 		// Create new game objects
 		newGameObjects = new GameObject[newHulls.Count];
@@ -343,8 +344,7 @@ public class ShatterTool : MonoBehaviour
 			Mesh newMesh = newMeshes[i];
 			float volume = newVolumes[i];
 			
-			GameObject newGameObject = (GameObject)Instantiate(gameObject);
-			
+			GameObject newGameObject = Instantiate(gameObject,transform.position,Quaternion.identity);
 			// Set shatter tool
 			ShatterTool newShatterTool = newGameObject.GetComponent<ShatterTool>();
 			

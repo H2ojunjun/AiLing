@@ -121,7 +121,7 @@ public class FastHull : IHull
 		
 		ValidateOutput(a, b, localPlaneNormal);
 		
-		isValid = false;
+		//isValid = false;
 		
 		// Set output
 		resultA = a;

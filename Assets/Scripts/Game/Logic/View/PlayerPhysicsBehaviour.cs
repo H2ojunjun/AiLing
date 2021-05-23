@@ -35,6 +35,7 @@ namespace AiLing
         private bool _canWalk = true;
         private bool _canRun = true;
         private bool _canJump = true;
+        private bool _canPushPull = true;
 
         //输入的条件和参数
         private bool _readyForJump = false;
@@ -53,6 +54,7 @@ namespace AiLing
         public bool canMove { get { return _canWalk; } set { _canWalk = value; } }
         public bool canRun { get { return _canRun; } set { _canRun = value; } }
         public bool canJump { get { return _canJump; } set { _canJump = value; } }
+        public bool canPushPull { get { return _canPushPull; } set { _canPushPull = value; } }
         public bool readyForJump { get { return _readyForJump; } set { _readyForJump = value; } }
         public bool readyForPush { get { return _readyForPush; } set { _readyForPush = value; } }
         public bool readyForBreakPush { get { return _readyForBreakPush; } set { _readyForBreakPush = value; } }
@@ -251,12 +253,16 @@ namespace AiLing
             {
                 //向右转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y + _rotationDelta, transform.localRotation.z));
+                canPushPull = false;
             }
-            if (!_isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            else if (!_isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
             {
                 //向左转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y - _rotationDelta, transform.localRotation.z));
+                canPushPull = false;
             }
+            else
+                canPushPull = true;
             if (isMove)
             {
                 if (!canRun)
@@ -357,9 +363,7 @@ namespace AiLing
 
         private bool CheckPush()
         {
-            if (_isInAir)
-                return false;
-            return true;
+            return (!_isInAir && canPushPull);
         }
 
         private void Push()
@@ -458,6 +462,7 @@ namespace AiLing
             _readyForJump = false;
             _readyForPush = false;
             _readyForBreakPush = false;
+            _horizontalInput = 0;
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)

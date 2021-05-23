@@ -23,6 +23,15 @@ namespace AiLing
         {
             allStatusInfo.Add(this);
             LoadStatus();
+            Init();
+        }
+
+        private void Init()
+        {
+            foreach(var sta in statusInfoes)
+            {
+                sta.Init();
+            }
         }
 
         private void AddStatus()
@@ -68,6 +77,16 @@ namespace AiLing
             {
                 item.StartReference();
             }
+        }
+
+        public void RevertReference()
+        {
+            foreach (var item in statusInfoes)
+            {
+                item.RevertValue();
+                item.StartReference();
+            }
+
         }
 
         public void SaveStatus()
@@ -119,6 +138,13 @@ namespace AiLing
         [LabelText("状态类别")]
         public string statusCN;
 
+        [SerializeField]
+        [LabelText("状态值")]
+        [ValueDropdown("specificStatus")]
+        private int _value;
+
+        private int _originValue;
+
         //特定状态枚举内元素的中文名
         public ValueDropdownList<int> specificStatus = new ValueDropdownList<int>();
 
@@ -127,11 +153,6 @@ namespace AiLing
 
         [HideInInspector]
         public static Dictionary<string, GameEnumAttribute> statusAttributeDic = new Dictionary<string, GameEnumAttribute>();
-        
-        [SerializeField]
-        [LabelText("状态值")]
-        [ValueDropdown("specificStatus")]
-        private int _value;
 
         [LabelText("参照物列表")]
         [ListDrawerSettings(DraggableItems = false)]
@@ -146,7 +167,7 @@ namespace AiLing
             set
             {
                 _value = value;
-                OnValueChange();
+                OnStatusValueChange();
             }
         }
 
@@ -167,7 +188,7 @@ namespace AiLing
             }
         }
 
-        public void OnChangeStatus()
+        public void OnChangeStatus(string newSta)
         {
             if (status == null)
                 return;
@@ -192,12 +213,24 @@ namespace AiLing
 
         public void Refresh()
         {
-#if UNITY_EDITOR
-            OnChangeStatus();
-#endif
+            if (status == null)
+                return;
+            specificStatus.Clear();
+            var attri = statusAttributeDic[status];
+            statusCN = attri.CNName;
+            Type t = attri.enumType;
+            FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
+            foreach (var field in fields)
+            {
+                var attris = Attribute.GetCustomAttribute(field, typeof(GameEnumAttribute), false) as GameEnumAttribute;
+                string name = attris.CNName;
+                var enumValue = field.GetValue(null);
+                int intValue = (int)enumValue;
+                specificStatus.Add(name, intValue);
+            }
         }
 
-        public void OnValueChange()
+        public void OnStatusValueChange()
         {
             if (isBack)
                 return;
@@ -254,6 +287,16 @@ namespace AiLing
                     return;
                 referenceCache.Read();
             }
+        }
+
+        public void Init()
+        {
+            _originValue = _value;
+        }
+
+        public void RevertValue()
+        {
+            _value = _originValue;
         }
     }
 

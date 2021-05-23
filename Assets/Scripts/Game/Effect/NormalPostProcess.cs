@@ -18,7 +18,6 @@ namespace AiLing
 
             if (normalMat != null)
             {
-                DebugHelper.Log("OnRenderImage");
                 Graphics.Blit(src, dest, normalMat);
             }
             else

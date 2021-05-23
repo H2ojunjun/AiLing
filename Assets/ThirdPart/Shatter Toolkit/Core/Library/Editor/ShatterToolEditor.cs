@@ -55,7 +55,6 @@ public class ShatterToolEditor : Editor
 		source.InternalHullType = (HullType)EditorGUILayout.EnumPopup(new GUIContent("Internal Hull Type", internalHullTypeTooltip), source.InternalHullType);
 		EditorGUILayout.EndHorizontal();
 
-		// InternalHullType
 		EditorGUILayout.BeginHorizontal();
 		source.IsDestory = EditorGUILayout.Toggle(new GUIContent("isDestroy"), source.IsDestory);
 		EditorGUILayout.EndHorizontal();

@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
+    [RequireComponent(typeof(ShatterHanlder),typeof(ShatterTool),typeof(MeshCollider))]
     [GameEventInfo("破碎")]
     public class ShatterEvent : GameEvent
     {
@@ -31,6 +32,8 @@ namespace AiLing
         [LabelText("切割后爆炸中心")]
         [DisableIf("isLocalExplode")]
         public GameObject explosionCenter;
+        [LabelText("爆炸后是否应用重力")]
+        public bool isUseGravity = false;
         [LabelText("延迟")]
         public float delay;
         private int _timer;
@@ -55,30 +58,25 @@ namespace AiLing
                 DebugHelper.LogError(target.name + "没有ShatterHanlder组件");
                 return;
             }
-            if (delay > 0)
+            if (_timer == 0)
             {
-                if (_timer == 0)
+                _timer =TimerManager.Instance.AddTimer(delay, 0, 1, null, null, () =>
                 {
-                    TimerManager.Instance.AddTimer(delay, 0, 1, null, null, () =>
-                    {
-                        Shatter();
-                        EventEnd();
-                    });
-                }
-                else
-                    return;
+                    Shatter();
+                    EventEnd();
+                });
             }
             else
-                Shatter();
+                return;
         }
 
         private void Shatter()
         {
+            _sh.postSplitCallBack = AfterSplit;
             if (isPoint)
                 _st.Shatter(transform.position + offsetFromCenter);
             else
                 _st.Split(planes.ToArray());
-            _sh.postSplitCallBack = AfterSplit;
         }
         
         private void AfterSplit(GameObject[] newGameObjects)
@@ -96,6 +94,7 @@ namespace AiLing
             {
                 Rigidbody body = item.GetComponent<Rigidbody>();
                 body.AddExplosionForce(explosionForce,center, explosionRaduis);
+                body.useGravity = isUseGravity;
             }
         }
 

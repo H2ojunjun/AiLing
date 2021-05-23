@@ -28,7 +28,7 @@ namespace AiLing
             base.Excute(unartPara);
             blackPP =  EffectManager.Instance.CreatePostProcess<LerpPostProcess>(shader);
             if (timer != 0)
-                TimerManager.Instance.RemoveTimer(timer);
+                return;
             timer = TimerManager.Instance.AddTimer(blackTime, delay, 1, EventStart, FadeBlack, EventEnd);
         }
 

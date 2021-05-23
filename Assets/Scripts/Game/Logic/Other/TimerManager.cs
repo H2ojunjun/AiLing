@@ -9,14 +9,10 @@ namespace AiLing
     {
         //已经发放的id的最大值
         private int _allocID = 0;
-        //是否在update中，此变量的作用是防止在循环中添加timer
-        private bool _isInUpdate = false;
-        //缓存的timer，有时AddTimer会在某一个Timer的回调中被调用，此时应该把它缓存起来，在循环外再添加到_allTimer中去
-        private Dictionary<int,Timer> _cacheTimerDic = new Dictionary<int, Timer>();
-        //用于保存要删除的timer的索引的列表
-        private List<int> _removeIndexes = new List<int>();
         //保存所有Timer的列表
         private List<Timer> _allTimer = new List<Timer>();
+        //保存Timer的所有下标
+        private List<int> _timerIndexes = new List<int>();
         //保存在timerDic中空闲的index
         public Stack<int> freeTimerIndexes = new Stack<int>();
 
@@ -41,18 +37,12 @@ namespace AiLing
             if (freeTimerIndexes.Count == 0 || freeTimerIndexes == null)
             {
                 timerKey = ++_allocID;
-                if (_isInUpdate)
-                    _cacheTimerDic.Add(timerKey, timer);
-                else
-                    _allTimer.Add(timer);
+                _allTimer.Add(timer);
             }
             else
             {
                 timerKey = freeTimerIndexes.Pop();
-                if (_isInUpdate)
-                    _cacheTimerDic.Add(timerKey, timer);
-                else
-                    _allTimer[timerKey-1] = timer;
+                _allTimer[timerKey-1] = timer;
             }
             timer.id = timerKey;
             timer.Start();
@@ -125,35 +115,29 @@ namespace AiLing
 
         void Update()
         {
-            _isInUpdate = true;
-            _cacheTimerDic.Clear();
-            _removeIndexes.Clear();
-            foreach (var timer in _allTimer)
+            _timerIndexes.Clear();
+            for(int i=0;i<_allTimer.Count; i++)
             {
-                if (timer == null)
+                if (_allTimer[i] != null)
+                {
+                    _timerIndexes.Add(i);
+                }
+            }
+            foreach(var index in _timerIndexes)
+            {
+                Timer timer = _allTimer[index];
+                //再一次判空是为了防止在改循环中timer被remove
+                if(timer == null)
+                {
                     continue;
+                }
                 if (timer.enable)
                 {
                     timer.Update();
                 }
                 if (timer.isFinished())
-                    _removeIndexes.Add(timer.id);
+                    RemoveTimer(timer.id);
             }
-            if (_cacheTimerDic.Count != 0)
-            {
-                foreach(var item in _cacheTimerDic)
-                {
-                    if (item.Key > _allTimer.Count)
-                        _allTimer.Add(item.Value);
-                    else
-                        _allTimer[item.Key - 1] = item.Value;
-                }
-            }
-            foreach(var index in _removeIndexes)
-            {
-                RemoveTimer(index);
-            }
-            _isInUpdate = false;
         }
     }
 

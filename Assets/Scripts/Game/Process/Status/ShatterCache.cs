@@ -10,7 +10,7 @@ namespace AiLing
         GameObject _originObj;
         public override void Cache()
         {
-            _sh = _originObj.GetComponent<ShatterHanlder>();
+            
             if (_sh == null)
             {
                 DebugHelper.LogError(_originObj.name + "没有ShatterHanlder");
@@ -20,17 +20,21 @@ namespace AiLing
 
         public override void Init(GameObject obj)
         {
-            _originObj = obj;
+            _sh = obj.GetComponentInChildren<ShatterHanlder>();
+            _originObj = _sh.gameObject;
         }
 
         public override void Read()
         {
             _originObj.SetActive(true);
             Transform newTrans = _sh.newTrans;
+            if (newTrans == null)
+                return;
             foreach(Transform item in newTrans)
             {
                 Object.Destroy(item.gameObject);
             }
+            Object.Destroy(newTrans.gameObject);
         }
     }
 }

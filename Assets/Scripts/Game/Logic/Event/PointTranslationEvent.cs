@@ -10,6 +10,11 @@ namespace AiLing
     [GameEventInfo("扩散")]
     public class PointTranslationEvent : GameEvent
     {
+        private void Awake()
+        {
+            SignalManager.Instance.Register(ESignal.Signal_TransForm_Cache_Read, RemoveTimer);
+        }
+
         [LabelText("物体")]
         public GameObject obj;
         [LabelText("方向向量和")]
@@ -52,7 +57,7 @@ namespace AiLing
             _mat = _render.material;
             _originMainTexScale = _mat.mainTextureScale;
             if (_timer != 0)
-                TimerManager.Instance.RemoveTimer(_timer);
+                return;
             _timer = TimerManager.Instance.AddTimer(time, 0, 1, EventStart, ChangeValue, EventEnd);
         }
         
@@ -106,6 +111,23 @@ namespace AiLing
                     realDir.z = -1;
             }
             dir = realDir;
+        }
+
+
+        private void RemoveTimer(params object[] obj)
+        {
+            GameObject gameObj = obj[0] as GameObject;
+            if (_timer == 0 || gameObj != gameObject)
+                return;
+            TimerManager.Instance.RemoveTimer(_timer);
+            _timer = 0;
+        }
+
+        private void OnDestroy()
+        {
+            if (SignalManager.Instance == null)
+                return;
+            SignalManager.Instance.RemoveFunction(ESignal.Signal_TransForm_Cache_Read, RemoveTimer);
         }
     }
 }

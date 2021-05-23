@@ -25,6 +25,7 @@ namespace AiLing
 
         public override void Read()
         {
+            SignalManager.Instance.CallSignal(ESignal.Signal_TransForm_Cache_Read,_obj);
             container.transform.localPosition = _localPosition;
             container.transform.localRotation = _localRotation;
             container.transform.localScale = _localSacle;

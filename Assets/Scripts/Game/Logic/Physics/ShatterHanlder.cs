@@ -10,11 +10,10 @@ namespace AiLing
 
 	public class ShatterHanlder : MonoBehaviour
     {
-        private const string NEW_GAMEOBJECT_PATH = "newGameObjects";
 		private ShatterTool _st;
 		public PostSplitDelegate postSplitCallBack;
 		public PreSplitDelegate preSplitCallBack;
-		[LabelText("新物体父亲")]
+		[HideInInspector]
         public Transform newTrans;
 		public bool attachPieceToParent = true;
 		public float maxPieceToParentDistance = 1.0f;
@@ -37,16 +36,9 @@ namespace AiLing
 			preSplitCallBack?.Invoke(planes);
 			if (!_st.IsDestory)
             {
-				if (newTrans == null)
-				{
-					newTrans = transform.Find(NEW_GAMEOBJECT_PATH);
-					if (newTrans == null)
-					{
-						GameObject obj = new GameObject();
-						obj.name = NEW_GAMEOBJECT_PATH;
-						obj.transform.parent = transform;
-					}
-				}
+				GameObject obj = new GameObject();
+				obj.name = name + "_shatter";
+				newTrans = obj.transform;
 			}
 			else
             {

@@ -14,6 +14,7 @@ namespace AiLing
 
         void Start()
         {
+            _animator = GetComponent<Animator>();
             _container = GetComponent<LogicContainer>();
             _creatureInfo = _container.GetSingletonLogicCompoent<CreatureInfo>();
             _playerLifeAnimatorSetter = _container.GetSingletonLogicCompoent<PlayerLifeAnimatorSetter>();

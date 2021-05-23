@@ -89,7 +89,7 @@ namespace AiLing
         {
             if (ps == null)
                 return;
-            ps.transform.parent = null;
+            Destroy(ps);
         }
     }
 }
