@@ -107,7 +107,7 @@ namespace AiLing
         public Vector3 center { get { return transform.position + _cc.center; } }
 
         private bool _isInAir;
-        private bool _isRight;
+        private bool _isRight = true;
         private float _speedHorizontal;
         private float _speedVertical;
         private bool _isPull;

@@ -9,7 +9,11 @@ namespace AiLing
     public class PositionListener : EventListener
     {
         [LabelText("碰撞检测层")]
-        public LayerMask layer = 1<<10;
+        public LayerMask layer = 1 << 10;
+        [LabelText("碰撞目标")]
+        public GameObject target;
+        [LabelText("是否trigger触发")]
+        public bool isTrigger = true;
 
         private BoxCollider _collider;
 
@@ -19,17 +23,46 @@ namespace AiLing
             _collider = GetComponent<BoxCollider>();
             if (_collider == null)
                 _collider = gameObject.AddComponent<BoxCollider>();
-            _collider.isTrigger = true;
+            _collider.isTrigger = isTrigger;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            unartificialPara.Clear();
-            GameObject obj = other.gameObject;
-            if (((1 << obj.layer) & layer) == 0)
+            if (!isTrigger)
                 return;
+            GameObject obj = other.gameObject;
+            if (!ShouldExcute(obj))
+                return;
+            unartificialPara.Clear();
             this.unartificialPara.Add(obj);
             base.CallEvent();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (isTrigger)
+                return;
+            GameObject obj = collision.gameObject;
+            if (!ShouldExcute(obj))
+                return;
+            unartificialPara.Clear();
+            this.unartificialPara.Add(obj);
+            base.CallEvent();
+        }
+
+        private bool ShouldExcute(GameObject obj)
+        {
+            if (target != null)
+            {
+                if (target != obj)
+                    return false;
+                else
+                    return true;
+            }
+            else
+            {
+                return (((1 << obj.layer) & layer) != 0);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RustMat_01
+  m_Name: cartoon_rust
   m_Shader: {fileID: 4800000, guid: db36ce648dcf2a14e9c37c507b427cab, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

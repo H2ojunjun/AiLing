@@ -6,7 +6,6 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [RequireComponent(typeof(ShatterHanlder),typeof(ShatterTool),typeof(MeshCollider))]
     [GameEventInfo("破碎")]
     public class ShatterEvent : GameEvent
     {
@@ -34,6 +33,8 @@ namespace AiLing
         public GameObject explosionCenter;
         [LabelText("爆炸后是否应用重力")]
         public bool isUseGravity = false;
+        [LabelText("爆炸后是否剔除碰撞器")]
+        public bool isCullCollider = false;
         [LabelText("延迟")]
         public float delay;
         private int _timer;
@@ -95,6 +96,11 @@ namespace AiLing
                 Rigidbody body = item.GetComponent<Rigidbody>();
                 body.AddExplosionForce(explosionForce,center, explosionRaduis);
                 body.useGravity = isUseGravity;
+                if (isCullCollider)
+                {
+                    Collider col = item.GetComponent<Collider>();
+                    Destroy(col);
+                }
             }
         }
 

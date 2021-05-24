@@ -10,6 +10,8 @@ namespace AiLing
 
         private Dictionary<Camera, List<PostProcessBase>> _postProcessDic = new Dictionary<Camera, List<PostProcessBase>>();
 
+        private Dictionary<string, int> _effectTimerDic = new Dictionary<string, int>();
+
         private void Start()
         {
             mainCam = GameMainManager.Instance.mainCamera;
@@ -81,15 +83,29 @@ namespace AiLing
 
         public void FollowParticle(ParticleSystem ps,GameObject owner,Vector3 offset)
         {
-            ps.transform.position = owner.transform.position+ offset;
-            ps.transform.parent = owner.transform;
+            int _timer;
+            if(_effectTimerDic.TryGetValue(ps.name,out _timer))
+            {
+                if (_timer != 0)
+                    TimerManager.Instance.RemoveTimer(_timer);
+            }
+            _timer = TimerManager.Instance.AddTimer(1, 0, -1, null, (time) => {
+                ps.transform.position = owner.transform.position + offset;
+            }, null);
+            _effectTimerDic[ps.name] = _timer;
         }
 
         public void BreakFollowParticle(ParticleSystem ps)
         {
             if (ps == null)
                 return;
-            Destroy(ps);
+            if (TimerManager.Instance&& _effectTimerDic.ContainsKey(ps.name))
+            {
+                int timer = _effectTimerDic[ps.name];
+                if(timer!=0)
+                    TimerManager.Instance.RemoveTimer(timer);
+                _effectTimerDic.Remove(ps.name);
+            }
         }
     }
 }

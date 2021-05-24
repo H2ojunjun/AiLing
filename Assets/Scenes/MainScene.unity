@@ -1831,6 +1831,10 @@ PrefabInstance:
       propertyPath: blackTime
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4294682241751034152, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4920350569764179534, guid: 7af62139581e42b43b740c3d30a03ee2, type: 3}
       propertyPath: m_RootOrder
       value: 3
