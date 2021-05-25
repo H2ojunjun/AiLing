@@ -7,7 +7,6 @@ namespace AiLing
     [GameEventInfo("重生")]
     public class MakeRegerationEvent : GameEvent
     {
-        private int _timer;
         private GameObject _realTarget;
 
         [InfoBox("想要player复活就不传")]

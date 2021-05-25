@@ -69,16 +69,10 @@ namespace AiLing
         EDoubleSwitch = 1,
         [GameEnum("三态电梯", typeof(EElevator3))]
         EElevator3,
-    }
-
-    public enum EReferenceContent
-    {
-        [GameEnum("TransForm", typeof(TransformReferenceCache))]
-        ETransform = 1,
-        [GameEnum("Material", typeof(MaterialReferenceCache))]
-        EMaterial,
-        [GameEnum("Shatter", typeof(ShatterCache))]
-        EShatter,
+        [GameEnum("是否下落", typeof(EFallen))]
+        EFallen,
+        [GameEnum("是否破碎", typeof(EBreak))]
+        EBreak,
     }
 
     public enum EDoubleSwitch
@@ -97,7 +91,34 @@ namespace AiLing
         Two,
         [GameEnum("3")]
         Three
+    }
 
+    public enum EFallen
+    {
+        [GameEnum("未下落")]
+        up = 1,
+        [GameEnum("已下落")]
+        down
+    }
+
+    public enum EBreak
+    {
+        [GameEnum("未破碎")]
+        complete =1,
+        [GameEnum("已破碎")]
+        broken,
+    }
+
+    public enum EReferenceContent
+    {
+        [GameEnum("TransForm", typeof(TransformReferenceCache))]
+        ETransform = 1,
+        [GameEnum("Material", typeof(MaterialReferenceCache))]
+        EMaterial,
+        [GameEnum("Shatter", typeof(ShatterCache))]
+        EShatter,
+        [GameEnum("Active", typeof(SetActiveCache))]
+        EActive,
     }
 }
 

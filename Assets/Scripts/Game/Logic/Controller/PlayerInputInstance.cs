@@ -13,6 +13,11 @@ namespace AiLing
         {
             _physicsBehaviour = GetComponent<PlayerPhysicsBehaviour>();
         }
+        private void HorizontalMove()
+        {
+            float horizontalInput = InputManager.Instance.GetHorizontal();
+            _physicsBehaviour.horizontalInput = horizontalInput;
+        }
 
         private void Jump()
         {
@@ -32,10 +37,10 @@ namespace AiLing
                 _physicsBehaviour.readyForBreakPush = true;
         }
 
-        private void HorizontalMove()
+        private void Press()
         {
-            float horizontalInput = InputManager.Instance.GetHorizontal();
-            _physicsBehaviour.horizontalInput = horizontalInput;
+            if (InputManager.Instance.GetKeyPress(KeyCode.Mouse0) || InputManager.Instance.GetKeyPress(KeyCode.JoystickButton1))
+                _physicsBehaviour.readyForPress = true;
         }
 
         private void FixedUpdate()
@@ -43,6 +48,7 @@ namespace AiLing
             HorizontalMove();
             Jump();
             Push();
+            Press();
             BreakPush();
         }
     }

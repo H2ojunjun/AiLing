@@ -18,7 +18,6 @@ namespace AiLing
         [Range(0, 1)]
         [LabelText("结束值")]
         public float end;
-        private int _timer;
         private Renderer _render;
         private bool _hasClone =false;
         public override void Excute(List<GameObject> unartPara)

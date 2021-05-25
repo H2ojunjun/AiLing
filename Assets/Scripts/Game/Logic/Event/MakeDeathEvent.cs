@@ -7,7 +7,6 @@ namespace AiLing
     [GameEventInfo("死亡")]
     public class MakeDeathEvent : GameEvent
     {
-        private int _timer;
         private GameObject _realTarget;
 
         [InfoBox("想要player死就不传")]

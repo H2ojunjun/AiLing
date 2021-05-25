@@ -36,6 +36,10 @@ namespace AiLing
 
         private Action _finishCallBack;
 
+        [NonSerialized]
+        protected int _timer;
+
+
         //事件的开始callback
         public event Action startCallBack { add { _startCallBack += value; }remove { _startCallBack -= value; } }
 

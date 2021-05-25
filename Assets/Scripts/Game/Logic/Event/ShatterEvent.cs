@@ -14,10 +14,10 @@ namespace AiLing
         [LabelText("是否点分割")]
         public bool isPoint;
         [LabelText("切割中心偏移量")]
-        [EnableIf("isPoint")]
+        [ShowIf("isPoint")]
         public Vector3 offsetFromCenter = Vector3.zero;
         [LabelText("分割平面")]
-        [DisableIf("isPoint")]
+        [HideIf("isPoint")]
         public List<Plane> planes = new List<Plane>();
         [LabelText("爆炸力")]
         public float explosionForce;
@@ -26,18 +26,20 @@ namespace AiLing
         [LabelText("是否local坐标爆炸")]
         public bool isLocalExplode;
         [LabelText("切割后爆炸点偏移量")]
-        [EnableIf("isLocalExplode")]
+        [ShowIf("isLocalExplode")]
         public Vector3 explosionOffset;
         [LabelText("切割后爆炸中心")]
-        [DisableIf("isLocalExplode")]
+        [HideIf("isLocalExplode")]
         public GameObject explosionCenter;
         [LabelText("爆炸后是否应用重力")]
         public bool isUseGravity = false;
-        [LabelText("爆炸后是否剔除碰撞器")]
-        public bool isCullCollider = false;
+        [LabelText("爆炸后是否修改layer")]
+        public bool isChangeLayer = false;
+        [ShowIf("isChangeLayer")]
+        [LabelText("新layer")]
+        public int layer;
         [LabelText("延迟")]
         public float delay;
-        private int _timer;
         private ShatterTool _st;
         private ShatterHanlder _sh;
         public override void Excute(List<GameObject> unartPara)
@@ -75,7 +77,7 @@ namespace AiLing
         {
             _sh.postSplitCallBack = AfterSplit;
             if (isPoint)
-                _st.Shatter(transform.position + offsetFromCenter);
+                _st.Shatter(target.transform.position + offsetFromCenter);
             else
                 _st.Split(planes.ToArray());
         }
@@ -96,10 +98,9 @@ namespace AiLing
                 Rigidbody body = item.GetComponent<Rigidbody>();
                 body.AddExplosionForce(explosionForce,center, explosionRaduis);
                 body.useGravity = isUseGravity;
-                if (isCullCollider)
+                if (isChangeLayer)
                 {
-                    Collider col = item.GetComponent<Collider>();
-                    Destroy(col);
+                    item.layer = layer;
                 }
             }
         }

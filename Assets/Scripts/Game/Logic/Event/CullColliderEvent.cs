@@ -14,7 +14,6 @@ namespace AiLing
         public float time;
         [LabelText("是否开启")]
         public bool isOpen = false;
-        private int _timer;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);

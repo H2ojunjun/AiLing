@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
+using System;
 
 namespace AiLing
 {
@@ -36,12 +37,14 @@ namespace AiLing
         private bool _canRun = true;
         private bool _canJump = true;
         private bool _canPushPull = true;
+        private bool _canPress = true;
 
         //输入的条件和参数
         private bool _readyForJump = false;
         private bool _readyForPush = false;
         private bool _readyForBreakPush = false;
         private bool _readyForMoveTowardsEndInSpeed = false;
+        private bool _readyForPress = false;
         private MoveTowardsParameter _moveTowardsPara = null;
         private float _horizontalInput;
         //真正的属性
@@ -55,10 +58,12 @@ namespace AiLing
         public bool canRun { get { return _canRun; } set { _canRun = value; } }
         public bool canJump { get { return _canJump; } set { _canJump = value; } }
         public bool canPushPull { get { return _canPushPull; } set { _canPushPull = value; } }
+        public bool canPress { get { return _canPress; } set { _canPress = value; } }
         public bool readyForJump { get { return _readyForJump; } set { _readyForJump = value; } }
         public bool readyForPush { get { return _readyForPush; } set { _readyForPush = value; } }
         public bool readyForBreakPush { get { return _readyForBreakPush; } set { _readyForBreakPush = value; } }
         public bool readyForMoveTowardsEndInSpeed { get { return _readyForMoveTowardsEndInSpeed; } set { _readyForMoveTowardsEndInSpeed = value; } }
+        public bool readyForPress { get { return _readyForPress; } set { _readyForPress = value; } }
         public MoveTowardsParameter moveTowardsPara { get { return _moveTowardsPara; } set { _moveTowardsPara = value; } }
         public float horizontalInput { get { return _horizontalInput; } set { _horizontalInput = value; } }
 
@@ -112,7 +117,10 @@ namespace AiLing
         private float _speedVertical;
         private bool _isPull;
         private bool _isPush;
+        private bool _isPress;
+        private bool _isInteract;
         private Vector3 _moveVec;
+        private PassiveListener pressListener;
 
         private void SetMovementInfo()
         {
@@ -122,7 +130,9 @@ namespace AiLing
             _movement.speedVertical = _speedVertical;
             _movement.isPull = _isPull;
             _movement.isPush = _isPush;
+            _movement.isPress = _isPress;
             _movement.moveVec = _moveVec;
+            _movement.isInteract = _isInteract;
         }
 
         void Start()
@@ -130,9 +140,9 @@ namespace AiLing
             _animator = GetComponent<Animator>();
             _container = GetComponent<LogicContainer>();
             _movement = _container.GetSingletonLogicCompoent<Movement>();
-            if(_movement == null)
+            if (_movement == null)
             {
-                DebugHelper.LogError(gameObject.name+"没有movement");
+                DebugHelper.LogError(gameObject.name + "没有movement");
                 return;
             }
             _movementAnimSetter = _container.GetSingletonLogicCompoent<MovementAnimatorSetter>();
@@ -238,10 +248,10 @@ namespace AiLing
                 return;
             DebugHelper.Log(_isInAir ? "isInAir" : "notInAir");
             bool isMove = false;
-            if (_horizontalInput != 0)
+            if (horizontalInput != 0)
             {
                 isMove = true;
-                _isRight = _horizontalInput > 0;
+                _isRight = horizontalInput > 0;
             }
             //真正的角度,localRotation.eulerAngles.y永远为正数（即使在Inspector面板中可以为负数）,将该正数转化成inspector面板中的数。
             float big = 360 - transform.localRotation.eulerAngles.y;
@@ -249,13 +259,15 @@ namespace AiLing
             float angle = big < small ? -big : small;
 
             AnimatorStateInfo info = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-            if (_isRight && angle < 90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            //if (_isRight && angle < 90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            if (_isRight && angle < 90 && !_isPull&&!_isPush)
             {
                 //向右转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y + _rotationDelta, transform.localRotation.z));
                 canPushPull = false;
             }
-            else if (!_isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            //else if (!_isRight && angle > -90 && !info.IsName("PushStart") && !info.IsName("PushMotion") && !info.IsName("Push Stop") && !info.IsName("PullStart") && !info.IsName("PullMotion"))
+            else if (!_isRight && angle > -90 && !_isPull && !_isPush)
             {
                 //向左转
                 transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.eulerAngles.y - _rotationDelta, transform.localRotation.z));
@@ -272,7 +284,7 @@ namespace AiLing
                 }
                 if (Mathf.Abs(_speedHorizontal) < _realHorizontalSpeedMax)
                 {
-                    float horizontalMove = _horizontalInput > 0 ? 1 : -1;
+                    float horizontalMove = horizontalInput > 0 ? 1 : -1;
                     //水平速度
                     _speedHorizontal += horizontalMove * horizontalAcceleration * Time.fixedDeltaTime;
                 }
@@ -296,18 +308,18 @@ namespace AiLing
             }
             else
             {
-                if(!_isInAir)
+                if (!_isInAir)
                     _speedHorizontal = 0;
             }
-            
+
             //暂停拉/推动画
             if ((info.IsName("PushMotion") || info.IsName("PullMotion")) && _speedHorizontal == 0 && (_isPush || _isPull))
             {
-                GetComponent<Animator>().speed = 0;
+                _animator.speed = 0; 
             }
             else
             {
-                GetComponent<Animator>().speed = 1;
+                _animator.speed = 1;
             }
         }
 
@@ -322,7 +334,7 @@ namespace AiLing
                 return;
             BreakPush();
             _speedVertical = _realJumpSpeed;
-            _readyForJump = false;
+            readyForJump = false;
         }
 
         private bool CheckFallDown()
@@ -353,10 +365,6 @@ namespace AiLing
             {
                 //此举是为了保证玩家在下坡的时候isInAir始终为true，如果不让speedVertical减小的话，可能会出现如：
                 //跳跃到一个高坡上speedVertical为 - 1，然后下坡的时候向下的速度不够导致characterController的碰不到地面而浮空。
-                //if (_speedVertical > _speedVerticalMinOnGround)
-                //    _speedVertical -= 0.01f;
-                //else if (_speedVertical < _speedVerticalMinOnGround)
-                //    _speedVertical += 0.01f;
                 _speedVertical = _speedVerticalMinOnGround;
             }
         }
@@ -423,7 +431,40 @@ namespace AiLing
                 _isPush = false;
                 _isPull = false;
             }
-            _readyForPush = false;
+            readyForPush = false;
+        }
+
+        private bool CheckPress()
+        {
+            return canPress;
+        }
+
+        private void Press()
+        {
+            if (!CheckPress())
+                return;
+            RaycastHit hit;
+            if (Physics.Raycast(center, Vector3.right * (_isRight ? 1 : -1), out hit, raycastDistance, raycastMask))
+            {
+                GameObject obj = hit.collider.gameObject;
+                pressListener = obj.GetComponent<PassiveListener>();
+                if (pressListener != null)
+                {
+                    _isPress = true;
+                    _isInteract = true;
+                    GameMainManager.Instance.mainPlayerInput.enabled = false;
+                }
+            }
+        }
+
+        public void FinishPress()
+        {
+            _isInteract = false;
+            if(pressListener != null)
+            {
+                pressListener.Call(null);
+                GameMainManager.Instance.mainPlayerInput.enabled = true;
+            }
         }
 
         private bool CheckBreakPush()
@@ -448,7 +489,7 @@ namespace AiLing
             _changeHorizontalSpeedLock = false;
             _isPush = false;
             _isPull = false;
-            _readyForBreakPush = false;
+            readyForBreakPush = false;
         }
 
         private void CharacterControllerMove()
@@ -459,10 +500,12 @@ namespace AiLing
 
         private void ClearStatus()
         {
-            _readyForJump = false;
-            _readyForPush = false;
-            _readyForBreakPush = false;
-            _horizontalInput = 0;
+            readyForJump = false;
+            readyForPush = false;
+            readyForBreakPush = false;
+            readyForPress = false;
+            horizontalInput = 0;
+            _isPress = false;
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -492,7 +535,7 @@ namespace AiLing
         //移动到某个点且抵达时刚好速度为某个值
         private void MoveTowardsEndInSpeed()
         {
-            if (_moveTowardsPara == null)
+            if (moveTowardsPara == null)
             {
                 DebugHelper.LogError(transform.name + "没有moveTowardsPara!");
                 return;
@@ -500,14 +543,14 @@ namespace AiLing
             if (!CheckMoveTowardsEndInSpeed())
                 return;
             _cc.enabled = false;
-            transform.DOMove(_moveTowardsPara.target - _cc.center, _moveTowardsPara.duration, false).onComplete = () =>
+            transform.DOMove(moveTowardsPara.target - _cc.center, moveTowardsPara.duration, false).onComplete = () =>
             {
                 _cc.enabled = true;
-                _speedHorizontal = _moveTowardsPara.endSpeedVec.x * _moveTowardsPara.endSpeed;
-                _speedVertical = _moveTowardsPara.endSpeedVec.y * _moveTowardsPara.endSpeed;
-                _moveTowardsPara = null;
+                _speedHorizontal = moveTowardsPara.endSpeedVec.x * moveTowardsPara.endSpeed;
+                _speedVertical = moveTowardsPara.endSpeedVec.y * moveTowardsPara.endSpeed;
+                moveTowardsPara = null;
             };
-            _readyForMoveTowardsEndInSpeed = false;
+            readyForMoveTowardsEndInSpeed = false;
         }
 
         private void FixedUpdate()
@@ -518,6 +561,8 @@ namespace AiLing
                 Jump();
             if (readyForPush)
                 Push();
+            if (readyForPress)
+                Press();
             if (readyForBreakPush || CheckPushObjDistanceCanBreak())
                 BreakPush();
             if (readyForMoveTowardsEndInSpeed)

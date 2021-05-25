@@ -17,7 +17,7 @@ namespace AiLing
         public Material mat;
         [LabelText("延迟")]
         public float delay;
-        int _timer;
+
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);

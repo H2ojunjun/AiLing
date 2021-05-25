@@ -42,26 +42,26 @@ namespace AiLing
 			}
 			else
             {
-				// Save and detach parent
-				if (transform.parent != null)
-				{
-					parent = transform.parent;
+                // Save and detach parent
+                if (transform.parent != null)
+                {
+                    parent = transform.parent;
 
-					transform.parent = null;
-				}
+                    transform.parent = null;
+                }
 
-				// Save and detach children
-				children = new Transform[transform.childCount];
+                // Save and detach children
+                children = new Transform[transform.childCount];
 
-				int index = 0;
+                int index = 0;
 
-				foreach (Transform child in transform)
-				{
-					children[index++] = child;
-				}
+                foreach (Transform child in transform)
+                {
+                    children[index++] = child;
+                }
 
-				transform.DetachChildren();
-			}
+                transform.DetachChildren();
+            }
 		}
 
 		public void PostSplit(GameObject[] newGameObjects)

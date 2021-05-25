@@ -629,6 +629,7 @@ MonoBehaviour:
   sendPreSplitMessage: 0
   sendPostSplitMessage: 0
   internalHullType: 0
+  isDestroy: 0
 --- !u!1001 &153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -667,6 +668,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 75c1cf98381254d6abf8090daf3766bc, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.0953971
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 75c1cf98381254d6abf8090daf3766bc, type: 3}
+      propertyPath: isDestroy
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75c1cf98381254d6abf8090daf3766bc, type: 3}
@@ -708,6 +713,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 812d225f67a39423e977633291883acd, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.50688446
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 812d225f67a39423e977633291883acd, type: 3}
+      propertyPath: isDestroy
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 812d225f67a39423e977633291883acd, type: 3}
       propertyPath: internalHullType
@@ -756,6 +765,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6400000, guid: 812d225f67a39423e977633291883acd, type: 3}
       propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 812d225f67a39423e977633291883acd, type: 3}
+      propertyPath: isDestroy
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -823,6 +836,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 9aea43b696d064ac1ac03ea9a5eb1836, type: 3}
+      propertyPath: isDestroy
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aea43b696d064ac1ac03ea9a5eb1836, type: 3}
 --- !u!1001 &873375185
@@ -863,6 +880,10 @@ PrefabInstance:
     - target: {fileID: 400008, guid: 9aea43b696d064ac1ac03ea9a5eb1836, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 9aea43b696d064ac1ac03ea9a5eb1836, type: 3}
+      propertyPath: isDestroy
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aea43b696d064ac1ac03ea9a5eb1836, type: 3}

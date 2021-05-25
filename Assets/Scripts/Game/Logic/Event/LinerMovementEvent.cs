@@ -15,6 +15,8 @@ namespace AiLing
         public GameObject target;
         [LabelText("运动时间")]
         public float time;
+        [LabelText("延迟时间")]
+        public float delay;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
@@ -29,7 +31,13 @@ namespace AiLing
             }
             if (mover == null)
                 mover = gameObject;
-            EventStart();
+            if (_timer != 0)
+                return;
+            _timer = TimerManager.Instance.AddTimer(delay, 0, 1, EventStart, null, Move);
+        }
+
+        private void Move()
+        {
             mover.transform.DOMove(target.transform.position, time, false).onComplete = EventEnd;
         }
     }

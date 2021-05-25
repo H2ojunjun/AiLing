@@ -16,7 +16,6 @@ namespace AiLing
         public float persistTime;
         [LabelText("延迟时间")]
         public float delay;
-        private int _timer;
         UITips tip;
         public override void Excute(List<GameObject> unartPara)
         {

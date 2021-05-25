@@ -16,9 +16,10 @@ namespace AiLing
         public bool isChangBack;
         [LabelText("时间")]
         public float changeTime;
+        [LabelText("延迟时间")]
+        public float delay;
         private Transform _oldTarget;
         private CinemachineVirtualCamera _virtualCam;
-        private int _timer;
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
@@ -26,7 +27,7 @@ namespace AiLing
             if (isChangBack)
             {
                 _oldTarget = _virtualCam.Follow;
-                _timer = TimerManager.Instance.AddTimer(changeTime,0,1,()=> {
+                _timer = TimerManager.Instance.AddTimer(changeTime, delay, 1,()=> {
                     _virtualCam.Follow = newTarget;
                     EventStart();
                 },null,()=> {

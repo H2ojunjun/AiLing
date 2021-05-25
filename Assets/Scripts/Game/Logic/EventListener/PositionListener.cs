@@ -50,6 +50,8 @@ namespace AiLing
             base.CallEvent();
         }
 
+
+
         private bool ShouldExcute(GameObject obj)
         {
             if (target != null)

@@ -30,7 +30,6 @@ namespace AiLing
         private float _width;
         private float _height;
         private float _depth;
-        private int _timer;
         private Vector3 _originScale;
         private Vector3 _originPos;
         private Vector2 _originMainTexScale;

@@ -114,8 +114,7 @@ namespace AiLing
 
         private void OnStatusInfoChange()
         {
-            //foreach(var item in conditions)
-            //    conditions.
+
         }
 
         public bool GetConditionRealResult()

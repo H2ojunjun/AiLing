@@ -249,7 +249,7 @@ namespace AiLing
             GameObject referenceObj = sr.reference;
             if (referenceObj == null)
             {
-                DebugHelper.LogError(owner.name + " 状态：" + statusCN + " 值：" + value + "没有引用物体");
+                //DebugHelper.LogError(owner.name + " 状态：" + statusCN + " 值：" + value + "没有引用物体");
                 return;
             }
             LogicContainer container = owner.GetComponent<LogicContainer>();
@@ -273,7 +273,7 @@ namespace AiLing
             GameObject referenceObj = sr.reference;
             if (referenceObj == null)
             {
-                DebugHelper.LogError(owner.name + " 状态：" + statusCN + " 值：" + value + "没有引用物体");
+                //DebugHelper.LogError(owner.name + " 状态：" + statusCN + " 值：" + value + "没有引用物体");
                 return;
             }
             LogicContainer container = owner.GetComponent<LogicContainer>();
@@ -286,6 +286,7 @@ namespace AiLing
                 if (referenceCache == null)
                     return;
                 referenceCache.Read();
+
             }
         }
 

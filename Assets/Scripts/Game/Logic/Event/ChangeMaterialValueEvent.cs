@@ -18,7 +18,6 @@ namespace AiLing
         public float start;
         [LabelText("结束值")]
         public float end;
-        private int _timer;
         private Material _mat;
         public override void Excute(List<GameObject> unartPara)
         {

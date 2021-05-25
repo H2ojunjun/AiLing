@@ -18,11 +18,15 @@ namespace AiLing
         private bool _isPush = false;
         private bool _isPull = false;
         private bool _isInAir = false;
+        private bool _isPress = false;
+        private bool _isInteract = false;
 
         public bool isRight { get { return _isRight; }set { _isRight = value; } }
         public bool isPush { get { return _isPush; } set { _isPush = value; } }
         public bool isPull { get { return _isPull; } set { _isPull = value; } }
         public bool isInAir { get { return _isInAir; } set { _isInAir = value; } }
+        public bool isPress { get { return _isPress; } set { _isPress = value; } }
+        public bool isInteract { get { return _isInteract; } set { _isInteract = value; } }
         public bool isWalk { get { return Mathf.Abs(speedHorizontal) > 0 && Mathf.Abs(speedHorizontal) < runSpeedMin && !isInAir; } }
         public bool isRun { get { return Mathf.Abs(speedHorizontal) >= runSpeedMin && !isInAir; } }
 
