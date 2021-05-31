@@ -11,8 +11,14 @@ namespace AiLing
     {
         [LabelText("运动者")]
         public GameObject mover;
+        [LabelText("是否参照对象")]
+        public bool isObj = true;
         [LabelText("目标点")]
+        [EnableIf("isObj")]
         public GameObject target;
+        [LabelText("偏移")]
+        [DisableIf("isObj")]
+        public Vector3 offset;
         [LabelText("运动时间")]
         public float time;
         [LabelText("延迟时间")]
@@ -20,13 +26,16 @@ namespace AiLing
         public override void Excute(List<GameObject> unartPara)
         {
             base.Excute(unartPara);
-            if(target == null)
+            if (isObj)
             {
-                target = unartPara[0];
-                if(target == null)
+                if (target == null)
                 {
-                    DebugHelper.LogError(gameObject.name+"直线运动事件没有target参数");
-                    return;
+                    target = unartPara[0];
+                    if (target == null)
+                    {
+                        DebugHelper.LogError(gameObject.name + "直线运动事件没有target参数");
+                        return;
+                    }
                 }
             }
             if (mover == null)
@@ -38,7 +47,16 @@ namespace AiLing
 
         private void Move()
         {
-            mover.transform.DOMove(target.transform.position, time, false).onComplete = EventEnd;
+            if(isObj)
+                mover.transform.DOMove(target.transform.position, time, false).onComplete = EventEnd;
+            else
+                mover.transform.DOMove(mover.transform.position+offset, time, false).onComplete = EventEnd;
+        }
+
+        public override void EventEnd()
+        {
+            base.EventEnd();
+            _timer = 0;
         }
     }
 }

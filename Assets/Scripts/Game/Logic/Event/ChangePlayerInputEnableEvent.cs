@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 namespace AiLing
 {
-    [GameEventInfo("屏蔽/开启玩家输入")]
+    [GameEventInfo("屏蔽|开启玩家输入")]
     public class ChangePlayerInputEnableEvent : GameEvent
     {
         [LabelText("目标")]

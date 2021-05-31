@@ -86,7 +86,6 @@ namespace AiLing
                 item.RevertValue();
                 item.StartReference();
             }
-
         }
 
         public void SaveStatus()
@@ -97,6 +96,7 @@ namespace AiLing
                 statusDic.Add(item.statusCN,item.value);
             }
             GameProcesser.Instance.ChangeItemInStatusDic(gameObject.name, statusDic);
+            GameProcesser.Instance.SaveGameAsyn(false);
         }
 
         public void LoadStatus()

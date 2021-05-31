@@ -11,13 +11,13 @@ namespace AiLing
 
         public const string UI_PATH = "Prefabs/UI/ui_normal";
 
-        public T CreateNewUI<T>() where T:UIBase,new()
+        public T CreateNewUI<T>() where T : UIBase, new()
         {
             UIBase t = new T();
-            if (uiDic.ContainsKey(t.componentName)&&t.isSingle)
+            if (uiDic.ContainsKey(t.componentName) && t.isSingle && uiDic[t.componentName].owner != null)
                 return uiDic[t.componentName] as T;
-            UIPackage.AddPackage("UI/"+t.PackageName+"/"+t.PackageName);
-            GameObject obj = Instantiate(Resources.Load<GameObject>(UI_PATH),Vector3.zero,Quaternion.identity) as GameObject; 
+            UIPackage.AddPackage("UI/" + t.PackageName + "/" + t.PackageName);
+            GameObject obj = Instantiate(Resources.Load<GameObject>(UI_PATH), Vector3.zero, Quaternion.identity) as GameObject;
             obj.layer = 5;
             obj.name = t.componentName;
             UIPanel panel = obj.GetComponent<UIPanel>();
@@ -25,7 +25,12 @@ namespace AiLing
             panel.componentName = t.componentName;
             panel.CreateUI();
             t.mainCom = panel.ui;
-            uiDic.Add(t.componentName, t);
+            if (uiDic.ContainsKey(t.componentName))
+            {
+                uiDic[t.componentName] = t;
+            }
+            else
+                uiDic.Add(t.componentName, t);
             t.owner = obj;
             obj.SetActive(false);
             return t as T;

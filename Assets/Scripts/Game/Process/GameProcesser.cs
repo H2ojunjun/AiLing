@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEngine.Events;
 
 namespace AiLing
 {
@@ -120,6 +121,12 @@ namespace AiLing
             return model;
         }
 
+        public void ChangeScene(string sceneName, UnityAction<Scene, LoadSceneMode> finishCallBack = null)
+        {
+            SceneManager.sceneLoaded += finishCallBack;
+            SceneManager.LoadScene(sceneName);
+        }
+
         public void ChangeCurrMark(int mark)
         {
             _currGameModel.mark = mark;
@@ -144,6 +151,8 @@ namespace AiLing
         public Dictionary<string, int> GetItemInStatusDic(string key)
         {
             Dictionary<string, int> tem;
+            if (_currGameModel == null)
+                return null;
             _currGameModel.statusDic.TryGetValue(key, out tem);
             return tem;
         }

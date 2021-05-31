@@ -119,6 +119,8 @@ namespace AiLing
         EShatter,
         [GameEnum("Active", typeof(SetActiveCache))]
         EActive,
+        [GameEnum("EventTime", typeof(EventTimeCache))]
+        EEventTime,
     }
 }
 

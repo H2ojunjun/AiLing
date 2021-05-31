@@ -29,17 +29,28 @@ namespace AiLing
         [GUIColor(0.3f, 1f, 0.5f, 1)]
         private void RefreshAll()
         {
+            InitAll();
             foreach (var item in conditionEvents)
             {
-                item.listener = this;
-                foreach (var eve in item.events)
-                {
-                    eve.Refresh();
-                }
+                if (item.si != null)
+                    item.si.Refresh();
                 foreach (var condition in item.conditions)
                 {
                     condition.Refresh();
                 }
+                foreach (var eve in item.events)
+                {
+                    eve.Refresh();
+                }
+            }
+            DebugHelper.Log("刷新成功");
+        }
+
+        private void InitAll()
+        {
+            foreach (var item in conditionEvents)
+            {
+                item.Init(this);
             }
             DebugHelper.Log("刷新成功");
         }
@@ -63,13 +74,13 @@ namespace AiLing
         protected virtual void Awake()
         {
             unartificialPara = new List<GameObject>();
-            RefreshAll();
+            InitAll();
         }
 
         private void AddConditionEvent()
         {
             ConditionEvents condEve = new ConditionEvents();
-            condEve.listener = this;
+            condEve.Init(this);
             conditionEvents.Add(condEve);
         }
     }
@@ -77,7 +88,7 @@ namespace AiLing
     [Serializable]
     public class ConditionEvents
     {
-        [HideInInspector]
+        [NonSerialized]
         public EventListener listener;
 
         [LabelText("状态")]
@@ -92,10 +103,23 @@ namespace AiLing
         [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventModifier", DraggableItems = false)]
         public List<EventModifier> events = new List<EventModifier>();
 
+        public void Init(EventListener listener)
+        {
+            this.listener = listener;
+            foreach (var condition in conditions)
+            {
+                condition.Init(this);
+            }
+            foreach (var eve in events)
+            {
+                eve.Init(this);
+            }
+        }
+
         private void AddEventModifier()
         {
             EventModifier mod = new EventModifier();
-            mod.conditionEvents = this;
+            mod.Init(this);
             events.Add(mod);
         }
 
@@ -107,8 +131,8 @@ namespace AiLing
                 DebugHelper.LogError("未设置状态！");
                 return;
             }
+            cod.Init(this);
             cod.statusCNNames = si.myStatusCNNames;
-            cod.owner = this;
             conditions.Add(cod);
         }
 
@@ -174,8 +198,7 @@ namespace AiLing
     [Serializable]
     public class Condition
     {
-        [HideInInspector]
-        public ConditionEvents owner;
+        private ConditionEvents _owner;
 
         [ValueDropdown("statusCNNames")]
         [OnValueChanged("OnChangeStatus")]
@@ -224,10 +247,15 @@ namespace AiLing
             { "小于等于",EOperation.LowerEqual},
         };
 
+        public void Init(ConditionEvents owner)
+        {
+            _owner = owner;
+        }
+
         private void OnChangeStatus()
         {
-            statusCNNames = owner.si.myStatusCNNames;
-            foreach (var sta in owner.si.statusInfoes)
+            statusCNNames = _owner.si.myStatusCNNames;
+            foreach (var sta in _owner.si.statusInfoes)
             {
                 if (sta.statusCN == currStatus)
                 {
@@ -266,12 +294,12 @@ namespace AiLing
 
         public bool GetConditionResult()
         {
-            if (owner.si == null)
+            if (_owner.si == null)
             {
                 DebugHelper.LogError("没有为该条件列表绑定statusInfo");
                 return false;
             }
-            foreach (var item in owner.si.statusInfoes)
+            foreach (var item in _owner.si.statusInfoes)
             {
                 if (item.statusCN == currStatus)
                 {
@@ -302,7 +330,6 @@ namespace AiLing
             OnChangeStatus();
             InitOperations();
             InitAllGate();
-            owner.si.Refresh();
 #endif
         }
     }
@@ -310,22 +337,29 @@ namespace AiLing
     [Serializable]
     public class EventModifier
     {
-        [HideInInspector]
-        public ConditionEvents conditionEvents;
+        private ConditionEvents _owner;
 
         [LabelText("事件绑定物体")]
         [OnValueChanged("OnGameObjectChange")]
         public GameObject eventHandler;
 
         [LabelText("事件选择器")]
-        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventChoose",DraggableItems = false)]
+        [ListDrawerSettings(Expanded = true, CustomAddFunction = "AddEventChoose", DraggableItems = false)]
         public List<EventChoose> eventChooses = new List<EventChoose>();
+
+        public void Init(ConditionEvents owner)
+        {
+            _owner = owner;
+            foreach (var ec in eventChooses)
+            {
+                ec.Init(this);
+            }
+        }
 
         public void OnGameObjectChange()
         {
             if (eventHandler == null)
             {
-                DebugHelper.LogError(conditionEvents.listener.gameObject.name+"上的事件绑定物体为空!");
                 return;
             }
             GameEvent[] events = eventHandler.GetComponents<GameEvent>();
@@ -344,8 +378,8 @@ namespace AiLing
         private void AddEventChoose()
         {
             EventChoose ec = new EventChoose();
-            ec.mod = this;
             ec.eventNames = eventNames;
+            ec.Init(this);
             eventChooses.Add(ec);
         }
 
@@ -358,18 +392,18 @@ namespace AiLing
                 {
                     if (eve.timing == ESetStatusTiming.Start)
                     {
-                        realEvent.startCallBack += conditionEvents.SetStatus;
+                        realEvent.startCallBack += _owner.SetStatus;
                         hasSetStatusChangeCallBack = true;
                     }
                     else if (eve.timing == ESetStatusTiming.Finish)
                     {
-                        realEvent.finishCallBack += conditionEvents.SetStatus;
+                        realEvent.finishCallBack += _owner.SetStatus;
                         hasSetStatusChangeCallBack = true;
                     }
                 }
                 if (realEvent.leftTimes == 0)
                     return;
-                realEvent.Excute(conditionEvents.listener.unartificialPara);
+                realEvent.Excute(_owner.listener.unartificialPara);
                 realEvent.leftTimes--;
             }
         }
@@ -377,10 +411,10 @@ namespace AiLing
         /// <summary>
         /// 用于编辑器模式下当事件参数信息更改时调用，刷新inspector参数列表
         /// </summary>
-        public void Refresh() 
+        public void Refresh()
         {
             OnGameObjectChange();
-            foreach(var ec in eventChooses)
+            foreach (var ec in eventChooses)
             {
                 ec.eventNames = eventNames;
             }
@@ -390,8 +424,7 @@ namespace AiLing
     [Serializable]
     public class EventChoose
     {
-        [HideInInspector]
-        public EventModifier mod;
+        private EventModifier _mod;
 
         [LabelText("事件名")]
         [ValueDropdown("eventNames")]
@@ -403,16 +436,22 @@ namespace AiLing
         [OnValueChanged("OnTimingChange")]
         public ESetStatusTiming timing = ESetStatusTiming.None;
 
+        internal void Init(EventModifier eventModifier)
+        {
+            _mod = eventModifier;
+        }
+
         private void OnTimingChange()
         {
             int changeNum = 0;
-            foreach (var item in mod.eventChooses)
+            foreach (var item in _mod.eventChooses)
             {
                 if (item.timing != ESetStatusTiming.None)
                     changeNum++;
             }
             if (changeNum > 1)
                 DebugHelper.LogError("该条件事件系统中有多个事件会设置后置状态，但最多只能有一个，请检查并修改");
+
         }
     }
 }

@@ -61,11 +61,23 @@ namespace AiLing
 
         public override void OnClose()
         {
+            UIBase ui;
+            if (UIManager.Instance.uiDic.TryGetValue("UI_GameOver", out ui))
+            {
+                if (ui.isShowing == false)
+                    UIManager.Instance.ShowUI(ui);
+            }
         }
 
         public override void OnHide()
         {
+            UIBase ui;
+            if (UIManager.Instance.uiDic.TryGetValue("UI_GameOver", out ui))
+            {
+                if (ui.isShowing == false)
+                    UIManager.Instance.ShowUI(ui);
 
+            }
         }
     }
 }

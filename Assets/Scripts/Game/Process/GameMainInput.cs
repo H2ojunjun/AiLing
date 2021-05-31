@@ -22,6 +22,11 @@ namespace AiLing
                     if (ui.isShowing == true)
                         UIManager.Instance.HideUI(ui);
                 }
+                if (UIManager.Instance.uiDic.TryGetValue("UI_GameOver", out ui))
+                {
+                    if (ui.isShowing == true)
+                        UIManager.Instance.HideUI(ui);
+                }
                 UIManager.Instance.CreateAndShow<UIESC>();
             }
         }
